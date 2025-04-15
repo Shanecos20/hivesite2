@@ -19,14 +19,41 @@ function ScrollToTop() {
     
     // Force refresh of any active GSAP animations/ScrollTriggers
     if (typeof window !== 'undefined') {
+      // Immediately dispatch resize event
       window.dispatchEvent(new Event('resize'));
       
-      // Small delay to ensure DOM has updated
-      const refreshTimeout = setTimeout(() => {
-        window.dispatchEvent(new Event('resize'));
-      }, 100);
+      // Set up multiple refresh attempts with increasing delays
+      // This helps ensure animations initialize properly regardless of when content loads
+      const refreshDelays = [50, 150, 300, 600];
       
-      return () => clearTimeout(refreshTimeout);
+      const refreshTimeouts = refreshDelays.map(delay => {
+        return setTimeout(() => {
+          console.log(`GSAP refresh at ${delay}ms`);
+          window.dispatchEvent(new Event('resize'));
+          
+          // Also try to refresh ScrollTrigger if available
+          try {
+            const refreshScrollTrigger = async () => {
+              try {
+                const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+                if (ScrollTrigger && ScrollTrigger.refresh) {
+                  ScrollTrigger.refresh();
+                }
+              } catch (e) {
+                // Silent fail if GSAP/ScrollTrigger isn't available yet
+              }
+            };
+            
+            refreshScrollTrigger();
+          } catch (e) {
+            // Silent fail if import fails
+          }
+        }, delay);
+      });
+      
+      return () => {
+        refreshTimeouts.forEach(timeout => clearTimeout(timeout));
+      };
     }
   }, [pathname]);
   

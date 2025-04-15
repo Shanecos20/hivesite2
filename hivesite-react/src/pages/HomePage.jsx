@@ -1,10 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from '../css/Home.module.css';
 
 const HomePage = () => {
   // State for testimonials
   const [currentSlide, setCurrentSlide] = useState(0);
   const testimonialInterval = useRef(null);
+  
+  // Register ScrollTrigger plugin outside useEffect
+  gsap.registerPlugin(ScrollTrigger);
 
   // Refs for elements to animate
   const heroTitleRef = useRef(null);
@@ -123,15 +128,12 @@ const HomePage = () => {
 
   // GSAP animations
   useEffect(() => {
-    const loadGSAP = async () => {
-      const gsapModule = await import('gsap');
-      const scrollTriggerModule = await import('gsap/ScrollTrigger');
+    // Function to initialize animations - separated for clarity
+    const initAnimations = () => {
+      console.log('Initializing HomePage GSAP animations');
       
-      const gsap = gsapModule.default;
-      const ScrollTrigger = scrollTriggerModule.default;
-      
-      // Register ScrollTrigger plugin
-      gsap.registerPlugin(ScrollTrigger);
+      // Kill any existing ScrollTrigger instances to prevent conflicts
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
       
       // Animate blobs with GSAP
       if (blobsRef.current && blobsRef.current.length) {
@@ -198,67 +200,49 @@ const HomePage = () => {
         });
       }
       
-      if (heroScrollRef.current) {
-        gsap.to(heroScrollRef.current, {
+      // Use gsap utils to select and animate section elements
+      gsap.utils.toArray(`.${styles.section_subtitle}`).forEach(element => {
+        gsap.to(element, {
+          scrollTrigger: {
+            trigger: element,
+            start: "top 80%",
+          },
           opacity: 1,
-          duration: 0.8,
+          y: 0,
+          duration: 0.6,
+          ease: 'power2.out'
+        });
+      });
+      
+      gsap.utils.toArray(`.${styles.section_title}`).forEach(element => {
+        gsap.to(element, {
+          scrollTrigger: {
+            trigger: element,
+            start: "top 80%",
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
           ease: 'power2.out',
-          delay: 1.5
+          delay: 0.2
         });
-      }
+      });
       
-      // Scroll animations
-      if (sectionRefs.subtitles.current && sectionRefs.subtitles.current.length) {
-        sectionRefs.subtitles.current.forEach(element => {
-          if (!element) return;
-          gsap.to(element, {
-            scrollTrigger: {
-              trigger: element,
-              start: "top 80%",
-            },
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: 'power2.out'
-          });
+      gsap.utils.toArray(`.${styles.section_description}`).forEach(element => {
+        gsap.to(element, {
+          scrollTrigger: {
+            trigger: element,
+            start: "top 80%",
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: 'power2.out',
+          delay: 0.4
         });
-      }
+      });
       
-      if (sectionRefs.titles.current && sectionRefs.titles.current.length) {
-        sectionRefs.titles.current.forEach(element => {
-          if (!element) return;
-          gsap.to(element, {
-            scrollTrigger: {
-              trigger: element,
-              start: "top 80%",
-            },
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: 'power2.out',
-            delay: 0.2
-          });
-        });
-      }
-      
-      if (sectionRefs.descriptions.current && sectionRefs.descriptions.current.length) {
-        sectionRefs.descriptions.current.forEach(element => {
-          if (!element) return;
-          gsap.to(element, {
-            scrollTrigger: {
-              trigger: element,
-              start: "top 80%",
-            },
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: 'power2.out',
-            delay: 0.4
-          });
-        });
-      }
-      
-      // Feature cards animation with stagger
+      // Feature cards animation
       if (sectionRefs.featureCards.current && sectionRefs.featureCards.current.length) {
         sectionRefs.featureCards.current.forEach((card, index) => {
           if (!card) return;
@@ -383,29 +367,40 @@ const HomePage = () => {
         });
       });
     };
-
-    loadGSAP();
+    
+    // First attempt - immediate initialization
+    initAnimations();
+    
+    // Second attempt - with short delay to ensure DOM is ready
+    const initTimeout = setTimeout(() => {
+      initAnimations();
+    }, 100);
+    
+    // Third attempt - with longer delay for any lazy-loaded resources
+    const refreshTimeout = setTimeout(() => {
+      initAnimations();
+      
+      // Force refresh of all ScrollTriggers
+      if (ScrollTrigger.refresh) {
+        ScrollTrigger.refresh();
+      }
+      
+      // Force window resize event to recalculate positions
+      window.dispatchEvent(new Event('resize'));
+    }, 500);
 
     // Cleanup function
     return () => {
-      const cleanup = async () => {
-        const gsapModule = await import('gsap');
-        const scrollTriggerModule = await import('gsap/ScrollTrigger');
-        
-        const gsap = gsapModule.default;
-        const ScrollTrigger = scrollTriggerModule.default;
-        
-        if (ScrollTrigger) {
-          ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-        }
-        if (gsap) {
-          gsap.killTweensOf("*");
-        }
-      };
+      clearTimeout(initTimeout);
+      clearTimeout(refreshTimeout);
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      gsap.killTweensOf("*");
       
-      cleanup();
+      if (testimonialInterval.current) {
+        clearInterval(testimonialInterval.current);
+      }
     };
-  }, []);
+  }, []); // Empty dependency array to run once on mount
 
   return (
     <>

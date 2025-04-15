@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from '../css/Download.module.css';
 
 const DownloadPage = () => {
@@ -8,6 +10,9 @@ const DownloadPage = () => {
   // State for FAQ items
   const [activeFaqItem, setActiveFaqItem] = useState(0);
 
+  // Register ScrollTrigger plugin outside useEffect
+  gsap.registerPlugin(ScrollTrigger);
+  
   // Refs for elements to animate
   const heroBadgeRef = useRef(null);
   const heroTitleRef = useRef(null);
@@ -47,15 +52,12 @@ const DownloadPage = () => {
 
   // GSAP animations
   useEffect(() => {
-    const loadGSAP = async () => {
-      const gsapModule = await import('gsap');
-      const scrollTriggerModule = await import('gsap/ScrollTrigger');
+    // Function to initialize animations - separated for clarity
+    const initAnimations = () => {
+      console.log('Initializing DownloadPage GSAP animations');
       
-      const gsap = gsapModule.default;
-      const ScrollTrigger = scrollTriggerModule.default;
-      
-      // Register ScrollTrigger plugin
-      gsap.registerPlugin(ScrollTrigger);
+      // Kill any existing ScrollTrigger instances to prevent conflicts
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
 
       // Animate gradient blobs
       if (blobsRef.current && blobsRef.current.length) {
@@ -90,7 +92,7 @@ const DownloadPage = () => {
           gsap.to(blob, {
             y: (index % 2 === 0) ? "+=80" : "-=80",
             scrollTrigger: {
-              trigger: ".hero",
+              trigger: `.${styles.hero}`,
               scrub: 1,
               start: "top bottom",
               end: "bottom top"
@@ -287,29 +289,36 @@ const DownloadPage = () => {
         });
       }
     };
-
-    loadGSAP();
+    
+    // First attempt - immediate initialization
+    initAnimations();
+    
+    // Second attempt - with short delay to ensure DOM is ready
+    const initTimeout = setTimeout(() => {
+      initAnimations();
+    }, 100);
+    
+    // Third attempt - with longer delay for any lazy-loaded resources
+    const refreshTimeout = setTimeout(() => {
+      initAnimations();
+      
+      // Force refresh of all ScrollTriggers
+      if (ScrollTrigger.refresh) {
+        ScrollTrigger.refresh();
+      }
+      
+      // Force window resize event to recalculate positions
+      window.dispatchEvent(new Event('resize'));
+    }, 500);
 
     // Cleanup function
     return () => {
-      const cleanup = async () => {
-        const gsapModule = await import('gsap');
-        const scrollTriggerModule = await import('gsap/ScrollTrigger');
-        
-        const gsap = gsapModule.default;
-        const ScrollTrigger = scrollTriggerModule.default;
-        
-        if (ScrollTrigger) {
-          ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-        }
-        if (gsap) {
-          gsap.killTweensOf("*");
-        }
-      };
-      
-      cleanup();
+      clearTimeout(initTimeout);
+      clearTimeout(refreshTimeout);
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      gsap.killTweensOf("*");
     };
-  }, []);
+  }, []); // Empty dependency array to run once on mount
 
   // FAQ data
   const faqData = [

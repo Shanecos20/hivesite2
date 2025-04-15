@@ -7,7 +7,7 @@ const MissionPage = () => {
   // Add loading state
   const [isLoaded, setIsLoaded] = useState(false);
   
-  // Register ScrollTrigger plugin
+  // Register ScrollTrigger plugin outside of useEffect
   gsap.registerPlugin(ScrollTrigger);
 
   // Refs for animation targets
@@ -102,8 +102,10 @@ const MissionPage = () => {
     // First mark component as loaded
     setIsLoaded(true);
     
-    // Use a short timeout to ensure DOM is fully rendered
-    const initTimeout = setTimeout(() => {
+    // Function to initialize animations - separated for clarity
+    const initAnimations = () => {
+      console.log('Initializing GSAP animations');
+      
       // Kill any existing ScrollTrigger instances to prevent conflicts
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
       
@@ -419,47 +421,36 @@ const MissionPage = () => {
           showSlide(i);
         });
       });
-    }, 100); // Small delay to ensure DOM is ready
-
-    // Cleanup function
-    return () => {
-      clearTimeout(initTimeout);
-      
-      // Kill all animations and ScrollTriggers
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-      
-      // Clear any running intervals
-      if (testimonialIntervalRef.current) {
-        clearInterval(testimonialIntervalRef.current);
-      }
-      
-      // Clean up other event listeners if needed
-      if (testimonialDotsRef.current.length > 0) {
-        testimonialDotsRef.current.forEach((dot) => {
-          dot.removeEventListener('click', () => {});
-        });
-      }
     };
-  }, []);
-
-  // Need to force a refresh on the window on initial load to ensure GSAP animations work properly
-  useEffect(() => {
-    // Force a reflow to ensure everything loads correctly
-    window.addEventListener('load', () => {
-      window.dispatchEvent(new Event('resize'));
-    });
     
-    // Force a refresh of scroll triggers when the component is mounted
+    // First attempt - immediate initialization
+    initAnimations();
+    
+    // Second attempt - with short delay to ensure DOM is ready
+    const initTimeout = setTimeout(() => {
+      initAnimations();
+    }, 100);
+    
+    // Third attempt - with longer delay for any lazy-loaded resources
     const refreshTimeout = setTimeout(() => {
+      initAnimations();
+      
+      // Force refresh of all ScrollTriggers
       if (ScrollTrigger.refresh) {
         ScrollTrigger.refresh();
       }
-    }, 200);
+      
+      // Force window resize event to recalculate positions
+      window.dispatchEvent(new Event('resize'));
+    }, 500);
 
     return () => {
+      // Cleanup timeouts and ScrollTrigger instances
+      clearTimeout(initTimeout);
       clearTimeout(refreshTimeout);
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
-  }, [isLoaded]);
+  }, []); // Empty dependency array to run once on mount
 
   return (
     <div className={styles.mission_page}>

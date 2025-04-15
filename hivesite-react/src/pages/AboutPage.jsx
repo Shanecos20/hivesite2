@@ -1,7 +1,12 @@
 import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from '../css/About.module.css';
 
 const About = () => {
+  // Register ScrollTrigger plugin outside of useEffect
+  gsap.registerPlugin(ScrollTrigger);
+  
   // Create refs for elements we need to animate
   const heroRef = useRef(null);
   const heroBadgeRef = useRef(null);
@@ -28,16 +33,12 @@ const About = () => {
   };
 
   useEffect(() => {
-    // Import GSAP dynamically to avoid SSR issues
-    const loadGSAP = async () => {
-      const gsapModule = await import('gsap');
-      const scrollTriggerModule = await import('gsap/ScrollTrigger');
+    // Function to initialize animations - separated for clarity
+    const initAnimations = () => {
+      console.log('Initializing AboutPage GSAP animations');
       
-      const gsap = gsapModule.default;
-      const ScrollTrigger = scrollTriggerModule.default;
-      
-      // Register ScrollTrigger plugin
-      gsap.registerPlugin(ScrollTrigger);
+      // Kill any existing ScrollTrigger instances to prevent conflicts
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
       
       // Animate gradient blobs
       if (blobsRef.current && blobsRef.current.length) {
@@ -281,20 +282,20 @@ const About = () => {
         });
       }
       
-      // Partners animations
+      // Partner animations
       if (sectionRefs.partnerItems.current && sectionRefs.partnerItems.current.length) {
-        sectionRefs.partnerItems.current.forEach((item, index) => {
-          if (!item) return;
-          gsap.to(item, {
+        sectionRefs.partnerItems.current.forEach((partner, index) => {
+          if (!partner) return;
+          gsap.to(partner, {
             scrollTrigger: {
-              trigger: item,
-              start: "top 85%",
+              trigger: partner,
+              start: "top 90%",
             },
             opacity: 1,
             y: 0,
             duration: 0.6,
             ease: 'power2.out',
-            delay: 0.05 * index
+            delay: 0.1 * index
           });
         });
       }
@@ -341,25 +342,36 @@ const About = () => {
         });
       }
     };
-
-    loadGSAP();
-
-    // Cleanup function to kill all animations and ScrollTriggers when component unmounts
-    return () => {
-      const cleanup = async () => {
-        const gsapModule = await import('gsap');
-        const scrollTriggerModule = await import('gsap/ScrollTrigger');
-        
-        const gsap = gsapModule.default;
-        const ScrollTrigger = scrollTriggerModule.default;
-        
-        ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-        gsap.killTweensOf("*");
-      };
+    
+    // First attempt - immediate initialization
+    initAnimations();
+    
+    // Second attempt - with short delay to ensure DOM is ready
+    const initTimeout = setTimeout(() => {
+      initAnimations();
+    }, 100);
+    
+    // Third attempt - with longer delay for any lazy-loaded resources
+    const refreshTimeout = setTimeout(() => {
+      initAnimations();
       
-      cleanup();
+      // Force refresh of all ScrollTriggers
+      if (ScrollTrigger.refresh) {
+        ScrollTrigger.refresh();
+      }
+      
+      // Force window resize event to recalculate positions
+      window.dispatchEvent(new Event('resize'));
+    }, 500);
+
+    // Cleanup function
+    return () => {
+      clearTimeout(initTimeout);
+      clearTimeout(refreshTimeout);
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      gsap.killTweensOf("*");
     };
-  }, []);
+  }, []); // Empty dependency array to run once on mount
 
   // Function to add elements to our refs arrays
   const addToRef = (el, refArray) => {

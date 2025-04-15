@@ -40,6 +40,40 @@ function Layout() {
         window.scrollTo(0, 0);
     }, [location.pathname]);
 
+    // Initialization effect that runs once for direct page loads
+    useEffect(() => {
+        // Force a refresh on initial load
+        const initialGSAPSetup = async () => {
+            try {
+                // Small delay to let the DOM render
+                setTimeout(async () => {
+                    const gsapModule = await import('gsap');
+                    const scrollTriggerModule = await import('gsap/ScrollTrigger');
+                    
+                    const gsap = gsapModule.default;
+                    const ScrollTrigger = scrollTriggerModule.default;
+                    
+                    // Register ScrollTrigger plugin
+                    gsap.registerPlugin(ScrollTrigger);
+                    
+                    // Force refresh to properly set up animations
+                    ScrollTrigger.refresh();
+                    window.dispatchEvent(new Event('resize'));
+                    
+                    // Second refresh after slightly longer delay
+                    setTimeout(() => {
+                        ScrollTrigger.refresh();
+                        window.dispatchEvent(new Event('resize'));
+                    }, 300);
+                }, 50);
+            } catch (error) {
+                console.error("Error setting up initial GSAP:", error);
+            }
+        };
+        
+        initialGSAPSetup();
+    }, []); // Empty dependency array means this runs once on mount
+
     // Navbar Scroll Effect
     useEffect(() => {
         const handleScroll = () => {
