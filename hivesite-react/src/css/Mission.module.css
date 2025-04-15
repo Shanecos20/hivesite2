@@ -1,5 +1,5 @@
- /* Base Styles */
- :root {
+/* Base Styles */
+:root {
     --honey-yellow: #FFC107;
     --honey-amber: #FF9800;
     --honey-dark: #FF6F00;
@@ -38,126 +38,11 @@ html {
     scroll-behavior: smooth;
 }
 
-/* Cursor */
-.custom-cursor {
-    position: fixed;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    border: 2px solid var(--honey-yellow);
-    pointer-events: none;
-    transform: translate(-50%, -50%);
-    mix-blend-mode: difference;
-    z-index: 9999;
-    transition: width 0.3s, height 0.3s, background-color 0.3s;
-}
-
-.custom-cursor.hover {
-    width: 50px;
-    height: 50px;
-    background-color: rgba(255, 193, 7, 0.2);
-}
-
-/* Navbar */
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 2rem 4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 100;
-    transition: background-color 0.5s, padding 0.5s;
-}
-
-.navbar.scrolled {
+/* Mission Page */
+.mission_page {
     background-color: var(--white);
-    padding: 1rem 4rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    text-decoration: none;
     color: var(--dark);
-}
-
-.logo svg {
-    width: 32px;
-    height: 32px;
-}
-
-.logo-text {
-    font-size: 1.8rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-
-.nav-links {
-    display: flex;
-    gap: 2.5rem;
-}
-
-.nav-link {
-    text-decoration: none;
-    color: var(--dark);
-    font-size: 1rem;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    position: relative;
-    padding: 0.5rem 0;
-    transition: color 0.3s;
-}
-
-.nav-link:after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: var(--honey-yellow);
-    transition: width 0.3s ease;
-}
-
-.nav-link:hover {
-    color: var(--honey-dark);
-}
-
-.nav-link:hover:after {
-    width: 100%;
-}
-
-.nav-link.active {
-    color: var(--honey-dark);
-}
-
-.nav-link.active:after {
-    width: 100%;
-}
-
-.cta-button {
-    padding: 0.7rem 1.8rem;
-    background-color: var(--honey-yellow);
-    color: var(--dark);
-    border: none;
-    border-radius: 30px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-    text-decoration: none;
-    display: inline-block;
-}
-
-.cta-button:hover {
-    background-color: var(--honey-dark);
-    color: var(--white);
-    transform: translateY(-2px);
+    overflow-x: hidden;
 }
 
 /* Hero Section */
@@ -174,7 +59,7 @@ html {
     background-color: var(--off-white);
 }
 
-.hero-bg {
+.hero_bg {
     position: absolute;
     top: 0;
     left: 0;
@@ -183,7 +68,7 @@ html {
     z-index: 0;
 }
 
-.honeycomb-grid {
+.honeycomb_grid {
     position: absolute;
     top: 0;
     left: 0;
@@ -196,7 +81,7 @@ html {
     background-position: 0 0;
 }
 
-.blob-container {
+.blob_container {
     position: absolute;
     top: 0;
     left: 0;
@@ -215,7 +100,7 @@ html {
     will-change: transform;
 }
 
-.hero-content {
+.hero_content {
     text-align: center;
     max-width: 900px;
     z-index: 2;
@@ -225,7 +110,7 @@ html {
     width: 100%;
 }
 
-.hero-badge {
+.hero_badge {
     display: inline-flex;
     align-items: center;
     background-color: rgba(255, 193, 7, 0.1);
@@ -240,7 +125,7 @@ html {
     transform: translateY(20px); /* For animation */
 }
 
-.hero-title {
+.hero_title {
     font-size: 4rem;
     font-weight: 800;
     line-height: 1.1;
@@ -249,14 +134,14 @@ html {
     transform: translateY(30px); /* For animation */
 }
 
-.hero-title span {
+.hero_title span {
     display: inline-block;
     color: var(--honey-dark);
     position: relative;
     z-index: 1;
 }
 
-.hero-title span:after {
+.hero_title span:after {
     content: '';
     position: absolute;
     bottom: 5px;
@@ -267,7 +152,7 @@ html {
     z-index: -1;
 }
 
-.hero-description {
+.hero_description {
     font-size: 1.3rem;
     font-weight: 400;
     line-height: 1.6;
@@ -278,9 +163,29 @@ html {
     max-width: 700px;
 }
 
-.hero-cta {
+.hero_cta {
     opacity: 0; /* For animation */
     transform: translateY(30px); /* For animation */
+}
+
+.cta_button {
+    padding: 0.7rem 1.8rem;
+    background-color: var(--honey-yellow);
+    color: var(--dark);
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.cta_button:hover {
+    background-color: var(--honey-dark);
+    color: var(--white);
+    transform: translateY(-2px);
 }
 
 /* Mission Section Styles */
@@ -289,20 +194,20 @@ html {
     position: relative;
 }
 
-.section.bg-white {
+.section.bg_white {
     background-color: var(--white);
 }
 
-.section.bg-off-white {
+.section.bg_off_white {
     background-color: var(--off-white);
 }
 
-.section-header {
+.section_header {
     text-align: center;
     margin-bottom: 5rem;
 }
 
-.section-subtitle {
+.section_subtitle {
     display: inline-block;
     font-size: 1rem;
     font-weight: 600;
@@ -315,7 +220,7 @@ html {
     transform: translateY(20px); /* For animation */
 }
 
-.section-title {
+.section_title {
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
@@ -323,7 +228,7 @@ html {
     transform: translateY(20px); /* For animation */
 }
 
-.section-description {
+.section_description {
     font-size: 1.2rem;
     line-height: 1.6;
     color: var(--gray);
@@ -334,7 +239,7 @@ html {
 }
 
 /* Mission Statement */
-.mission-statement {
+.mission_statement {
     max-width: 1000px;
     margin: 0 auto;
     text-align: center;
@@ -348,7 +253,7 @@ html {
     transform: translateY(30px); /* For animation */
 }
 
-.mission-quote {
+.mission_quote {
     font-size: 2rem;
     font-weight: 300;
     font-style: italic;
@@ -358,8 +263,8 @@ html {
     position: relative;
 }
 
-.mission-quote:before,
-.mission-quote:after {
+.mission_quote:before,
+.mission_quote:after {
     content: '';
     display: block;
     width: 50px;
@@ -368,14 +273,14 @@ html {
     margin: 2rem auto;
 }
 
-.mission-author {
+.mission_author {
     font-size: 1rem;
     font-weight: 600;
     color: var(--honey-dark);
 }
 
 /* Vision & Values */
-.values-container {
+.values_container {
     display: flex;
     flex-wrap: wrap;
     gap: 2rem;
@@ -384,7 +289,7 @@ html {
     justify-content: center;
 }
 
-.value-card {
+.value_card {
     flex: 1;
     min-width: 250px;
     max-width: 350px;
@@ -403,12 +308,12 @@ html {
     align-items: center;
 }
 
-.value-card:hover {
+.value_card:hover {
     transform: translateY(-10px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
-.value-icon {
+.value_icon {
     width: 70px;
     height: 70px;
     background-color: rgba(255, 193, 7, 0.1);
@@ -420,31 +325,26 @@ html {
     color: var(--honey-dark);
 }
 
-.value-icon svg {
-    width: 35px;
-    height: 35px;
-}
-
-.value-title {
+.value_title {
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 1rem;
     color: var(--dark);
 }
 
-.value-description {
+.value_description {
     font-size: 1rem;
     line-height: 1.6;
     color: var(--gray);
 }
 
 /* Environmental Impact */
-.impact-container {
+.impact_container {
     max-width: 1200px;
     margin: 0 auto;
 }
 
-.impact-row {
+.impact_row {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -452,43 +352,43 @@ html {
     margin-bottom: 6rem;
 }
 
-.impact-row:last-child {
+.impact_row:last-child {
     margin-bottom: 0;
 }
 
-.impact-row:nth-child(even) {
+.impact_row:nth-child(even) {
     flex-direction: row-reverse;
 }
 
-.impact-content {
+.impact_content {
     flex: 1;
     min-width: 300px;
     opacity: 0; /* For animation */
     transform: translateY(30px); /* For animation */
 }
 
-.impact-title {
+.impact_title {
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
     color: var(--dark);
 }
 
-.impact-text {
+.impact_text {
     font-size: 1.1rem;
     line-height: 1.7;
     color: var(--gray);
     margin-bottom: 1.5rem;
 }
 
-.impact-metrics {
+.impact_metrics {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
     margin-top: 2rem;
 }
 
-.impact-metric {
+.impact_metric {
     flex: 1;
     min-width: 150px;
     background-color: rgba(255, 193, 7, 0.1);
@@ -497,7 +397,7 @@ html {
     text-align: center;
 }
 
-.metric-value {
+.metric_value {
     font-size: 2.5rem;
     font-weight: 700;
     color: var(--honey-dark);
@@ -505,13 +405,13 @@ html {
     line-height: 1;
 }
 
-.metric-label {
+.metric_label {
     font-size: 0.9rem;
     color: var(--gray);
     font-weight: 500;
 }
 
-.impact-image {
+.impact_image {
     flex: 1;
     min-width: 300px;
     height: 350px;
@@ -523,49 +423,49 @@ html {
     transform: translateY(30px); /* For animation */
 }
 
-.impact-image img {
+.impact_image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
 /* Sustainability Goals */
-.goals-container {
+.goals_container {
     max-width: 1200px;
     margin: 0 auto 4rem;
 }
 
-.goal-progress-bars {
+.goal_progress_bars {
     display: flex;
     flex-direction: column;
     gap: 2.5rem;
 }
 
-.goal-item {
+.goal_item {
     opacity: 0; /* For animation */
     transform: translateY(20px); /* For animation */
 }
 
-.goal-header {
+.goal_header {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
     margin-bottom: 0.8rem;
 }
 
-.goal-title {
+.goal_title {
     font-size: 1.2rem;
     font-weight: 600;
     color: var(--dark);
 }
 
-.goal-percentage {
+.goal_percentage {
     font-size: 1rem;
     font-weight: 700;
     color: var(--honey-dark);
 }
 
-.progress-container {
+.progress_container {
     width: 100%;
     height: 12px;
     background-color: rgba(0, 0, 0, 0.05);
@@ -573,7 +473,7 @@ html {
     overflow: hidden;
 }
 
-.progress-bar {
+.progress_bar {
     height: 100%;
     background: linear-gradient(90deg, var(--honey-yellow), var(--honey-dark));
     border-radius: 10px;
@@ -582,7 +482,7 @@ html {
 }
 
 /* EU Green Initiative */
-.eu-initiative {
+.eu_initiative {
     max-width: 1000px;
     margin: 0 auto;
     padding: 4rem;
@@ -595,7 +495,7 @@ html {
     transform: translateY(30px); /* For animation */
 }
 
-.initiative-top {
+.initiative_top {
     display: flex;
     align-items: center;
     gap: 2rem;
@@ -603,7 +503,7 @@ html {
     flex-wrap: wrap;
 }
 
-.initiative-logo {
+.initiative_logo {
     width: 120px;
     height: 120px;
     background-color: var(--gray-light);
@@ -614,32 +514,32 @@ html {
     flex-shrink: 0;
 }
 
-.initiative-title {
+.initiative_title {
     font-size: 1.8rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
     color: var(--dark);
 }
 
-.initiative-subtitle {
+.initiative_subtitle {
     font-size: 1.1rem;
     color: var(--gray);
 }
 
-.initiative-text {
+.initiative_text {
     font-size: 1.1rem;
     line-height: 1.7;
     color: var(--gray);
     margin-bottom: 2rem;
 }
 
-.initiative-highlights {
+.initiative_highlights {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
 }
 
-.initiative-highlight {
+.initiative_highlight {
     flex: 1;
     min-width: 200px;
     padding: 1.5rem;
@@ -647,32 +547,32 @@ html {
     border-radius: 15px;
 }
 
-.highlight-title {
+.highlight_title {
     font-size: 1.1rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
     color: var(--leaf-dark);
 }
 
-.highlight-text {
+.highlight_text {
     font-size: 0.95rem;
     line-height: 1.5;
     color: var(--gray);
 }
 
 /* Community Impact */
-.testimonials-container {
+.testimonials_container {
     max-width: 1200px;
     margin: 0 auto;
     position: relative;
 }
 
-.testimonial-slider {
+.testimonial_slider {
     position: relative;
     min-height: 350px;
 }
 
-.testimonial-slide {
+.testimonial_slide {
     display: none;
     padding: 0 1rem;
     opacity: 0; /* For animation */
@@ -682,7 +582,7 @@ html {
     right: 0;
 }
 
-.testimonial-card {
+.testimonial_content {
     background-color: var(--white);
     border-radius: 20px;
     padding: 4rem 3rem;
@@ -694,7 +594,7 @@ html {
     border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
-.testimonial-content {
+.testimonial_quote {
     font-size: 1.3rem;
     line-height: 1.7;
     color: var(--dark);
@@ -703,8 +603,8 @@ html {
     position: relative;
 }
 
-.testimonial-content:before,
-.testimonial-content:after {
+.testimonial_quote:before,
+.testimonial_quote:after {
     content: '"';
     font-size: 3rem;
     color: var(--honey-yellow);
@@ -712,22 +612,22 @@ html {
     font-family: serif;
 }
 
-.testimonial-content:before {
+.testimonial_quote:before {
     top: -20px;
     left: -10px;
 }
 
-.testimonial-content:after {
+.testimonial_quote:after {
     bottom: -40px;
     right: -10px;
 }
 
-.testimonial-author {
+.testimonial_author {
     display: flex;
     align-items: center;
 }
 
-.testimonial-avatar {
+.author_image {
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -741,92 +641,67 @@ html {
     overflow: hidden;
 }
 
-.testimonial-avatar img {
+.author_image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.testimonial-info {
+.author_info {
     display: flex;
     flex-direction: column;
 }
 
-.testimonial-name {
+.author_name {
     font-size: 1.2rem;
     font-weight: 700;
     color: var(--dark);
 }
 
-.testimonial-role {
+.author_title {
     font-size: 0.9rem;
     color: var(--gray);
 }
 
-.testimonial-nav {
+.testimonial_navigation {
     display: flex;
     justify-content: center;
     margin-top: 3rem;
     gap: 1rem;
 }
 
-.testimonial-dot {
+.testimonial_dots {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.testimonial_dot {
     width: 12px;
     height: 12px;
     border-radius: 50%;
     background-color: var(--gray-light);
     cursor: pointer;
     transition: background-color 0.3s;
+    border: none;
 }
 
-.testimonial-dot.active {
+.testimonial_dot.active {
     background-color: var(--honey-yellow);
 }
 
 /* Join Movement Section */
-.join-section {
-    position: relative;
-    padding: 8rem 4rem;
-    text-align: center;
-    background-color: var(--off-white);
-    overflow: hidden;
-}
-
-.join-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
-}
-
-.join-title {
-    font-size: 3rem;
-    font-weight: 800;
-    margin-bottom: 1.5rem;
-    opacity: 0; /* For animation */
-    transform: translateY(30px); /* For animation */
-}
-
-.join-description {
-    font-size: 1.3rem;
-    color: var(--gray);
-    line-height: 1.6;
-    max-width: 700px;
-    margin: 0 auto 3rem;
-    opacity: 0; /* For animation */
-    transform: translateY(30px); /* For animation */
-}
-
-.join-options {
+.join_options {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
     opacity: 0; /* For animation */
     transform: translateY(30px); /* For animation */
 }
 
-.join-option {
+.join_option {
     flex: 1;
     min-width: 250px;
     max-width: 350px;
@@ -838,12 +713,12 @@ html {
     text-align: center;
 }
 
-.join-option:hover {
+.join_option:hover {
     transform: translateY(-10px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
-.join-icon {
+.option_icon {
     width: 60px;
     height: 60px;
     background-color: rgba(255, 193, 7, 0.1);
@@ -855,58 +730,70 @@ html {
     color: var(--honey-dark);
 }
 
-.join-icon svg {
-    width: 30px;
-    height: 30px;
-}
-
-.join-option-title {
+.option_title {
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 1rem;
     color: var(--dark);
 }
 
-.join-option-text {
+.option_description {
     font-size: 1rem;
     line-height: 1.6;
     color: var(--gray);
     margin-bottom: 1.5rem;
 }
 
+.option_button {
+    display: inline-block;
+    padding: 0.6rem 1.5rem;
+    background-color: rgba(255, 193, 7, 0.1);
+    color: var(--honey-dark);
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.option_button:hover {
+    background-color: var(--honey-yellow);
+    color: var(--dark);
+}
+
 /* CTA Section */
-.cta-section {
+.cta_section {
     padding: 8rem 4rem;
-    background-color: var(--white);
+    background: linear-gradient(135deg, var(--honey-yellow), var(--honey-amber));
     position: relative;
     overflow: hidden;
     text-align: center;
 }
 
-.cta-container {
+.cta_content {
     position: relative;
     z-index: 1;
     max-width: 1000px;
     margin: 0 auto;
     padding: 4rem;
-    background-color: var(--off-white);
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
     border-radius: 20px;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
-    background-image: radial-gradient(rgba(255, 193, 7, 0.1) 2px, transparent 2px);
-    background-size: 25px 25px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
 }
 
-.cta-title {
+.cta_title {
     font-size: 2.5rem;
     font-weight: 800;
     margin-bottom: 1.5rem;
+    color: var(--white);
     opacity: 0; /* For animation */
     transform: translateY(20px); /* For animation */
 }
 
-.cta-description {
+.cta_description {
     font-size: 1.2rem;
-    color: var(--gray);
+    color: rgba(255, 255, 255, 0.9);
     margin-bottom: 2.5rem;
     max-width: 700px;
     margin-left: auto;
@@ -915,7 +802,7 @@ html {
     transform: translateY(20px); /* For animation */
 }
 
-.cta-buttons {
+.cta_buttons {
     display: flex;
     justify-content: center;
     gap: 1rem;
@@ -924,158 +811,65 @@ html {
     transform: translateY(20px); /* For animation */
 }
 
-/* Footer */
-footer {
-    background-color: var(--dark);
-    color: var(--white);
-    padding: 5rem 4rem 2rem;
-}
-
-.footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 3rem;
-    margin-bottom: 4rem;
-}
-
-.footer-column {
-    display: flex;
-    flex-direction: column;
-}
-
-.footer-logo {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.footer-logo svg {
-    width: 32px;
-    height: 32px;
-}
-
-.footer-logo-text {
-    font-size: 1.8rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: var(--white);
-}
-
-.footer-description {
-    color: var(--gray);
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-}
-
-.footer-social {
-    display: flex;
-    gap: 1rem;
-}
-
-.footer-social-link {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background-color 0.3s;
-}
-
-.footer-social-link:hover {
-    background-color: var(--honey-yellow);
-}
-
-.footer-social-link svg {
-    width: 20px;
-    height: 20px;
-    fill: var(--white);
-}
-
-.footer-title {
-    font-size: 1.3rem;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-    color: var(--white);
-}
-
-.footer-links {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-}
-
-.footer-link {
-    color: var(--gray);
-    text-decoration: none;
-    transition: color 0.3s;
-}
-
-.footer-link:hover {
-    color: var(--honey-yellow);
-}
-
-.footer-copyright {
-    text-align: center;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--gray);
-    font-size: 0.9rem;
-}
-
-/* EU Badge */
-.eu-badge {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    display: flex;
-    align-items: center;
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 10px 15px;
+.cta_button_primary {
+    padding: 0.8rem 2rem;
+    background-color: var(--white);
+    color: var(--honey-dark);
+    border: none;
     border-radius: 30px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    z-index: 50;
-    opacity: 0; /* For animation */
-    transform: translateY(20px); /* For animation */
-}
-
-.eu-badge img {
-    width: 30px;
-    height: auto;
-    margin-right: 10px;
-}
-
-.eu-badge-text {
-    font-size: 0.8rem;
+    font-size: 1rem;
     font-weight: 600;
-    color: var(--leaf-dark);
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.cta_button_primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.cta_button_secondary {
+    padding: 0.8rem 2rem;
+    background-color: transparent;
+    color: var(--white);
+    border: 2px solid var(--white);
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.cta_button_secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-3px);
 }
 
 /* Media Queries */
 @media (max-width: 1280px) {
-    .hero-title {
+    .hero_title {
         font-size: 3.5rem;
     }
     
-    .section-title, .join-title {
+    .section_title {
         font-size: 2.5rem;
     }
     
-    .impact-row {
+    .impact_row {
         gap: 3rem;
     }
     
-    .eu-initiative {
+    .eu_initiative {
         padding: 3rem;
     }
 }
 
 @media (max-width: 1024px) {
-    .hero-title {
+    .hero_title {
         font-size: 3rem;
     }
     
@@ -1083,53 +877,41 @@ footer {
         padding: 6rem 3rem;
     }
     
-    .section-title, .join-title {
+    .section_title {
         font-size: 2.2rem;
     }
     
-    .mission-statement, .eu-initiative {
+    .mission_statement, .eu_initiative {
         padding: 3rem;
     }
     
-    .mission-quote {
+    .mission_quote {
         font-size: 1.8rem;
     }
     
-    .impact-title {
+    .impact_title {
         font-size: 1.8rem;
     }
     
-    .impact-image {
+    .impact_image {
         height: 300px;
     }
     
-    .join-section, .cta-section {
+    .cta_section {
         padding: 6rem 3rem;
     }
     
-    .cta-container {
+    .cta_content {
         padding: 3rem;
     }
 }
 
 @media (max-width: 768px) {
-    .navbar {
-        padding: 1.5rem 2rem;
-    }
-    
-    .navbar.scrolled {
-        padding: 1rem 2rem;
-    }
-    
-    .nav-links {
-        display: none;
-    }
-    
-    .hero-title {
+    .hero_title {
         font-size: 2.5rem;
     }
     
-    .hero-description {
+    .hero_description {
         font-size: 1.1rem;
     }
     
@@ -1137,117 +919,111 @@ footer {
         padding: 5rem 2rem;
     }
     
-    .section-title, .join-title {
+    .section_title {
         font-size: 2rem;
     }
     
-    .section-description, .join-description {
+    .section_description {
         font-size: 1.1rem;
     }
     
-    .mission-statement, .eu-initiative {
+    .mission_statement, .eu_initiative {
         padding: 2.5rem 1.5rem;
     }
     
-    .mission-quote {
+    .mission_quote {
         font-size: 1.5rem;
     }
     
-    .value-card, .join-option {
+    .value_card, .join_option {
         min-width: 100%;
     }
     
-    .impact-title {
+    .impact_title {
         font-size: 1.6rem;
     }
     
-    .impact-text {
+    .impact_text {
         font-size: 1rem;
     }
     
-    .join-section, .cta-section {
-        padding: 5rem 2rem;
-    }
-    
-    .testimonial-card {
+    .testimonial_content {
         padding: 3rem 2rem;
     }
     
-    .testimonial-content {
+    .testimonial_quote {
         font-size: 1.1rem;
     }
     
-    .cta-container {
+    .cta_content {
         padding: 2.5rem 1.5rem;
     }
     
-    .cta-title {
+    .cta_title {
         font-size: 2rem;
     }
 }
 
 @media (max-width: 480px) {
-    .hero-title {
+    .hero_title {
         font-size: 2.2rem;
     }
     
-    .hero-description {
+    .hero_description {
         font-size: 1rem;
     }
     
-    .section-title, .join-title {
+    .section_title {
         font-size: 1.8rem;
     }
     
-    .mission-quote {
+    .mission_quote {
         font-size: 1.3rem;
     }
     
-    .mission-quote:before, .mission-quote:after {
+    .mission_quote:before, .mission_quote:after {
         width: 30px;
         margin: 1.5rem auto;
     }
     
-    .impact-title {
+    .impact_title {
         font-size: 1.5rem;
     }
     
-    .impact-metrics {
+    .impact_metrics {
         flex-direction: column;
     }
     
-    .metric-value {
+    .metric_value {
         font-size: 2rem;
     }
     
-    .initiative-logo {
+    .initiative_logo {
         width: 100px;
         height: 100px;
     }
     
-    .initiative-title {
+    .initiative_title {
         font-size: 1.5rem;
     }
     
-    .initiative-text {
+    .initiative_text {
         font-size: 1rem;
     }
     
-    .testimonial-content {
+    .testimonial_quote {
         font-size: 1rem;
     }
     
-    .cta-title {
+    .cta_title {
         font-size: 1.8rem;
     }
     
-    .cta-description {
+    .cta_description {
         font-size: 1rem;
     }
     
-    .footer-content {
-        display: flex;
-        flex-direction: column;
-        gap: 3rem;
+    .option_button {
+        width: 100%;
     }
-}
+} 
