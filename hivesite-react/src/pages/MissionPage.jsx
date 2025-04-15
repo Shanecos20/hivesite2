@@ -860,7 +860,7 @@ const MissionPage = () => {
           ></div>
           <div 
             className={styles.blob} 
-            style={{ width: '450px', height: '450px', bottom: '5%', right: '-150px', opacity: 0.15, background: 'linear-gradient(135deg, var(--leaf-green), var(--honey-yellow))' }}
+            style={{ width: '450px', height: '450px', bottom: '5%', right: '-150px', opacity: 0.15, background: 'linear-gradient(135deg, var(--honey-yellow), var(--honey-amber))' }}
           ></div>
         </div>
 
