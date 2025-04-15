@@ -1,0 +1,189 @@
+import React, { useState, useEffect } from 'react';
+import { Link, Outlet, useLocation } from 'react-router-dom';
+import { gsap } from 'gsap';
+// Import layout-specific CSS if you create one, or reuse index/global CSS
+import '../index.css'; // Assuming common styles are here, adjust if needed
+
+function Layout() {
+    const location = useLocation(); // Hook to get the current path
+
+    // Navbar Scroll Effect
+    useEffect(() => {
+        const navbar = document.querySelector('.navbar');
+        if (!navbar) return;
+
+        const handleScroll = () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        // Initial check in case the page loads already scrolled
+        handleScroll();
+
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    // Custom Cursor Logic (Common for all pages)
+    useEffect(() => {
+        const cursor = document.querySelector('.custom-cursor');
+        if (!cursor) return;
+
+        // Query for hoverable elements within the entire document now
+        const cursorHoverElements = document.querySelectorAll(
+            'a, button, .platform-button, .faq-question, .feature-card, .testimonial-dot, .app-store-button'
+        );
+
+        const onMouseMove = (e) => {
+            gsap.to(cursor, {
+                x: e.clientX,
+                y: e.clientY,
+                duration: 0.2,
+            });
+        };
+
+        const onMouseEnter = (e) => e.target.classList.add('cursor-hover-active'); // Add a class to the element being hovered
+        const onMouseLeave = (e) => e.target.classList.remove('cursor-hover-active'); // Remove the class
+
+        // Apply hover effect directly using CSS might be more performant
+        // but keeping JS logic if complex interactions are needed.
+        document.addEventListener('mousemove', onMouseMove);
+        cursorHoverElements.forEach((element) => {
+            element.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            element.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
+        // Cleanup function
+        return () => {
+            document.removeEventListener('mousemove', onMouseMove);
+            cursorHoverElements.forEach((element) => {
+                 element.removeEventListener('mouseenter', () => cursor.classList.add('hover'));
+                 element.removeEventListener('mouseleave', () => cursor.classList.remove('hover'));
+            });
+        };
+    }, []); // Runs once on mount
+
+    // Helper function to determine if a link is active
+    const isNavLinkActive = (path) => {
+        // Handle the base path explicitly
+        if (path === '/') {
+            return location.pathname === '/';
+        }
+        return location.pathname.startsWith(path);
+    };
+
+    return (
+        <>
+            {/* Custom Cursor - Rendered once here */}
+            <div className="custom-cursor"></div>
+
+            {/* Navbar */}
+            <nav className="navbar">
+                <Link to="/" className="logo">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 3L4.5 7.5V16.5L12 21L19.5 16.5V7.5L12 3Z" fill="#FFC107" stroke="#FF6F00" strokeWidth="1.5"/>
+                        <path d="M12 8L7 11V14L12 17L17 14V11L12 8Z" fill="#FFFFFF" stroke="#FF6F00" strokeWidth="1"/>
+                    </svg>
+                    <span className="logo-text">HIVE</span>
+                </Link>
+                <div className="nav-links">
+                    <Link to="/" className={`nav-link ${isNavLinkActive('/') ? 'active' : ''}`}>Home</Link>
+                    <Link to="/download" className={`nav-link ${isNavLinkActive('/download') ? 'active' : ''}`}>Download</Link>
+                    <Link to="/about" className={`nav-link ${isNavLinkActive('/about') ? 'active' : ''}`}>About</Link> {/* Add routes for these later */}
+                    <Link to="/mission" className={`nav-link ${isNavLinkActive('/mission') ? 'active' : ''}`}>Mission</Link> {/* Add routes for these later */}
+                    <Link to="/contact" className={`nav-link ${isNavLinkActive('/contact') ? 'active' : ''}`}>Contact</Link> {/* Add routes for these later */}
+                </div>
+                 {/* Update this link target later if needed */}
+                <Link to="/get-started" className="cta-button">Get Started</Link>
+            </nav>
+
+            {/* Main content area where routed components will render */}
+            <main>
+                <Outlet />
+            </main>
+
+            {/* Footer */}
+             <footer>
+                <div className="footer-content">
+                    <div className="footer-column">
+                        <div className="footer-logo">
+                             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <path d="M12 3L4.5 7.5V16.5L12 21L19.5 16.5V7.5L12 3Z" fill="#FFC107" stroke="#FF6F00" strokeWidth="1.5"/>
+                                 <path d="M12 8L7 11V14L12 17L17 14V11L12 8Z" fill="#FFFFFF" stroke="#FF6F00" strokeWidth="1"/>
+                             </svg>
+                             <span className="footer-logo-text">HIVE</span>
+                         </div>
+                         <p className="footer-description">Revolutionizing beekeeping through innovative IoT technology and AI-driven insights to create a sustainable future for bees and beekeepers.</p>
+                         <div className="footer-social">
+                             {/* Replace # with actual links or remove if not used */}
+                             <a href="#" className="footer-social-link">
+                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                     <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z" fill="#FFFFFF"/>
+                                 </svg>
+                             </a>
+                            {/* Add other social links similarly */}
+                             <a href="#" className="footer-social-link"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z" fill="#FFFFFF"/></svg></a>
+                            <a href="#" className="footer-social-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2zm-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6zm9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25zM12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z" fill="#FFFFFF"/></svg></a>
+                            <a href="#" className="footer-social-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" fill="#FFFFFF"/></svg></a>
+                         </div>
+                     </div>
+                     <div className="footer-column">
+                         <h3 className="footer-title">Company</h3>
+                         <div className="footer-links">
+                            <Link to="/about" className="footer-link">About Us</Link>
+                            <Link to="/mission" className="footer-link">Our Mission</Link>
+                            {/* Add Links for Team, Careers, Press later if needed */}
+                            <Link to="/team" className="footer-link">Team</Link>
+                            <Link to="/careers" className="footer-link">Careers</Link>
+                            <Link to="/press" className="footer-link">Press</Link>
+                         </div>
+                     </div>
+                     <div className="footer-column">
+                         <h3 className="footer-title">Product</h3>
+                         <div className="footer-links">
+                            <Link to="/features" className="footer-link">Features</Link>
+                            <Link to="/pricing" className="footer-link">Pricing</Link>
+                            <Link to="/download" className="footer-link">Download</Link>
+                            <Link to="/integration" className="footer-link">Integration</Link>
+                            <Link to="/api" className="footer-link">API</Link>
+                         </div>
+                     </div>
+                     <div className="footer-column">
+                         <h3 className="footer-title">Resources</h3>
+                         <div className="footer-links">
+                            <Link to="/docs" className="footer-link">Documentation</Link>
+                            <Link to="/guides" className="footer-link">Guides</Link>
+                            <Link to="/support" className="footer-link">Support Center</Link>
+                            <Link to="/community" className="footer-link">Community</Link>
+                            <Link to="/blog" className="footer-link">Blog</Link>
+                         </div>
+                     </div>
+                     <div className="footer-column">
+                         <h3 className="footer-title">Contact</h3>
+                         <div className="footer-links">
+                            <Link to="/contact" className="footer-link">Contact Us</Link>
+                            <Link to="/support" className="footer-link">Support</Link>
+                            <Link to="/sales" className="footer-link">Sales</Link>
+                            <Link to="/partnerships" className="footer-link">Partnerships</Link>
+                         </div>
+                     </div>
+                 </div>
+                 <div className="footer-copyright">
+                     <p>© 2025 HIVE - Honeybee Innovation for Vibrant Ecosystems. All rights reserved.</p>
+                 </div>
+            </footer>
+
+            {/* EU Green Award Badge - Assuming it's positioned fixed/absolutely by CSS */}
+             <div className="eu-badge">
+                 {/* Update src path relative to public folder */}
+                 <img src="/assets/main-logo-colors.png" alt="EU Green Award" />
+                 <div className="eu-badge-text">EU Green Award Winner</div>
+             </div>
+        </>
+    );
+}
+
+export default Layout; 
