@@ -1,9 +1,44 @@
 import React, { useState, useEffect } from 'react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import styles from '../css/Layout.module.css';
 
 function Layout() {
     const location = useLocation(); // Hook to get the current path
+    const navigate = useNavigate();
+    
+    // Handle page navigation and cleanup
+    useEffect(() => {
+        // Kill any GSAP animations that might be running
+        const cleanupGSAP = async () => {
+            try {
+                const gsapModule = await import('gsap');
+                const scrollTriggerModule = await import('gsap/ScrollTrigger');
+                
+                const gsap = gsapModule.default;
+                const ScrollTrigger = scrollTriggerModule.default;
+                
+                // Register ScrollTrigger plugin
+                gsap.registerPlugin(ScrollTrigger);
+                
+                // Kill all animations and ScrollTriggers
+                ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+                gsap.killTweensOf("*");
+                
+                // Force refresh after small delay
+                setTimeout(() => {
+                    ScrollTrigger.refresh();
+                    window.dispatchEvent(new Event('resize'));
+                }, 50);
+            } catch (error) {
+                console.error("Error cleaning up GSAP animations:", error);
+            }
+        };
+        
+        cleanupGSAP();
+        
+        // Scroll to top on page navigation
+        window.scrollTo(0, 0);
+    }, [location.pathname]);
 
     // Navbar Scroll Effect
     useEffect(() => {
@@ -28,79 +63,96 @@ function Layout() {
     // EU Green Award Badge Animation
     useEffect(() => {
         const loadGSAP = async () => {
-            const gsapModule = await import('gsap');
-            const gsap = gsapModule.default;
-            
-            const euBadge = document.getElementById('eu-badge');
-            if (!euBadge) return;
-    
-            // Initially hide the badge
-            gsap.set(euBadge, { opacity: 0, scale: 0.8, y: 20 });
-            
-            // Animate it in with a small delay
-            gsap.to(euBadge, {
-                opacity: 1,
-                scale: 1,
-                y: 0,
-                duration: 0.8,
-                ease: "back.out(1.7)",
-                delay: 1.5
-            });
-            
-            // Optional pulse animation that repeats a few times
-            gsap.to(euBadge, {
-                scale: 1.05,
-                duration: 0.8,
-                repeat: 3,
-                yoyo: true,
-                delay: 2.5
-            });
+            try {
+                const gsapModule = await import('gsap');
+                const gsap = gsapModule.default;
+                
+                const euBadge = document.getElementById('eu-badge');
+                if (!euBadge) return;
+        
+                // Initially hide the badge
+                gsap.set(euBadge, { opacity: 0, scale: 0.8, y: 20 });
+                
+                // Animate it in with a small delay
+                gsap.to(euBadge, {
+                    opacity: 1,
+                    scale: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "back.out(1.7)",
+                    delay: 1.5
+                });
+                
+                // Optional pulse animation that repeats a few times
+                gsap.to(euBadge, {
+                    scale: 1.05,
+                    duration: 0.8,
+                    repeat: 3,
+                    yoyo: true,
+                    delay: 2.5
+                });
+            } catch (error) {
+                console.error("Error loading GSAP for badge animation:", error);
+            }
         };
         
         loadGSAP();
-    }, [location]);
+    }, [location.pathname]); // Re-run on route change
 
     // Custom Cursor Logic
     useEffect(() => {
         const loadGSAP = async () => {
-            const gsapModule = await import('gsap');
-            const gsap = gsapModule.default;
-            
-            const cursor = document.getElementById('custom-cursor');
-            if (!cursor) return;
-    
-            // Query for hoverable elements
-            const cursorHoverElements = document.querySelectorAll(
-                'a, button, .platform-button, .faq-question, .feature-card, .testimonial-dot, .app-store-button'
-            );
-    
-            const onMouseMove = (e) => {
-                gsap.to(cursor, {
-                    x: e.clientX,
-                    y: e.clientY,
-                    duration: 0.2,
-                });
-            };
-    
-            document.addEventListener('mousemove', onMouseMove);
-            
-            cursorHoverElements.forEach((element) => {
-                element.addEventListener('mouseenter', () => cursor.classList.add(styles.hover));
-                element.addEventListener('mouseleave', () => cursor.classList.remove(styles.hover));
-            });
-    
-            // Cleanup function
-            return () => {
-                document.removeEventListener('mousemove', onMouseMove);
+            try {
+                const gsapModule = await import('gsap');
+                const gsap = gsapModule.default;
+                
+                const cursor = document.getElementById('custom-cursor');
+                if (!cursor) return;
+        
+                // Query for hoverable elements
+                const cursorHoverElements = document.querySelectorAll(
+                    'a, button, .platform-button, .faq-question, .feature-card, .testimonial-dot, .app-store-button'
+                );
+        
+                const onMouseMove = (e) => {
+                    gsap.to(cursor, {
+                        x: e.clientX,
+                        y: e.clientY,
+                        duration: 0.2,
+                    });
+                };
+        
+                document.addEventListener('mousemove', onMouseMove);
+                
+                const onMouseEnter = () => cursor.classList.add(styles.hover);
+                const onMouseLeave = () => cursor.classList.remove(styles.hover);
+                
                 cursorHoverElements.forEach((element) => {
-                    element.removeEventListener('mouseenter', () => cursor.classList.add(styles.hover));
-                    element.removeEventListener('mouseleave', () => cursor.classList.remove(styles.hover));
+                    element.addEventListener('mouseenter', onMouseEnter);
+                    element.addEventListener('mouseleave', onMouseLeave);
                 });
-            };
+        
+                // Cleanup function
+                return () => {
+                    document.removeEventListener('mousemove', onMouseMove);
+                    cursorHoverElements.forEach((element) => {
+                        element.removeEventListener('mouseenter', onMouseEnter);
+                        element.removeEventListener('mouseleave', onMouseLeave);
+                    });
+                };
+            } catch (error) {
+                console.error("Error loading GSAP for cursor animation:", error);
+            }
         };
         
-        loadGSAP();
-    }, [location]);
+        const cleanupFunc = loadGSAP();
+        
+        return () => {
+            if (cleanupFunc && typeof cleanupFunc === 'function') {
+                cleanupFunc();
+            }
+        };
+    }, [location.pathname]); // Re-run on route change
 
     // Helper function to determine if a link is active
     const isNavLinkActive = (path) => {
@@ -111,6 +163,19 @@ function Layout() {
         return location.pathname.startsWith(path);
     };
 
+    // Custom navigation handler
+    const handleNavigation = (e, to) => {
+        e.preventDefault();
+        
+        // If clicking on the already active page, just ignore
+        if (location.pathname === to) {
+            return;
+        }
+        
+        // Navigate to the new page
+        navigate(to);
+    };
+
     return (
         <>
             {/* Custom Cursor */}
@@ -118,7 +183,7 @@ function Layout() {
 
             {/* Navbar */}
             <nav id="navbar" className={styles.navbar}>
-                <Link to="/" className={styles.logo}>
+                <Link to="/" className={styles.logo} onClick={(e) => handleNavigation(e, '/')}>
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 3L4.5 7.5V16.5L12 21L19.5 16.5V7.5L12 3Z" fill="#FFC107" stroke="#FF6F00" strokeWidth="1.5"/>
                         <path d="M12 8L7 11V14L12 17L17 14V11L12 8Z" fill="#FFFFFF" stroke="#FF6F00" strokeWidth="1"/>
@@ -126,13 +191,13 @@ function Layout() {
                     <span className={styles.logo_text}>HIVE</span>
                 </Link>
                 <div className={styles.nav_links}>
-                    <Link to="/" className={`${styles.nav_link} ${isNavLinkActive('/') ? styles.active : ''}`}>Home</Link>
-                    <Link to="/download" className={`${styles.nav_link} ${isNavLinkActive('/download') ? styles.active : ''}`}>Download</Link>
-                    <Link to="/about" className={`${styles.nav_link} ${isNavLinkActive('/about') ? styles.active : ''}`}>About</Link>
-                    <Link to="/mission" className={`${styles.nav_link} ${isNavLinkActive('/mission') ? styles.active : ''}`}>Mission</Link>
-                    <Link to="/contact" className={`${styles.nav_link} ${isNavLinkActive('/contact') ? styles.active : ''}`}>Contact</Link>
+                    <Link to="/" onClick={(e) => handleNavigation(e, '/')} className={`${styles.nav_link} ${isNavLinkActive('/') ? styles.active : ''}`}>Home</Link>
+                    <Link to="/download" onClick={(e) => handleNavigation(e, '/download')} className={`${styles.nav_link} ${isNavLinkActive('/download') ? styles.active : ''}`}>Download</Link>
+                    <Link to="/about" onClick={(e) => handleNavigation(e, '/about')} className={`${styles.nav_link} ${isNavLinkActive('/about') ? styles.active : ''}`}>About</Link>
+                    <Link to="/mission" onClick={(e) => handleNavigation(e, '/mission')} className={`${styles.nav_link} ${isNavLinkActive('/mission') ? styles.active : ''}`}>Mission</Link>
+                    <Link to="/contact" onClick={(e) => handleNavigation(e, '/contact')} className={`${styles.nav_link} ${isNavLinkActive('/contact') ? styles.active : ''}`}>Contact</Link>
                 </div>
-                <Link to="/get-started" className={styles.cta_button}>Get Started</Link>
+                <Link to="/get-started" onClick={(e) => handleNavigation(e, '/get-started')} className={styles.cta_button}>Get Started</Link>
             </nav>
 
             {/* Main content area where routed components will render */}

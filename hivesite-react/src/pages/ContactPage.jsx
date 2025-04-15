@@ -1,233 +1,300 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from '../css/Contact.module.css';
 
 const ContactPage = () => {
+  // Add loading state
+  const [isLoaded, setIsLoaded] = useState(false);
+  
   // Refs for GSAP animations
   const blobsRef = useRef([]);
   const heroRef = useRef(null);
   
   useEffect(() => {
+    // First mark component as loaded
+    setIsLoaded(true);
+    
     // Register ScrollTrigger plugin
     gsap.registerPlugin(ScrollTrigger);
     
-    // Animate gradient blobs
-    const blobs = blobsRef.current;
-    
-    blobs.forEach((blob, index) => {
-      // Set initial positions
-      gsap.set(blob, {
-        x: 0,
-        y: 0,
-        scale: 1,
-        opacity: 0.3
-      });
+    // Use a short timeout to ensure DOM is fully rendered
+    const initTimeout = setTimeout(() => {
+      // Clear any existing ScrollTriggers to prevent conflicts
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
       
-      // Create animation
-      const tl = gsap.timeline({
-        repeat: -1,
-        yoyo: true,
-        delay: index * 1.5
-      });
+      // Animate gradient blobs
+      const blobs = blobsRef.current;
       
-      tl.to(blob, {
-        x: (Math.random() - 0.5) * 100,
-        y: (Math.random() - 0.5) * 100,
-        scale: 0.9 + Math.random() * 0.3,
-        opacity: 0.2 + Math.random() * 0.2,
-        duration: 15 + index * 5,
-        ease: "sine.inOut"
-      });
-      
-      // Add scroll-based parallax
-      gsap.to(blob, {
-        y: (index % 2 === 0) ? "+=80" : "-=80",
-        scrollTrigger: {
-          trigger: heroRef.current,
-          scrub: 1,
-          start: "top bottom",
-          end: "bottom top"
-        }
-      });
-    });
-
-    // FAQ Toggle functionality
-    const faqQuestions = document.querySelectorAll(`.${styles.faq_question}`);
-    
-    faqQuestions.forEach(question => {
-      question.addEventListener('click', () => {
-        const faqItem = question.parentElement;
-        faqItem.classList.toggle(styles.active);
-      });
-    });
-
-    // GSAP animations for content
-    // Hero section animations
-    gsap.to(`.${styles.hero_badge}`, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power2.out',
-      delay: 0.3
-    });
-    
-    gsap.to(`.${styles.hero_title}`, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power2.out',
-      delay: 0.5
-    });
-    
-    gsap.to(`.${styles.hero_description}`, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power2.out',
-      delay: 0.7
-    });
-    
-    // Scroll animations
-    gsap.utils.toArray(`.${styles.section_subtitle}`).forEach(element => {
-      gsap.to(element, {
-        scrollTrigger: {
-          trigger: element,
-          start: "top 80%",
-        },
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        ease: 'power2.out'
-      });
-    });
-    
-    gsap.utils.toArray(`.${styles.section_title}`).forEach(element => {
-      gsap.to(element, {
-        scrollTrigger: {
-          trigger: element,
-          start: "top 80%",
-        },
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        ease: 'power2.out',
-        delay: 0.2
-      });
-    });
-    
-    gsap.utils.toArray(`.${styles.section_description}`).forEach(element => {
-      gsap.to(element, {
-        scrollTrigger: {
-          trigger: element,
-          start: "top 80%",
-        },
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        ease: 'power2.out',
-        delay: 0.4
-      });
-    });
-    
-    // Contact cards animations
-    gsap.utils.toArray(`.${styles.contact_card}`).forEach((card, index) => {
-      gsap.to(card, {
-        scrollTrigger: {
-          trigger: card,
-          start: "top 85%",
-        },
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: 'power2.out',
-        delay: 0.2 * index
-      });
-    });
-    
-    // Contact form and social container animations
-    gsap.to(`.${styles.contact_form_container}`, {
-      scrollTrigger: {
-        trigger: `.${styles.contact_form_container}`,
-        start: "top 80%",
-      },
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power2.out'
-    });
-    
-    gsap.to(`.${styles.social_container}`, {
-      scrollTrigger: {
-        trigger: `.${styles.social_container}`,
-        start: "top 80%",
-      },
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power2.out',
-      delay: 0.3
-    });
-    
-    // Support hours animation
-    gsap.to(`.${styles.support_hours}`, {
-      scrollTrigger: {
-        trigger: `.${styles.support_hours}`,
-        start: "top 80%",
-      },
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power2.out'
-    });
-    
-    // FAQ section animation
-    gsap.to(`.${styles.faq_section}`, {
-      scrollTrigger: {
-        trigger: `.${styles.faq_section}`,
-        start: "top 80%",
-      },
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power2.out'
-    });
-
-    // Form input focus effect
-    const formInputs = document.querySelectorAll(`.${styles.form_input}, .${styles.form_select}, .${styles.form_textarea}`);
-    
-    formInputs.forEach(input => {
-      input.addEventListener('focus', () => {
-        gsap.to(input, {
-          borderColor: '#FFC107',
-          boxShadow: '0 0 0 3px rgba(255, 193, 7, 0.2)',
-          duration: 0.3
+      blobs.forEach((blob, index) => {
+        // Set initial positions
+        gsap.set(blob, {
+          x: 0,
+          y: 0,
+          scale: 1,
+          opacity: 0.3
         });
-      });
-      
-      input.addEventListener('blur', () => {
-        if (!input.value) {
-          gsap.to(input, {
-            borderColor: '#EEEEEE',
-            boxShadow: 'none',
-            duration: 0.3
+        
+        // Create animation
+        const tl = gsap.timeline({
+          repeat: -1,
+          yoyo: true,
+          delay: index * 1.5
+        });
+        
+        tl.to(blob, {
+          x: (Math.random() - 0.5) * 100,
+          y: (Math.random() - 0.5) * 100,
+          scale: 0.9 + Math.random() * 0.3,
+          opacity: 0.2 + Math.random() * 0.2,
+          duration: 15 + index * 5,
+          ease: "sine.inOut"
+        });
+        
+        // Add scroll-based parallax
+        if (heroRef.current) {
+          gsap.to(blob, {
+            y: (index % 2 === 0) ? "+=80" : "-=80",
+            scrollTrigger: {
+              trigger: heroRef.current,
+              scrub: 1,
+              start: "top bottom",
+              end: "bottom top"
+            }
           });
         }
       });
-    });
+
+      // FAQ Toggle functionality
+      const faqQuestions = document.querySelectorAll(`.${styles.faq_question}`);
+      
+      faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+          const faqItem = question.parentElement;
+          faqItem.classList.toggle(styles.active);
+        });
+      });
+
+      // GSAP animations for content
+      // Hero section animations
+      const heroBadge = document.querySelector(`.${styles.hero_badge}`);
+      if (heroBadge) {
+        gsap.to(heroBadge, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          delay: 0.3
+        });
+      }
+      
+      const heroTitle = document.querySelector(`.${styles.hero_title}`);
+      if (heroTitle) {
+        gsap.to(heroTitle, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          delay: 0.5
+        });
+      }
+      
+      const heroDescription = document.querySelector(`.${styles.hero_description}`);
+      if (heroDescription) {
+        gsap.to(heroDescription, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          delay: 0.7
+        });
+      }
+      
+      // Scroll animations
+      const sectionSubtitles = document.querySelectorAll(`.${styles.section_subtitle}`);
+      sectionSubtitles.forEach(element => {
+        gsap.to(element, {
+          scrollTrigger: {
+            trigger: element,
+            start: "top 80%",
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: 'power2.out'
+        });
+      });
+      
+      const sectionTitles = document.querySelectorAll(`.${styles.section_title}`);
+      sectionTitles.forEach(element => {
+        gsap.to(element, {
+          scrollTrigger: {
+            trigger: element,
+            start: "top 80%",
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: 'power2.out',
+          delay: 0.2
+        });
+      });
+      
+      const sectionDescriptions = document.querySelectorAll(`.${styles.section_description}`);
+      sectionDescriptions.forEach(element => {
+        gsap.to(element, {
+          scrollTrigger: {
+            trigger: element,
+            start: "top 80%",
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: 'power2.out',
+          delay: 0.4
+        });
+      });
+      
+      // Contact cards animations
+      const contactCards = document.querySelectorAll(`.${styles.contact_card}`);
+      contactCards.forEach((card, index) => {
+        gsap.to(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: "top 85%",
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          delay: 0.2 * index
+        });
+      });
+      
+      // Contact form and social container animations
+      const contactFormContainer = document.querySelector(`.${styles.contact_form_container}`);
+      if (contactFormContainer) {
+        gsap.to(contactFormContainer, {
+          scrollTrigger: {
+            trigger: contactFormContainer,
+            start: "top 80%",
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out'
+        });
+      }
+      
+      const socialContainer = document.querySelector(`.${styles.social_container}`);
+      if (socialContainer) {
+        gsap.to(socialContainer, {
+          scrollTrigger: {
+            trigger: socialContainer,
+            start: "top 80%",
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          delay: 0.3
+        });
+      }
+      
+      // Support hours animation
+      const supportHours = document.querySelector(`.${styles.support_hours}`);
+      if (supportHours) {
+        gsap.to(supportHours, {
+          scrollTrigger: {
+            trigger: supportHours,
+            start: "top 80%",
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out'
+        });
+      }
+      
+      // FAQ section animation
+      const faqSection = document.querySelector(`.${styles.faq_section}`);
+      if (faqSection) {
+        gsap.to(faqSection, {
+          scrollTrigger: {
+            trigger: faqSection,
+            start: "top 80%",
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out'
+        });
+      }
+
+      // Form input focus effect
+      const formInputs = document.querySelectorAll(`.${styles.form_input}, .${styles.form_select}, .${styles.form_textarea}`);
+      
+      formInputs.forEach(input => {
+        input.addEventListener('focus', () => {
+          gsap.to(input, {
+            borderColor: '#FFC107',
+            boxShadow: '0 0 0 3px rgba(255, 193, 7, 0.2)',
+            duration: 0.3
+          });
+        });
+        
+        input.addEventListener('blur', () => {
+          if (!input.value) {
+            gsap.to(input, {
+              borderColor: '#EEEEEE',
+              boxShadow: 'none',
+              duration: 0.3
+            });
+          }
+        });
+      });
+      
+    }, 100); // Small delay to ensure DOM is ready
     
     // Cleanup event listeners
     return () => {
+      clearTimeout(initTimeout);
+      
+      // Kill all ScrollTrigger instances
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      
+      // Clean up event listeners
+      const faqQuestions = document.querySelectorAll(`.${styles.faq_question}`);
       faqQuestions.forEach(question => {
         question.removeEventListener('click', () => {});
       });
+      
+      const formInputs = document.querySelectorAll(`.${styles.form_input}, .${styles.form_select}, .${styles.form_textarea}`);
       formInputs.forEach(input => {
         input.removeEventListener('focus', () => {});
         input.removeEventListener('blur', () => {});
       });
     };
   }, []);
+
+  // Need to force a refresh on the window on initial load to ensure GSAP animations work properly
+  useEffect(() => {
+    // Force a reflow to ensure everything loads correctly
+    window.addEventListener('load', () => {
+      window.dispatchEvent(new Event('resize'));
+    });
+    
+    // Force a refresh of scroll triggers when the component is mounted
+    const refreshTimeout = setTimeout(() => {
+      if (ScrollTrigger.refresh) {
+        ScrollTrigger.refresh();
+      }
+    }, 200);
+
+    return () => {
+      clearTimeout(refreshTimeout);
+    };
+  }, [isLoaded]);
 
   // Function to add blobs to the ref
   const addBlobRef = (element) => {

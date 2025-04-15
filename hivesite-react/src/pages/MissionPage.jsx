@@ -1,9 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from '../css/Mission.module.css';
 
 const MissionPage = () => {
+  // Add loading state
+  const [isLoaded, setIsLoaded] = useState(false);
+  
   // Register ScrollTrigger plugin
   gsap.registerPlugin(ScrollTrigger);
 
@@ -94,311 +97,369 @@ const MissionPage = () => {
     });
   };
 
-  // Initialize animations on component mount
+  // Initialize animations when component mounts
   useEffect(() => {
-    // Store references to DOM elements
-    blobsRef.current = Array.from(document.querySelectorAll(`.${styles.blob}`));
-    valueCardsRef.current = Array.from(document.querySelectorAll(`.${styles.value_card}`));
-    impactContentRef.current = Array.from(document.querySelectorAll(`.${styles.impact_content}`));
-    impactImageRef.current = Array.from(document.querySelectorAll(`.${styles.impact_image}`));
-    goalItemsRef.current = Array.from(document.querySelectorAll(`.${styles.goal_item}`));
-    testimonialSlidesRef.current = Array.from(document.querySelectorAll(`.${styles.testimonial_slide}`));
-    testimonialDotsRef.current = Array.from(document.querySelectorAll(`.${styles.testimonial_dot}`));
+    // First mark component as loaded
+    setIsLoaded(true);
+    
+    // Use a short timeout to ensure DOM is fully rendered
+    const initTimeout = setTimeout(() => {
+      // Kill any existing ScrollTrigger instances to prevent conflicts
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      
+      // Store references to DOM elements
+      blobsRef.current = Array.from(document.querySelectorAll(`.${styles.blob}`));
+      valueCardsRef.current = Array.from(document.querySelectorAll(`.${styles.value_card}`));
+      impactContentRef.current = Array.from(document.querySelectorAll(`.${styles.impact_content}`));
+      impactImageRef.current = Array.from(document.querySelectorAll(`.${styles.impact_image}`));
+      goalItemsRef.current = Array.from(document.querySelectorAll(`.${styles.goal_item}`));
+      testimonialSlidesRef.current = Array.from(document.querySelectorAll(`.${styles.testimonial_slide}`));
+      testimonialDotsRef.current = Array.from(document.querySelectorAll(`.${styles.testimonial_dot}`));
 
-    // Animate blobs
-    blobsRef.current.forEach((blob, index) => {
-      // Set initial positions
-      gsap.set(blob, {
-        x: 0,
-        y: 0,
-        scale: 1,
-        opacity: 0.3
+      // Animate blobs
+      blobsRef.current.forEach((blob, index) => {
+        // Set initial positions
+        gsap.set(blob, {
+          x: 0,
+          y: 0,
+          scale: 1,
+          opacity: 0.3
+        });
+        
+        // Create animation
+        const tl = gsap.timeline({
+          repeat: -1,
+          yoyo: true,
+          delay: index * 1.5
+        });
+        
+        tl.to(blob, {
+          x: (Math.random() - 0.5) * 100,
+          y: (Math.random() - 0.5) * 100,
+          scale: 0.9 + Math.random() * 0.3,
+          opacity: 0.2 + Math.random() * 0.2,
+          duration: 15 + index * 5,
+          ease: "sine.inOut"
+        });
+        
+        // Add scroll-based parallax
+        gsap.to(blob, {
+          y: (index % 2 === 0) ? "+=80" : "-=80",
+          scrollTrigger: {
+            trigger: `.${styles.hero}`,
+            scrub: 1,
+            start: "top bottom",
+            end: "bottom top"
+          }
+        });
+      });
+
+      // Hero section animations
+      if (heroBadgeRef.current) {
+        gsap.to(heroBadgeRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          delay: 0.3
+        });
+      }
+      
+      if (heroTitleRef.current) {
+        gsap.to(heroTitleRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          delay: 0.5
+        });
+      }
+      
+      if (heroDescriptionRef.current) {
+        gsap.to(heroDescriptionRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          delay: 0.7
+        });
+      }
+      
+      if (heroCtaRef.current) {
+        gsap.to(heroCtaRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          delay: 0.9
+        });
+      }
+
+      // Section subtitles, titles, and descriptions
+      gsap.utils.toArray(`.${styles.section_subtitle}`).forEach(element => {
+        gsap.to(element, {
+          scrollTrigger: {
+            trigger: element,
+            start: "top 80%",
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: 'power2.out'
+        });
       });
       
-      // Create animation
-      const tl = gsap.timeline({
-        repeat: -1,
-        yoyo: true,
-        delay: index * 1.5
+      gsap.utils.toArray(`.${styles.section_title}`).forEach(element => {
+        gsap.to(element, {
+          scrollTrigger: {
+            trigger: element,
+            start: "top 80%",
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: 'power2.out',
+          delay: 0.2
+        });
       });
       
-      tl.to(blob, {
-        x: (Math.random() - 0.5) * 100,
-        y: (Math.random() - 0.5) * 100,
-        scale: 0.9 + Math.random() * 0.3,
-        opacity: 0.2 + Math.random() * 0.2,
-        duration: 15 + index * 5,
-        ease: "sine.inOut"
+      gsap.utils.toArray(`.${styles.section_description}`).forEach(element => {
+        gsap.to(element, {
+          scrollTrigger: {
+            trigger: element,
+            start: "top 80%",
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: 'power2.out',
+          delay: 0.4
+        });
       });
       
-      // Add scroll-based parallax
-      gsap.to(blob, {
-        y: (index % 2 === 0) ? "+=80" : "-=80",
-        scrollTrigger: {
-          trigger: `.${styles.hero}`,
-          scrub: 1,
-          start: "top bottom",
-          end: "bottom top"
-        }
+      // Mission statement animation
+      if (missionStatementRef.current) {
+        gsap.to(missionStatementRef.current, {
+          scrollTrigger: {
+            trigger: missionStatementRef.current,
+            start: "top 80%",
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out'
+        });
+      }
+      
+      // Values cards animations
+      valueCardsRef.current.forEach((card, index) => {
+        gsap.to(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: "top 85%",
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          delay: 0.2 * index
+        });
       });
-    });
-
-    // Hero section animations
-    gsap.to(heroBadgeRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power2.out',
-      delay: 0.3
-    });
-    
-    gsap.to(heroTitleRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power2.out',
-      delay: 0.5
-    });
-    
-    gsap.to(heroDescriptionRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power2.out',
-      delay: 0.7
-    });
-    
-    gsap.to(heroCtaRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power2.out',
-      delay: 0.9
-    });
-
-    // Section subtitles, titles, and descriptions
-    gsap.utils.toArray(`.${styles.section_subtitle}`).forEach(element => {
-      gsap.to(element, {
-        scrollTrigger: {
-          trigger: element,
-          start: "top 80%",
-        },
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        ease: 'power2.out'
+      
+      // Impact content animations
+      impactContentRef.current.forEach((content) => {
+        gsap.to(content, {
+          scrollTrigger: {
+            trigger: content,
+            start: "top 80%",
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out'
+        });
       });
-    });
-    
-    gsap.utils.toArray(`.${styles.section_title}`).forEach(element => {
-      gsap.to(element, {
-        scrollTrigger: {
-          trigger: element,
-          start: "top 80%",
-        },
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        ease: 'power2.out',
-        delay: 0.2
+      
+      impactImageRef.current.forEach((image) => {
+        gsap.to(image, {
+          scrollTrigger: {
+            trigger: image,
+            start: "top 80%",
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          delay: 0.3
+        });
       });
-    });
-    
-    gsap.utils.toArray(`.${styles.section_description}`).forEach(element => {
-      gsap.to(element, {
-        scrollTrigger: {
-          trigger: element,
-          start: "top 80%",
-        },
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        ease: 'power2.out',
-        delay: 0.4
+      
+      // Goal items animations
+      goalItemsRef.current.forEach((item, index) => {
+        gsap.to(item, {
+          scrollTrigger: {
+            trigger: item,
+            start: "top 85%",
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: 'power2.out',
+          delay: 0.1 * index,
+          onComplete: animateProgressBars
+        });
       });
-    });
-    
-    // Mission statement animation
-    gsap.to(missionStatementRef.current, {
-      scrollTrigger: {
-        trigger: missionStatementRef.current,
-        start: "top 80%",
-      },
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power2.out'
-    });
-    
-    // Values cards animations
-    valueCardsRef.current.forEach((card, index) => {
-      gsap.to(card, {
-        scrollTrigger: {
-          trigger: card,
-          start: "top 85%",
-        },
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: 'power2.out',
-        delay: 0.2 * index
+      
+      // EU initiative animation
+      if (euInitiativeRef.current) {
+        gsap.to(euInitiativeRef.current, {
+          scrollTrigger: {
+            trigger: euInitiativeRef.current,
+            start: "top 80%",
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out'
+        });
+      }
+      
+      // Join movement section animations
+      if (joinTitleRef.current) {
+        gsap.to(joinTitleRef.current, {
+          scrollTrigger: {
+            trigger: joinTitleRef.current,
+            start: "top 80%",
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out'
+        });
+      }
+      
+      if (joinDescriptionRef.current) {
+        gsap.to(joinDescriptionRef.current, {
+          scrollTrigger: {
+            trigger: joinDescriptionRef.current,
+            start: "top 80%",
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          delay: 0.2
+        });
+      }
+      
+      if (joinOptionsRef.current) {
+        gsap.to(joinOptionsRef.current, {
+          scrollTrigger: {
+            trigger: joinOptionsRef.current,
+            start: "top 80%",
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          delay: 0.4
+        });
+      }
+      
+      // CTA section animations
+      if (ctaTitleRef.current) {
+        gsap.to(ctaTitleRef.current, {
+          scrollTrigger: {
+            trigger: ctaTitleRef.current,
+            start: "top 80%",
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out'
+        });
+      }
+      
+      if (ctaDescriptionRef.current) {
+        gsap.to(ctaDescriptionRef.current, {
+          scrollTrigger: {
+            trigger: ctaDescriptionRef.current,
+            start: "top 80%",
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          delay: 0.2
+        });
+      }
+      
+      if (ctaButtonsRef.current) {
+        gsap.to(ctaButtonsRef.current, {
+          scrollTrigger: {
+            trigger: ctaButtonsRef.current,
+            start: "top 85%",
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          delay: 0.4
+        });
+      }
+  
+      // Initialize testimonial slider
+      if (testimonialSlidesRef.current.length > 0) {
+        showSlide(0);
+      }
+  
+      // Add event listeners for testimonial dots
+      testimonialDotsRef.current.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+          showSlide(i);
+        });
       });
-    });
-    
-    // Impact content animations
-    impactContentRef.current.forEach((content) => {
-      gsap.to(content, {
-        scrollTrigger: {
-          trigger: content,
-          start: "top 80%",
-        },
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: 'power2.out'
-      });
-    });
-    
-    impactImageRef.current.forEach((image) => {
-      gsap.to(image, {
-        scrollTrigger: {
-          trigger: image,
-          start: "top 80%",
-        },
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: 'power2.out',
-        delay: 0.3
-      });
-    });
-    
-    // Goal items animations
-    goalItemsRef.current.forEach((item, index) => {
-      gsap.to(item, {
-        scrollTrigger: {
-          trigger: item,
-          start: "top 85%",
-        },
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        ease: 'power2.out',
-        delay: 0.1 * index,
-        onComplete: animateProgressBars
-      });
-    });
-    
-    // EU initiative animation
-    gsap.to(euInitiativeRef.current, {
-      scrollTrigger: {
-        trigger: euInitiativeRef.current,
-        start: "top 80%",
-      },
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power2.out'
-    });
-    
-    // Join movement section animations
-    gsap.to(joinTitleRef.current, {
-      scrollTrigger: {
-        trigger: joinTitleRef.current,
-        start: "top 80%",
-      },
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power2.out'
-    });
-    
-    gsap.to(joinDescriptionRef.current, {
-      scrollTrigger: {
-        trigger: joinDescriptionRef.current,
-        start: "top 80%",
-      },
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power2.out',
-      delay: 0.2
-    });
-    
-    gsap.to(joinOptionsRef.current, {
-      scrollTrigger: {
-        trigger: joinOptionsRef.current,
-        start: "top 80%",
-      },
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power2.out',
-      delay: 0.4
-    });
-    
-    // CTA section animations
-    gsap.to(ctaTitleRef.current, {
-      scrollTrigger: {
-        trigger: ctaTitleRef.current,
-        start: "top 80%",
-      },
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power2.out'
-    });
-    
-    gsap.to(ctaDescriptionRef.current, {
-      scrollTrigger: {
-        trigger: ctaDescriptionRef.current,
-        start: "top 80%",
-      },
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power2.out',
-      delay: 0.2
-    });
-    
-    gsap.to(ctaButtonsRef.current, {
-      scrollTrigger: {
-        trigger: ctaButtonsRef.current,
-        start: "top 85%",
-      },
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power2.out',
-      delay: 0.4
-    });
-
-    // Initialize testimonial slider
-    showSlide(0);
-
-    // Add event listeners for testimonial dots
-    testimonialDotsRef.current.forEach((dot, i) => {
-      dot.addEventListener('click', () => {
-        showSlide(i);
-      });
-    });
+    }, 100); // Small delay to ensure DOM is ready
 
     // Cleanup function
     return () => {
+      clearTimeout(initTimeout);
+      
+      // Kill all animations and ScrollTriggers
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      
+      // Clear any running intervals
       if (testimonialIntervalRef.current) {
         clearInterval(testimonialIntervalRef.current);
       }
       
       // Clean up other event listeners if needed
-      testimonialDotsRef.current.forEach((dot) => {
-        dot.removeEventListener('click', () => {});
-      });
-      
-      // Kill all animations and ScrollTriggers
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-      gsap.killTweensOf("*");
+      if (testimonialDotsRef.current.length > 0) {
+        testimonialDotsRef.current.forEach((dot) => {
+          dot.removeEventListener('click', () => {});
+        });
+      }
     };
   }, []);
+
+  // Need to force a refresh on the window on initial load to ensure GSAP animations work properly
+  useEffect(() => {
+    // Force a reflow to ensure everything loads correctly
+    window.addEventListener('load', () => {
+      window.dispatchEvent(new Event('resize'));
+    });
+    
+    // Force a refresh of scroll triggers when the component is mounted
+    const refreshTimeout = setTimeout(() => {
+      if (ScrollTrigger.refresh) {
+        ScrollTrigger.refresh();
+      }
+    }, 200);
+
+    return () => {
+      clearTimeout(refreshTimeout);
+    };
+  }, [isLoaded]);
 
   return (
     <div className={styles.mission_page}>
