@@ -790,12 +790,24 @@ const MissionPage = () => {
       </section>
 
       {/* Join Movement Section */}
-      <section className={`${styles.section} ${styles.bg_white}`} id="join-movement">
+      <section className={`${styles.section} ${styles.bg_white} ${styles.join_movement_section}`} id="join-movement">
+        {/* Add Blob Container for this section */}
+        <div className={styles.join_movement_blob_container}>
+          <div 
+            className={styles.blob} 
+            style={{ width: '350px', height: '350px', top: '10%', left: '-100px', opacity: 0.15 }}
+          ></div>
+          <div 
+            className={styles.blob} 
+            style={{ width: '450px', height: '450px', bottom: '5%', right: '-150px', opacity: 0.15, background: 'linear-gradient(135deg, var(--leaf-green), var(--honey-yellow))' }}
+          ></div>
+        </div>
+
         <div className={styles.section_header}>
           <span className={styles.section_subtitle}>Take Action</span>
           <h2 className={styles.section_title} ref={joinTitleRef}>Join Our Movement</h2>
           <p className={styles.section_description} ref={joinDescriptionRef}>
-            There are many ways to be part of our mission to save the bees and promote sustainable ecosystems.
+            There are many ways to contribute to our mission of bee conservation and sustainable beekeeping. Find the path that's right for you.
           </p>
         </div>
         
@@ -806,52 +818,41 @@ const MissionPage = () => {
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
               </svg>
             </div>
-            <h3 className={styles.option_title}>Use Our Technology</h3>
+            <h3 className={styles.option_title}>Become a HIVE Beekeeper</h3>
             <p className={styles.option_description}>
-              Whether you're a hobbyist or commercial beekeeper, our solutions can help you maintain healthier colonies while contributing valuable data to our research initiatives.
+              Integrate our technology into your beekeeping practice and join thousands of beekeepers while contributing valuable data to our research efforts.
             </p>
-            <a href="/products" className={styles.option_button}>Explore Products</a>
+            <a href="/products" className={styles.option_button}>Get Started</a>
           </div>
           
           <div className={styles.join_option}>
             <div className={styles.option_icon}>
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
               </svg>
             </div>
-            <h3 className={styles.option_title}>Support Our Foundation</h3>
+            <h3 className={styles.option_title}>Partner With Us</h3>
             <p className={styles.option_description}>
-              Your donations help fund research, conservation efforts, and educational programs aimed at protecting bee populations worldwide.
+              Whether you're a research institution, environmental organization, or business that shares our values, we welcome collaborations that will expand our impact.
             </p>
-            <a href="/donate" className={styles.option_button}>Donate Now</a>
+            <a href="/partner" className={styles.option_button}>Contact Us</a>
           </div>
           
           <div className={styles.join_option}>
             <div className={styles.option_icon}>
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
               </svg>
             </div>
-            <h3 className={styles.option_title}>Spread Awareness</h3>
+            <h3 className={styles.option_title}>Spread The Word</h3>
             <p className={styles.option_description}>
-              Follow us on social media and help spread the word about the importance of bees to our ecosystems and food security.
+              Help raise awareness about the importance of bee conservation by sharing our mission with your network. Follow us on social media for sustainable beekeeping tips.
             </p>
-            <a href="/social" className={styles.option_button}>Connect with Us</a>
-          </div>
-          
-          <div className={styles.join_option}>
-            <div className={styles.option_icon}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-              </svg>
-            </div>
-            <h3 className={styles.option_title}>Volunteer Your Skills</h3>
-            <p className={styles.option_description}>
-              From technical expertise to community outreach, we welcome volunteers who share our passion for bee conservation.
-            </p>
-            <a href="/volunteer" className={styles.option_button}>Get Involved</a>
+            <a href="/social" className={styles.option_button}>Follow Us</a>
           </div>
         </div>
       </section>
@@ -861,11 +862,11 @@ const MissionPage = () => {
         <div className={styles.cta_content}>
           <h2 className={styles.cta_title} ref={ctaTitleRef}>Ready to Make a Difference?</h2>
           <p className={styles.cta_description} ref={ctaDescriptionRef}>
-            Start your journey with HIVE today and become part of a global community working to ensure a sustainable future for bees and humans alike.
+            Take the first step toward supporting bee conservation and sustainable agriculture by exploring how HIVE can transform your beekeeping practice.
           </p>
           <div className={styles.cta_buttons} ref={ctaButtonsRef}>
-            <a href="/products" className={styles.cta_button_primary}>Explore Our Solutions</a>
-            <a href="/contact" className={styles.cta_button_secondary}>Contact Us</a>
+            <a href="/download" className={styles.cta_button_primary}>Download the App</a>
+            <a href="/demo" className={styles.cta_button_secondary}>Request a Demo</a>
           </div>
         </div>
       </section>
