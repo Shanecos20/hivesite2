@@ -390,7 +390,7 @@ const DownloadPage = () => {
             
             <div className={styles.qr_container} style={{ display: activePlatform === 'ios' ? 'flex' : 'none' }}>
               <div className={styles.qr_code}>
-                <img src="/api/placeholder/150/150" alt="QR Code for iOS app" />
+                <img src="/assets/qr.png" alt="QR Code for iOS app" />
               </div>
               <div className={styles.qr_content}>
                 <h3 className={styles.qr_title}>Download HIVE for iOS</h3>
@@ -429,7 +429,7 @@ const DownloadPage = () => {
             
             <div className={styles.qr_container} style={{ display: activePlatform === 'android' ? 'flex' : 'none' }}>
               <div className={styles.qr_code}>
-                <img src="/api/placeholder/150/150" alt="QR Code for Android app" />
+                <img src="/assets/qr.png" alt="QR Code for Android app" />
               </div>
               <div className={styles.qr_content}>
                 <h3 className={styles.qr_title}>Download HIVE for Android</h3>
@@ -480,7 +480,7 @@ const DownloadPage = () => {
         <div className={styles.showcase_container}>
           <div className={styles.showcase_item} ref={el => addToRef(el, sectionRefs.showcaseItems)} style={{ opacity: 0, transform: 'translateY(30px)' }}>
             <div className={styles.showcase_image}>
-              <img src="/api/placeholder/300/550" alt="HIVE app dashboard" />
+              <img src="/assets/dashboard.png" alt="HIVE app dashboard" />
               <div className={styles.phone_frame}></div>
             </div>
             <h3 className={styles.showcase_title}>Smart Dashboard</h3>
@@ -489,7 +489,7 @@ const DownloadPage = () => {
           
           <div className={styles.showcase_item} ref={el => addToRef(el, sectionRefs.showcaseItems)} style={{ opacity: 0, transform: 'translateY(30px)' }}>
             <div className={styles.showcase_image}>
-              <img src="/api/placeholder/300/550" alt="HIVE app analytics" />
+              <img src="/assets/trends.png" alt="HIVE app analytics" />
               <div className={styles.phone_frame}></div>
             </div>
             <h3 className={styles.showcase_title}>Detailed Analytics</h3>
@@ -498,7 +498,7 @@ const DownloadPage = () => {
           
           <div className={styles.showcase_item} ref={el => addToRef(el, sectionRefs.showcaseItems)} style={{ opacity: 0, transform: 'translateY(30px)' }}>
             <div className={styles.showcase_image}>
-              <img src="/api/placeholder/300/550" alt="HIVE app recommendations" />
+              <img src="/assets/insights.png" alt="HIVE app recommendations" />
               <div className={styles.phone_frame}></div>
             </div>
             <h3 className={styles.showcase_title}>Smart Recommendations</h3>

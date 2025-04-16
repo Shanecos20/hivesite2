@@ -420,7 +420,7 @@ const About = () => {
             <p className={styles.story_text}>Today, HIVE has grown into a comprehensive platform used by thousands of beekeepers across Europe and North America, from hobbyists with a single hive to commercial operations with thousands of colonies.</p>
           </div>
           <div className={styles.story_image} ref={sectionRefs.storyImage} style={{ opacity: 0, transform: 'translateY(20px)' }}>
-            <img src="/api/placeholder/400/400" alt="HIVE founders with beehives" />
+            <img src="/assets/beeflower.jpg" alt="HIVE founders with beehives" />
           </div>
         </div>
       </section>
@@ -624,7 +624,7 @@ const About = () => {
               </div>
             </div>
             <div className={styles.tech_image} ref={el => addToRef(el, sectionRefs.techImages)} style={{ opacity: 0, transform: 'translateY(20px)' }}>
-              <img src="/api/placeholder/400/350" alt="HIVE IoT sensors" />
+              <img src="/assets/stockhive.jpg" alt="HIVE IoT sensors" />
             </div>
           </div>
           
@@ -663,7 +663,7 @@ const About = () => {
               </div>
             </div>
             <div className={styles.tech_image} ref={el => addToRef(el, sectionRefs.techImages)} style={{ opacity: 0, transform: 'translateY(20px)' }}>
-              <img src="/api/placeholder/400/350" alt="HIVE Analytics Dashboard" />
+              <img src="/assets/dashboardwide2.png" alt="HIVE Analytics Dashboard" />
             </div>
           </div>
           
@@ -702,7 +702,7 @@ const About = () => {
               </div>
             </div>
             <div className={styles.tech_image} ref={el => addToRef(el, sectionRefs.techImages)} style={{ opacity: 0, transform: 'translateY(20px)' }}>
-              <img src="/api/placeholder/400/350" alt="HIVE mobile app interface" />
+              <img src="/assets/dashboardwide.png" alt="HIVE mobile app interface" />
             </div>
           </div>
         </div>

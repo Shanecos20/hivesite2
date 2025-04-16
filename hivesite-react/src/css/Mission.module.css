@@ -512,6 +512,8 @@ html {
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
+    opacity: 0.5;
+    z-index: -1;
 }
 
 .initiative_title {

@@ -507,7 +507,7 @@ const MissionPage = () => {
             To revolutionize beekeeping through technology that enhances colony health, empowers beekeepers, and contributes to global biodiversity, ensuring a sustainable future where both bees and humans thrive together.
           </p>
           <p className={styles.mission_author}>
-            — Dr. Elena Rodriguez, Founder & CEO
+            — HIVE Team
           </p>
         </div>
       </section>
@@ -599,7 +599,7 @@ const MissionPage = () => {
               </div>
             </div>
             <div className={styles.impact_image}>
-              <img src="/api/placeholder/400/350" alt="Healthy beehive with HIVE technology" />
+              <img src="/assets/smart.jpg" alt="Healthy beehive with HIVE technology" />
             </div>
           </div>
           
@@ -624,7 +624,7 @@ const MissionPage = () => {
               </div>
             </div>
             <div className={styles.impact_image}>
-              <img src="/api/placeholder/400/350" alt="Organic beekeeping with HIVE" />
+              <img src="/assets/organic.jpg" alt="Organic beekeeping with HIVE" />
             </div>
           </div>
           
@@ -649,7 +649,7 @@ const MissionPage = () => {
               </div>
             </div>
             <div className={styles.impact_image}>
-              <img src="/api/placeholder/400/350" alt="Bees pollinating flowers" />
+              <img src="/assets/pollinating.jpg" alt="Bees pollinating flowers" />
             </div>
           </div>
         </div>
@@ -733,7 +733,7 @@ const MissionPage = () => {
         <div className={styles.eu_initiative} ref={euInitiativeRef}>
           <div className={styles.initiative_top}>
             <div className={styles.initiative_logo}>
-              <img src="/api/placeholder/120/120" alt="EU Green Initiative Logo" />
+              <img src="/assets/eu.png" alt="EU Green Initiative Logo" />
             </div>
             <div>
               <h3 className={styles.initiative_title}>Official EU Green Award Recipient</h3>
