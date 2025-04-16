@@ -51,13 +51,16 @@
     justify-content: space-between;
     align-items: center;
     z-index: 100;
-    transition: background-color 0.5s, padding 0.5s;
+    transition: background-color 0.5s, padding 0.5s, box-shadow 0.5s;
 }
 
 .navbar.scrolled {
-    background-color: var(--white);
+    background-color: rgba(255, 255, 255, 0.9);
     padding: 1rem 4rem;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border-radius: 0 0 20px 20px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .logo {
@@ -278,6 +281,145 @@
     min-height: 100vh;
 }
 
+/* Mobile Menu Button */
+.mobile_menu_btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 200;
+    position: fixed;
+    top: 1.5rem;
+    right: 2rem;
+}
+
+/* Specific styling for when the menu is open */
+.mobile_menu_btn.menu_open {
+    position: fixed;
+    top: 1.5rem;
+    right: 2rem;
+}
+
+.mobile_menu_btn.menu_open .hamburger span {
+    background-color: var(--honey-dark);
+    height: 3px;
+}
+
+.hamburger {
+    width: 30px;
+    height: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hamburger span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: var(--dark);
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
+    position: absolute;
+    left: 0;
+}
+
+.hamburger span:nth-child(1) {
+    top: 0;
+}
+
+.hamburger span:nth-child(2) {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.hamburger span:nth-child(3) {
+    bottom: 0;
+}
+
+.hamburger.open span:nth-child(1) {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%) rotate(-45deg);
+}
+
+/* Mobile Menu */
+.mobile_menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.95);
+    z-index: 105;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease-in-out;
+    pointer-events: none;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.mobile_menu.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+}
+
+.mobile_menu_links {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+}
+
+.mobile_nav_link {
+    font-size: 1.5rem;
+    color: var(--dark);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.mobile_nav_link:hover,
+.mobile_nav_link.active {
+    color: var(--honey-dark);
+}
+
+.mobile_cta_button {
+    margin-top: 1.5rem;
+    padding: 0.8rem 2rem;
+    background-color: var(--honey-yellow);
+    color: var(--dark);
+    border: none;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.mobile_cta_button:hover {
+    background-color: var(--honey-dark);
+    color: var(--white);
+}
+
 /* Media Queries */
 @media (max-width: 1024px) {
     .navbar {
@@ -286,6 +428,10 @@
     
     .navbar.scrolled {
         padding: 1rem 3rem;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 0 0 15px 15px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
     }
 }
 
@@ -296,10 +442,23 @@
     
     .navbar.scrolled {
         padding: 1rem 2rem;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 0 0 15px 15px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
     }
     
     .nav_links {
         display: none;
+    }
+    
+    .cta_button {
+        display: none;
+    }
+    
+    .mobile_menu_btn {
+        display: block;
+        margin-left: auto;
     }
     
     .footer {
@@ -309,8 +468,11 @@
 
 @media (max-width: 480px) {
     .footer_content {
-        display: flex;
-        flex-direction: column;
-        gap: 3rem;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .navbar.scrolled {
+        border-radius: 0 0 10px 10px;
     }
 }

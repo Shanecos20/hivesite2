@@ -5,6 +5,7 @@ import styles from '../css/Layout.module.css';
 function Layout() {
     const location = useLocation(); // Hook to get the current path
     const navigate = useNavigate();
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     
     // Handle page navigation and cleanup
     useEffect(() => {
@@ -38,6 +39,9 @@ function Layout() {
         
         // Scroll to top on page navigation
         window.scrollTo(0, 0);
+        
+        // Close mobile menu when navigating
+        setMobileMenuOpen(false);
     }, [location.pathname]);
 
     // Initialization effect that runs once for direct page loads
@@ -210,6 +214,17 @@ function Layout() {
         navigate(to);
     };
 
+    // Toggle mobile menu
+    const toggleMobileMenu = () => {
+        setMobileMenuOpen(!mobileMenuOpen);
+    };
+    
+    // Close mobile menu when a link is clicked
+    const handleMobileNavigation = (e, to) => {
+        handleNavigation(e, to);
+        setMobileMenuOpen(false);
+    };
+
     return (
         <>
             {/* Custom Cursor */}
@@ -231,8 +246,30 @@ function Layout() {
                     <Link to="/mission" onClick={(e) => handleNavigation(e, '/mission')} className={`${styles.nav_link} ${isNavLinkActive('/mission') ? styles.active : ''}`}>Mission</Link>
                     <Link to="/contact" onClick={(e) => handleNavigation(e, '/contact')} className={`${styles.nav_link} ${isNavLinkActive('/contact') ? styles.active : ''}`}>Contact</Link>
                 </div>
+                
                 <Link to="/get-started" onClick={(e) => handleNavigation(e, '/get-started')} className={styles.cta_button}>Get Started</Link>
             </nav>
+            
+            {/* Mobile Menu Button - Moved outside nav */}
+            <button className={`${styles.mobile_menu_btn} ${mobileMenuOpen ? styles.menu_open : ''}`} onClick={toggleMobileMenu} aria-label="Toggle mobile menu">
+                <div className={`${styles.hamburger} ${mobileMenuOpen ? styles.open : ''}`}>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+            
+            {/* Mobile Menu Overlay */}
+            <div className={`${styles.mobile_menu} ${mobileMenuOpen ? styles.open : ''}`}>
+                <div className={styles.mobile_menu_links}>
+                    <Link to="/" onClick={(e) => handleMobileNavigation(e, '/')} className={`${styles.mobile_nav_link} ${isNavLinkActive('/') ? styles.active : ''}`}>Home</Link>
+                    <Link to="/download" onClick={(e) => handleMobileNavigation(e, '/download')} className={`${styles.mobile_nav_link} ${isNavLinkActive('/download') ? styles.active : ''}`}>Download</Link>
+                    <Link to="/about" onClick={(e) => handleMobileNavigation(e, '/about')} className={`${styles.mobile_nav_link} ${isNavLinkActive('/about') ? styles.active : ''}`}>About</Link>
+                    <Link to="/mission" onClick={(e) => handleMobileNavigation(e, '/mission')} className={`${styles.mobile_nav_link} ${isNavLinkActive('/mission') ? styles.active : ''}`}>Mission</Link>
+                    <Link to="/contact" onClick={(e) => handleMobileNavigation(e, '/contact')} className={`${styles.mobile_nav_link} ${isNavLinkActive('/contact') ? styles.active : ''}`}>Contact</Link>
+                    <Link to="/get-started" onClick={(e) => handleMobileNavigation(e, '/get-started')} className={`${styles.mobile_cta_button}`}>Get Started</Link>
+                </div>
+            </div>
 
             {/* Main content area where routed components will render */}
             <main className={styles.main_content}>
