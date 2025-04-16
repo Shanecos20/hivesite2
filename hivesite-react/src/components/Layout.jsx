@@ -6,6 +6,7 @@ function Layout() {
     const location = useLocation(); // Hook to get the current path
     const navigate = useNavigate();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
     
     // Handle page navigation and cleanup
     useEffect(() => {
@@ -81,13 +82,10 @@ function Layout() {
     // Navbar Scroll Effect
     useEffect(() => {
         const handleScroll = () => {
-            const navbar = document.getElementById('navbar');
-            if (!navbar) return;
-
             if (window.scrollY > 50) {
-                navbar.classList.add(styles.scrolled);
+                setScrolled(true);
             } else {
-                navbar.classList.remove(styles.scrolled);
+                setScrolled(false);
             }
         };
 
@@ -239,14 +237,15 @@ function Layout() {
                     </svg>
                     <span className={styles.logo_text}>HIVE</span>
                 </Link>
-                <div className={styles.nav_links}>
-                    <Link to="/" onClick={(e) => handleNavigation(e, '/')} className={`${styles.nav_link} ${isNavLinkActive('/') ? styles.active : ''}`}>Home</Link>
-                    <Link to="/download" onClick={(e) => handleNavigation(e, '/download')} className={`${styles.nav_link} ${isNavLinkActive('/download') ? styles.active : ''}`}>Download</Link>
-                    <Link to="/about" onClick={(e) => handleNavigation(e, '/about')} className={`${styles.nav_link} ${isNavLinkActive('/about') ? styles.active : ''}`}>About</Link>
-                    <Link to="/mission" onClick={(e) => handleNavigation(e, '/mission')} className={`${styles.nav_link} ${isNavLinkActive('/mission') ? styles.active : ''}`}>Mission</Link>
-                    <Link to="/contact" onClick={(e) => handleNavigation(e, '/contact')} className={`${styles.nav_link} ${isNavLinkActive('/contact') ? styles.active : ''}`}>Contact</Link>
+                <div className={`${styles.nav_links_container} ${scrolled ? styles.nav_links_scrolled : ''}`}>
+                    <div className={styles.nav_links}>
+                        <Link to="/" onClick={(e) => handleNavigation(e, '/')} className={`${styles.nav_link} ${isNavLinkActive('/') ? styles.active : ''}`}>Home</Link>
+                        <Link to="/download" onClick={(e) => handleNavigation(e, '/download')} className={`${styles.nav_link} ${isNavLinkActive('/download') ? styles.active : ''}`}>Download</Link>
+                        <Link to="/about" onClick={(e) => handleNavigation(e, '/about')} className={`${styles.nav_link} ${isNavLinkActive('/about') ? styles.active : ''}`}>About</Link>
+                        <Link to="/mission" onClick={(e) => handleNavigation(e, '/mission')} className={`${styles.nav_link} ${isNavLinkActive('/mission') ? styles.active : ''}`}>Mission</Link>
+                        <Link to="/contact" onClick={(e) => handleNavigation(e, '/contact')} className={`${styles.nav_link} ${isNavLinkActive('/contact') ? styles.active : ''}`}>Contact</Link>
+                    </div>
                 </div>
-                
                 <Link to="/get-started" onClick={(e) => handleNavigation(e, '/get-started')} className={styles.cta_button}>Get Started</Link>
             </nav>
             

@@ -51,16 +51,28 @@
     justify-content: space-between;
     align-items: center;
     z-index: 100;
-    transition: background-color 0.5s, padding 0.5s, box-shadow 0.5s;
+    transition: padding 0.5s;
+}
+
+/* New container for nav links */
+.nav_links_container {
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem 0;
+    transition: all 0.3s ease;
+    border-radius: 30px;
+}
+
+/* Styling for when scrolled */
+.nav_links_scrolled {
+    background: #faf6ebc9;
+    border: 2px solid #fbe49f;
+    box-shadow: 0 4px 15px rgba(255, 111, 0, 0.15);
+    padding: 0.6rem 1.8rem;
 }
 
 .navbar.scrolled {
-    background-color: rgba(255, 255, 255, 0.9);
     padding: 1rem 4rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    border-radius: 0 0 20px 20px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
 }
 
 .logo {
@@ -428,10 +440,10 @@
     
     .navbar.scrolled {
         padding: 1rem 3rem;
-        background-color: rgba(255, 255, 255, 0.9);
-        border-radius: 0 0 15px 15px;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .nav_links_scrolled {
+        padding: 0.6rem 1.4rem;
     }
 }
 
@@ -442,10 +454,10 @@
     
     .navbar.scrolled {
         padding: 1rem 2rem;
-        background-color: rgba(255, 255, 255, 0.9);
-        border-radius: 0 0 15px 15px;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .nav_links_container {
+        display: none;
     }
     
     .nav_links {
@@ -458,11 +470,10 @@
     
     .mobile_menu_btn {
         display: block;
-        margin-left: auto;
     }
     
     .footer {
-        padding: 4rem 2rem 2rem;
+        padding: 3rem 2rem 1.5rem;
     }
 }
 
@@ -473,6 +484,6 @@
     }
     
     .navbar.scrolled {
-        border-radius: 0 0 10px 10px;
+        padding: 0.8rem 1.5rem;
     }
 }

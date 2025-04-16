@@ -19,6 +19,7 @@ const HomePage = () => {
   const heroScrollRef = useRef(null);
   const canvasRef = useRef(null);
   const blobsRef = useRef([]);
+  const heroBadgeRef = useRef(null);
   
   // Refs for sections
   const sectionRefs = {
@@ -168,6 +169,16 @@ const HomePage = () => {
           duration: 0.8,
           ease: 'power2.out',
           delay: 0.3
+        });
+      }
+      
+      if (heroBadgeRef.current) {
+        gsap.to(heroBadgeRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          delay: 0.1
         });
       }
       
@@ -415,6 +426,12 @@ const HomePage = () => {
           </div>
         </div>
         <div className={styles.hero_content}>
+          <div className={styles.hero_badge} ref={heroBadgeRef} style={{ opacity: 0, transform: 'translateY(20px)' }}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+            </svg>
+            <span style={{ marginLeft: '8px' }}>EU Green Award Winner</span>
+          </div>
           <h1 className={styles.hero_title} ref={heroTitleRef} style={{ opacity: 0, transform: 'translateY(30px)' }}>Revolutionizing <span>Beekeeping</span> Through Innovation</h1>
           <p className={styles.hero_description} ref={heroDescriptionRef} style={{ opacity: 0, transform: 'translateY(30px)' }}>HIVE connects IoT technology with AI-driven insights to make beekeeping more accessible, efficient, and sustainable. Real-time monitoring, smart analytics, and actionable recommendations to ensure thriving colonies.</p>
           <div className={styles.hero_cta_group} ref={heroCTAGroupRef} style={{ opacity: 0, transform: 'translateY(30px)' }}>
@@ -433,40 +450,177 @@ const HomePage = () => {
         <div className={styles.device_preview} ref={devicePreviewRef} style={{ opacity: 0 }}>
           <div className={styles.device_screen}>
             <div className={styles.device_header}>
-              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 3L4.5 7.5V16.5L12 21L19.5 16.5V7.5L12 3Z" fill="#FFFFFF" stroke="#FFFFFF" strokeWidth="1.5"/>
-                <path d="M12 8L7 11V14L12 17L17 14V11L12 8Z" fill="#FF6F00" stroke="#FFFFFF" strokeWidth="1"/>
-              </svg>
-              HIVE Dashboard
+              <div className={styles.device_status_bar}>
+                <span>21:10</span>
+                <div className={styles.device_status_icons}>
+                  <span>•••</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                  </svg>
+                </div>
+              </div>
+              <div className={styles.device_title}>Hive Dashboard</div>
+              <div className={styles.device_hive_selector}>
+                <div className={styles.device_hive_name}>
+                  <span>Hive Alpha</span>
+                  <span className={styles.device_status_dot}></span>
+                </div>
+                <button className={styles.device_add_btn}>
+                  <span>+</span>
+                  Add Hive
+                </button>
+              </div>
             </div>
+            
             <div className={styles.device_content}>
-              <div className={styles.device_data_card}>
-                <div className="label">Temperature</div>
-                <div className="value">34.2°C</div>
+              <div className={styles.device_hive_status}>
+                <span className={styles.device_status_indicator}></span>
+                <span>Healthy</span>
               </div>
-              <div className={styles.device_data_card}>
-                <div className="label">Humidity</div>
-                <div className="value">65%</div>
-              </div>
-              <div className={styles.device_chart}>
-                <svg width="100%" height="100%" viewBox="0 0 300 100" preserveAspectRatio="none">
-                  <defs>
-                    <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                      <stop offset="0%" stopColor="#FFC107" stopOpacity="0.8"/>
-                      <stop offset="100%" stopColor="#FFC107" stopOpacity="0"/>
-                    </linearGradient>
-                  </defs>
-                  <path className={styles.chart_line_path} d="M0,80 C20,70 40,40 60,30 C80,20 100,50 120,40 C140,30 160,60 180,50 C200,40 220,20 240,30 C260,40 280,60 300,50"></path>
-                  <path className={styles.chart_line_area} d="M0,80 C20,70 40,40 60,30 C80,20 100,50 120,40 C140,30 160,60 180,50 C200,40 220,20 240,30 C260,40 280,60 300,50 L300,100 L0,100 Z"></path>
+              
+              <div className={styles.device_location}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
                 </svg>
+                <span>Galway</span>
               </div>
-              <div className={styles.device_data_card}>
-                <div className="label">Bee Activity</div>
-                <div className="value">High</div>
+              
+              <div className={styles.device_update_time}>
+                Last updated: Apr 15 at 9:10 PM
               </div>
+              
+              <div className={styles.device_metrics_grid}>
+                <div className={styles.device_metric_card}>
+                  <div className={styles.device_metric_icon} style={{ color: '#f44336' }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 4a1 1 0 00-1 1v7a1 1 0 001 1h7a1 1 0 001-1 7 7 0 10-14 0A7 7 0 0012 18a1 1 0 100 2 9 9 0 110-18 9 9 0 019 9 3 3 0 01-3 3h-7a3 3 0 01-3-3V5a3 3 0 013-3 1 1 0 100-2 5 5 0 00-5 5v7a5 5 0 005 5h7a5 5 0 005-5 11 11 0 00-11-11z"></path>
+                    </svg>
+                  </div>
+                  <div className={styles.device_metric_value}>32°C</div>
+                  <div className={styles.device_metric_label}>Temperature</div>
+                </div>
+                
+                <div className={styles.device_metric_card}>
+                  <div className={styles.device_metric_icon} style={{ color: '#2196f3' }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"></path>
+                    </svg>
+                  </div>
+                  <div className={styles.device_metric_value}>45%</div>
+                  <div className={styles.device_metric_label}>Humidity</div>
+                </div>
+                
+                <div className={styles.device_metric_card}>
+                  <div className={styles.device_metric_icon} style={{ color: '#ff9800' }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 14.5c-2.49 0-4.5-2.01-4.5-4.5S9.51 7.5 12 7.5s4.5 2.01 4.5 4.5-2.01 4.5-4.5 4.5z"></path>
+                    </svg>
+                  </div>
+                  <div className={styles.device_metric_value}>2</div>
+                  <div className={styles.device_metric_label}>Varroa Index</div>
+                </div>
+                
+                <div className={styles.device_metric_card}>
+                  <div className={styles.device_metric_icon} style={{ color: '#4caf50' }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2c-5.33 4-8 8-8 12 0 4.42 3.58 8 8 8s8-3.58 8-8c0-4-2.67-8-8-12zm0 20c-4.41 0-8-3.59-8-8 0-3.45 2.32-6.97 8-11.35 5.68 4.38 8 7.9 8 11.35 0 4.41-3.59 8-8 8z"></path>
+                      <path d="M12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path>
+                    </svg>
+                  </div>
+                  <div className={styles.device_metric_value}>15 kg</div>
+                  <div className={styles.device_metric_label}>Weight</div>
+                </div>
+              </div>
+              
               <div className={styles.device_actions}>
-                <div className={styles.device_action_button}>Details</div>
-                <div className={styles.device_action_button}>Actions</div>
+                <div className={styles.device_action_button}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="3" y1="9" x2="21" y2="9"></line>
+                    <line x1="9" y1="21" x2="9" y2="9"></line>
+                  </svg>
+                  Details
+                </div>
+                <div className={styles.device_action_button}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path>
+                    <polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon>
+                  </svg>
+                  Edit
+                </div>
+                <div className={styles.device_action_button}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 8v4M12 16h.01"></path>
+                  </svg>
+                  Insights
+                </div>
+              </div>
+              
+              <div className={styles.device_trends}>
+                <h4>Sensor Trends</h4>
+                <div className={styles.device_trend_category}>Temperature (°C)</div>
+                <div className={styles.device_chart}>
+                  <svg width="100%" height="100%" viewBox="0 0 300 100" preserveAspectRatio="none">
+                    <defs>
+                      <linearGradient id="tempGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor="#f44336" stopOpacity="0.2"/>
+                        <stop offset="100%" stopColor="#f44336" stopOpacity="0"/>
+                      </linearGradient>
+                    </defs>
+                    <path className={styles.chart_line_path} style={{ stroke: '#f44336' }} d="M0,70 C20,55 40,80 60,75 C80,70 100,40 120,15 C140,30 160,50 180,40 C200,30 220,50 240,75 C260,70 280,75 300,70"></path>
+                    <path className={styles.chart_line_area} style={{ fill: 'url(#tempGradient)' }} d="M0,70 C20,55 40,80 60,75 C80,70 100,40 120,15 C140,30 160,50 180,40 C200,30 220,50 240,75 C260,70 280,75 300,70 L300,100 L0,100 Z"></path>
+                    
+                    <circle cx="0" cy="70" r="3" fill="#f44336" />
+                    <circle cx="60" cy="75" r="3" fill="#f44336" />
+                    <circle cx="120" cy="15" r="3" fill="#f44336" />
+                    <circle cx="180" cy="40" r="3" fill="#f44336" />
+                    <circle cx="240" cy="75" r="3" fill="#f44336" />
+                    <circle cx="300" cy="70" r="3" fill="#f44336" />
+                  </svg>
+                  
+                  <div className={styles.device_chart_labels}>
+                    <div>30.6</div>
+                    <div>31.5</div>
+                    <div>32.3</div>
+                    <div>33.2</div>
+                    <div>34.0</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className={styles.device_nav}>
+                <div className={styles.device_nav_item}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#FFC107" stroke="#FFC107" strokeWidth="1">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                  </svg>
+                  <span>Dashboard</span>
+                </div>
+                <div className={styles.device_nav_item}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12" y2="16"></line>
+                  </svg>
+                  <span>Insights</span>
+                </div>
+                <div className={styles.device_nav_item}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                  </svg>
+                  <span>Notifications</span>
+                </div>
+                <div className={styles.device_nav_item}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                  </svg>
+                  <span>Settings</span>
+                </div>
               </div>
             </div>
           </div>
