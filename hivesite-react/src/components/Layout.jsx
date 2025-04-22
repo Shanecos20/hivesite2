@@ -231,11 +231,7 @@ function Layout() {
             {/* Navbar */}
             <nav id="navbar" className={styles.navbar}>
                 <Link to="/" className={styles.logo} onClick={(e) => handleNavigation(e, '/')}>
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 3L4.5 7.5V16.5L12 21L19.5 16.5V7.5L12 3Z" fill="#FFC107" stroke="#FF6F00" strokeWidth="1.5"/>
-                        <path d="M12 8L7 11V14L12 17L17 14V11L12 8Z" fill="#FFFFFF" stroke="#FF6F00" strokeWidth="1"/>
-                    </svg>
-                    <span className={styles.logo_text}>HIVE</span>
+                    <img src="/src/assets/logov3.png" alt="HIVE Logo" className={styles.logo_img} />
                 </Link>
                 <div className={`${styles.nav_links_container} ${scrolled ? styles.nav_links_scrolled : ''}`}>
                     <div className={styles.nav_links}>
@@ -280,11 +276,7 @@ function Layout() {
                 <div className={styles.footer_content}>
                     <div className={styles.footer_column}>
                         <div className={styles.footer_logo}>
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 3L4.5 7.5V16.5L12 21L19.5 16.5V7.5L12 3Z" fill="#FFC107" stroke="#FF6F00" strokeWidth="1.5"/>
-                                <path d="M12 8L7 11V14L12 17L17 14V11L12 8Z" fill="#FFFFFF" stroke="#FF6F00" strokeWidth="1"/>
-                            </svg>
-                            <span className={styles.footer_logo_text}>HIVE</span>
+                            <img src="/src/assets/logov4.png" alt="HIVE Logo" className={styles.footer_logo_img} />
                         </div>
                         <p className={styles.footer_description}>Revolutionizing beekeeping through innovative IoT technology and AI-driven insights to create a sustainable future for bees and beekeepers.</p>
                         <div className={styles.footer_social}>

@@ -48,7 +48,7 @@
     width: 100%;
     padding: 2rem 4rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     z-index: 100;
     transition: padding 0.5s;
@@ -61,12 +61,17 @@
     padding: 0.5rem 0;
     transition: all 0.3s ease;
     border-radius: 30px;
+    margin: 0 auto; /* center horizontally within navbar */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 /* Styling for when scrolled */
 .nav_links_scrolled {
     background: #faf6ebc9;
     border: 2px solid #fbe49f;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 4px 15px rgba(255, 111, 0, 0.15);
     padding: 0.6rem 1.8rem;
 }
@@ -76,6 +81,10 @@
 }
 
 .logo {
+    position: absolute;
+    left: 4rem;
+    top: 50%;
+    transform: translateY(-50%);
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -83,9 +92,14 @@
     color: var(--dark);
 }
 
-.logo svg {
-    width: 32px;
-    height: 32px;
+.logo_img {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    height: 150px;
+    width: auto;
+    object-fit: contain;
 }
 
 .logo_text {
@@ -138,6 +152,10 @@
 }
 
 .cta_button {
+    position: absolute;
+    right: 4rem;
+    top: 50%;
+    transform: translateY(-50%);
     padding: 0.7rem 1.8rem;
     background-color: var(--honey-yellow);
     color: var(--dark);
@@ -166,11 +184,10 @@
 
 .footer_content {
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 0 auto 4rem; /* center grid in footer */
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: 300px repeat(4, 1fr); /* fixed first column for logo/text, then quick links equally */
     gap: 3rem;
-    margin-bottom: 4rem;
 }
 
 .footer_column {
@@ -185,9 +202,10 @@
     margin-bottom: 1.5rem;
 }
 
-.footer_logo svg {
-    width: 32px;
-    height: 32px;
+.footer_logo_img {
+    width: 150px;
+    height: auto;
+    object-fit: contain;
 }
 
 .footer_logo_text {
