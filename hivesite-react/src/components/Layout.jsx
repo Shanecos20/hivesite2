@@ -231,7 +231,7 @@ function Layout() {
             {/* Navbar */}
             <nav id="navbar" className={styles.navbar}>
                 <Link to="/" className={styles.logo} onClick={(e) => handleNavigation(e, '/')}>
-                    <img src="/src/assets/logov3.png" alt="HIVE Logo" className={styles.logo_img} />
+                    <img src="/assets/logov3.png" alt="HIVE Logo" className={styles.logo_img} />
                 </Link>
                 <div className={`${styles.nav_links_container} ${scrolled ? styles.nav_links_scrolled : ''}`}>
                     <div className={styles.nav_links}>
