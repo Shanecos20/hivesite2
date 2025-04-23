@@ -6,7 +6,7 @@ const API_CONFIG = {
   },
   // Production environment (Render)
   production: {
-    baseUrl: 'https://your-render-api-url-here.onrender.com' // Replace with your actual Render URL
+    baseUrl: 'https://hivesite-api.onrender.com' // Replace with your actual Render URL
   }
 };
 
