@@ -172,7 +172,6 @@
 .cta_button:hover {
     background-color: var(--honey-dark);
     color: var(--white);
-    transform: translateY(-2px);
 }
 
 /* Footer */
@@ -492,6 +491,16 @@
     
     .footer {
         padding: 3rem 2rem 1.5rem;
+    }
+    
+    /* Center logo on mobile screens */
+    .logo {
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .logo_img {
+        height: 100px;
     }
 }
 

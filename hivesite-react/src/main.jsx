@@ -9,6 +9,7 @@ import DownloadPage from './pages/DownloadPage.jsx'
 import AboutPage from './pages/AboutPage.jsx'
 import ContactPage from './pages/ContactPage.jsx'
 import MissionPage from './pages/MissionPage.jsx'
+import GetStartedPage from './pages/GetStartedPage.jsx'
 
 // ScrollToTop component to ensure page scrolls to top on route change
 function ScrollToTop() {
@@ -71,6 +72,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="about" element={<AboutPage />} />
           <Route path="contact" element={<ContactPage />} />
           <Route path="mission" element={<MissionPage />} />
+          <Route path="get-started" element={<GetStartedPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
