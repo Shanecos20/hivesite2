@@ -416,8 +416,8 @@ const About = () => {
           <div className={styles.story_content} ref={sectionRefs.storyContent} style={{ opacity: 0, transform: 'translateY(20px)' }}>
             <h3 className={styles.story_title}>A Vision Born from Necessity</h3>
             <p className={styles.story_text}>HIVE was born from a shared passion for sustainability, technology, and bee welfare. Founded in 2024 by a team of final-year computing and digital media students—and developed in close dialogue with real-world beekeepers—HIVE emerged in response to a simple but serious question: why are we still losing so many hives to preventable problems like mites, starvation, and disease?</p>
-            <p className={styles.story_text}>Rather than replace the art of beekeeping, we set out to build a tool that complements it—a modular smart-hive system powered by AI and IoT that can alert, assist, and even act on a beekeeper’s behalf when early signs of trouble appear. Drawing from sensor technology, cloud computing, and human-centered design, we created a prototype that brings precision and peace of mind to both hobbyists and commercial apiarists.</p>
-            <p className={styles.story_text}>With strong early interest from local clubs, commercial beekeepers, and agri-tech mentors, we’re working to launch a product that empowers keepers of all levels to protect their colonies, reduce manual labour, and improve outcomes—without losing the hands-on joy of the craft.</p>
+            <p className={styles.story_text}>Rather than replace the art of beekeeping, we set out to build a tool that complements it—a modular smart-hive system powered by AI and IoT that can alert, assist, and even act on a beekeeper's behalf when early signs of trouble appear. Drawing from sensor technology, cloud computing, and human-centered design, we created a prototype that brings precision and peace of mind to both hobbyists and commercial apiarists.</p>
+            <p className={styles.story_text}>With strong early interest from local clubs, commercial beekeepers, and agri-tech mentors, we're working to launch a product that empowers keepers of all levels to protect their colonies, reduce manual labour, and improve outcomes—without losing the hands-on joy of the craft.</p>
           </div>
           <div className={styles.story_image} ref={sectionRefs.storyImage} style={{ opacity: 0, transform: 'translateY(20px)' }}>
             <img src="/assets/beeflower.jpg" alt="HIVE founders with beehives" />
@@ -799,7 +799,7 @@ const About = () => {
           
           <div className={styles.cta_buttons} ref={sectionRefs.ctaButtons} style={{ opacity: 0, transform: 'translateY(20px)' }}>
             <a href="#" className="cta-button">Get Started</a>
-            <a href="#" className="cta-button" style={{ backgroundColor: 'transparent', border: '2px solid var(--honey-yellow)', color: 'var(--dark)' }}>Contact Sales</a>
+            <a href="#" className="cta-button cta-button--secondary">Contact Sales</a>
           </div>
         </div>
       </section>

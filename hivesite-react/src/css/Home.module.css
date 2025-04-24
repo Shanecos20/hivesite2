@@ -132,19 +132,24 @@
 }
 
 .hero_cta_secondary {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
+    padding: 0.7rem 1.8rem;
+    background-color: transparent;
     color: var(--dark);
+    border: 2px solid var(--honey-yellow);
+    border-radius: 30px;
     font-size: 1rem;
     font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
     text-decoration: none;
-    transition: color 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .hero_cta_secondary:hover {
-    color: var(--honey-dark);
+    background-color: rgba(255, 193, 7, 0.1);
+    transform: translateY(-2px);
 }
 
 .hero_scroll {
@@ -884,6 +889,7 @@
     justify-content: center;
     gap: 1.5rem;
     margin-top: 2rem;
+    flex-wrap: wrap;
     opacity: 0; /* For animation */
     transform: translateY(30px); /* For animation */
     width: 100%;

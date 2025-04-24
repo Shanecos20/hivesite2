@@ -896,7 +896,7 @@ const HomePage = () => {
           <p className={styles.cta_description} ref={sectionRefs.ctaDescription} style={{ opacity: 0, transform: 'translateY(30px)' }}>Join thousands of beekeepers who are using HIVE technology to create healthier, more productive colonies while contributing to global bee conservation efforts.</p>
           <div className={styles.cta_buttons} ref={sectionRefs.ctaButtons} style={{ opacity: 0, transform: 'translateY(30px)' }}>
             <a href="#" className="cta-button">Get Started Today</a>
-            <a href="#" className="cta-button" style={{ backgroundColor: 'transparent', border: '2px solid var(--honey-yellow)' }}>Contact Sales</a>
+            <a href="#" className="cta-button cta-button--secondary">Contact Sales</a>
           </div>
           <div className={styles.app_stores} ref={sectionRefs.appStores} style={{ opacity: 0, transform: 'translateY(30px)' }}>
             <a href="#" className={styles.app_store_button}>
