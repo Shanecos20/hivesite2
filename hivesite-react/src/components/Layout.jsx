@@ -315,7 +315,7 @@ function Layout() {
                 <div className={styles.footer_content}>
                     <div className={styles.footer_column}>
                         <div className={styles.footer_logo}>
-                            <img src="/assets/logov3.png" alt="HIVE Logo" className={styles.footer_logo_img} />
+                            <img src="/assets/logov4.png" alt="HIVE Logo" className={styles.footer_logo_img} />
                         </div>
                         <p className={styles.footer_description}>Revolutionizing beekeeping through innovative IoT technology and AI-driven insights to create a sustainable future for bees and beekeepers.</p>
                         <div className={styles.footer_social}>
