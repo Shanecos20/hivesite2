@@ -18,6 +18,9 @@ const isProduction =
 const environment = isProduction ? 'production' : 'development';
 const config = API_CONFIG[environment];
 
+// Export the base URL for direct API calls
+export const API_URL = config.baseUrl;
+
 // Utility function to get full API URL
 export const getApiUrl = (endpoint) => {
   const path = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;

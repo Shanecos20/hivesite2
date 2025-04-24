@@ -2,14 +2,111 @@ import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from '../css/Contact.module.css';
+import axios from 'axios';
+import { API_URL } from '../config/api';
 
 const ContactPage = () => {
   // Add loading state
   const [isLoaded, setIsLoaded] = useState(false);
+  // Add form states
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+    website: ''
+  });
+  const [formStatus, setFormStatus] = useState({
+    submitted: false,
+    success: false,
+    error: null
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   // Refs for GSAP animations
   const blobsRef = useRef([]);
   const heroRef = useRef(null);
+  
+  // State for active FAQ item
+  const [activeFaqItem, setActiveFaqItem] = useState(null);
+  
+  // FAQ data
+  const faqData = [
+    {
+      question: "How quickly will I receive a response to my inquiry?",
+      answer: "We strive to respond to all inquiries within 24 hours during business days. For urgent technical issues, please use our phone support option for immediate assistance during our support hours."
+    },
+    {
+      question: "How can I request a product demonstration?",
+      answer: "You can request a product demonstration by selecting 'Product Inquiry' in the contact form subject dropdown and specifying your interest in a demo. Alternatively, you can email our sales team directly at sales@hiveproject.com to schedule a personalized demonstration."
+    },
+    {
+      question: "Do you offer support in languages other than English?",
+      answer: "Yes, we offer support in multiple languages including English, French, German, Spanish, and Italian. Please indicate your preferred language when contacting us, and we'll do our best to accommodate your request."
+    },
+    {
+      question: "How can I report a bug or suggest a feature?",
+      answer: "We value your feedback! To report a bug, please select 'Technical Support' in the contact form and provide as much detail as possible about the issue you're experiencing. For feature suggestions, select 'Feedback' and share your ideas with us. Our product team reviews all suggestions as we continue to improve HIVE."
+    }
+  ];
+  
+  // Handle input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+  
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    // Check if honeypot field is filled - if so, silently return without submitting
+    // This prevents spam bots that auto-fill all fields
+    if (formData.website) {
+      console.log('Honeypot triggered - likely a bot submission');
+      // Show success message to the bot but don't actually send anything
+      setFormStatus({
+        submitted: true,
+        success: true,
+        error: null
+      });
+      return;
+    }
+    
+    setIsSubmitting(true);
+    
+    try {
+      const response = await axios.post(`${API_URL}/api/support`, formData);
+      
+      setFormStatus({
+        submitted: true,
+        success: true,
+        error: null
+      });
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: '',
+        website: ''
+      });
+      
+    } catch (error) {
+      console.error('Error submitting support form:', error);
+      setFormStatus({
+        submitted: true,
+        success: false,
+        error: error.response?.data?.message || 'Failed to submit form. Please try again.'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   
   useEffect(() => {
     // First mark component as loaded
@@ -63,16 +160,6 @@ const ContactPage = () => {
             }
           });
         }
-      });
-
-      // FAQ Toggle functionality
-      const faqQuestions = document.querySelectorAll(`.${styles.faq_question}`);
-      
-      faqQuestions.forEach(question => {
-        question.addEventListener('click', () => {
-          const faqItem = question.parentElement;
-          faqItem.classList.toggle(styles.active);
-        });
       });
 
       // GSAP animations for content
@@ -264,11 +351,6 @@ const ContactPage = () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
       
       // Clean up event listeners
-      const faqQuestions = document.querySelectorAll(`.${styles.faq_question}`);
-      faqQuestions.forEach(question => {
-        question.removeEventListener('click', () => {});
-      });
-      
       const formInputs = document.querySelectorAll(`.${styles.form_input}, .${styles.form_select}, .${styles.form_textarea}`);
       formInputs.forEach(input => {
         input.removeEventListener('focus', () => {});
@@ -301,6 +383,11 @@ const ContactPage = () => {
     if (element && !blobsRef.current.includes(element)) {
       blobsRef.current.push(element);
     }
+  };
+
+  // Handle FAQ item click
+  const toggleFaqItem = (index) => {
+    setActiveFaqItem(index === activeFaqItem ? null : index);
   };
 
   return (
@@ -397,37 +484,105 @@ const ContactPage = () => {
         <div className={styles.contact_container}>
           <div className={styles.contact_form_container}>
             <h3 className={styles.form_title}>Get in Touch</h3>
-            <form className={styles.contact_form}>
-              <div className={styles.form_group}>
-                <label htmlFor="name" className={styles.form_label}>Name</label>
-                <input type="text" id="name" name="name" className={styles.form_input} placeholder="Your full name" required />
+            {formStatus.submitted && formStatus.success ? (
+              <div className={styles.success_message}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M8 12l2 2 4-4"></path>
+                </svg>
+                <h4>Thank you for reaching out!</h4>
+                <p>We have received your message and will get back to you as soon as possible. Our support team typically responds within 24 hours during business days.</p>
               </div>
-              
-              <div className={styles.form_group}>
-                <label htmlFor="email" className={styles.form_label}>Email</label>
-                <input type="email" id="email" name="email" className={styles.form_input} placeholder="Your email address" required />
-              </div>
-              
-              <div className={styles.form_group}>
-                <label htmlFor="subject" className={styles.form_label}>Subject</label>
-                <select id="subject" name="subject" className={styles.form_select} required>
-                  <option value="" disabled selected>Select a topic</option>
-                  <option value="technical-support">Technical Support</option>
-                  <option value="account-help">Account Help</option>
-                  <option value="product-inquiry">Product Inquiry</option>
-                  <option value="partnership">Partnership Opportunity</option>
-                  <option value="feedback">Feedback</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-              
-              <div className={styles.form_group}>
-                <label htmlFor="message" className={styles.form_label}>Message</label>
-                <textarea id="message" name="message" className={styles.form_textarea} placeholder="How can we help you?" required></textarea>
-              </div>
-              
-              <button type="submit" className={styles.form_submit}>Send Message</button>
-            </form>
+            ) : (
+              <form className={styles.contact_form} onSubmit={handleSubmit}>
+                <div className={styles.form_group}>
+                  <label htmlFor="name" className={styles.form_label}>Name</label>
+                  <input 
+                    type="text" 
+                    id="name" 
+                    name="name" 
+                    className={styles.form_input} 
+                    placeholder="Your full name" 
+                    required 
+                    value={formData.name}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                
+                <div className={styles.form_group}>
+                  <label htmlFor="email" className={styles.form_label}>Email</label>
+                  <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    className={styles.form_input} 
+                    placeholder="Your email address" 
+                    required 
+                    value={formData.email}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                
+                <div className={styles.form_group}>
+                  <label htmlFor="subject" className={styles.form_label}>Subject</label>
+                  <select 
+                    id="subject" 
+                    name="subject" 
+                    className={styles.form_select} 
+                    required
+                    value={formData.subject}
+                    onChange={handleInputChange}
+                  >
+                    <option value="" disabled>Select a topic</option>
+                    <option value="technical-support">Technical Support</option>
+                    <option value="account-help">Account Help</option>
+                    <option value="product-inquiry">Product Inquiry</option>
+                    <option value="partnership">Partnership Opportunity</option>
+                    <option value="feedback">Feedback</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                
+                <div className={styles.form_group}>
+                  <label htmlFor="message" className={styles.form_label}>Message</label>
+                  <textarea 
+                    id="message" 
+                    name="message" 
+                    className={styles.form_textarea} 
+                    placeholder="How can we help you?" 
+                    required
+                    value={formData.message}
+                    onChange={handleInputChange}
+                  ></textarea>
+                </div>
+                
+                {/* Honeypot field - hidden from regular users but bots will fill it */}
+                <div style={{ display: 'none' }}>
+                  <label htmlFor="website" className={styles.form_label}>Website</label>
+                  <input 
+                    type="text" 
+                    id="website" 
+                    name="website" 
+                    value={formData.website}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                
+                {formStatus.error && (
+                  <div className={styles.error_message}>
+                    {formStatus.error}
+                  </div>
+                )}
+                
+                <button 
+                  type="submit" 
+                  className={styles.form_submit}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                </button>
+              </form>
+            )}
           </div>
           
           <div className={styles.social_container}>
@@ -482,12 +637,21 @@ const ContactPage = () => {
               <h3 className={styles.office_title}>Headquarters</h3>
               <p className={styles.office_address}>
                 HIVE Innovation Center<br />
-                123 Apiary Lane<br />
-                Brussels, BE 1000<br />
-                European Union
+                iHUBS Building, ATU Campus<br />
+                Dublin Road, Galway<br />
+                Ireland
               </p>
               <div className={styles.office_map}>
-                [Interactive Map]
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2385.7389442666856!2d-9.014310323857566!3d53.28026207996396!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x485b96f41665754f%3A0xebcf1c23d5e77e9c!2siHUBS%20ATU%20Galway!5e0!3m2!1sen!2sus!4v1719439095800!5m2!1sen!2sus" 
+                  width="100%" 
+                  height="100%" 
+                  style={{ border: 0 }} 
+                  allowFullScreen="" 
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="HIVE Headquarters Location"
+                ></iframe>
               </div>
             </div>
           </div>
@@ -514,68 +678,29 @@ const ContactPage = () => {
         </div>
         
         <div className={styles.faq_section}>
-          <h3 className={styles.faq_title}>Frequently Asked Questions</h3>
+          <div className={styles.section_header}>
+            <span className={styles.section_subtitle}>Questions & Answers</span>
+            <h2 className={styles.section_title}>Frequently Asked Questions</h2>
+            <p className={styles.section_description}>Get answers to the most common questions about contacting and working with our support team.</p>
+          </div>
           
           <div className={styles.faq_container}>
-            <div className={styles.faq_item}>
-              <div className={styles.faq_question}>
-                <div className={styles.question_text}>How quickly will I receive a response to my inquiry?</div>
-                <div className={styles.question_icon}>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                  </svg>
+            {faqData.map((faq, index) => (
+              <div key={index} className={`${styles.faq_item} ${activeFaqItem === index ? styles.active : ''}`}>
+                <div className={styles.faq_question} onClick={() => toggleFaqItem(index)}>
+                  <div className={styles.question_text}>{faq.question}</div>
+                  <div className={styles.question_icon}>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="12" y1="5" x2="12" y2="19"></line>
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                  </div>
+                </div>
+                <div className={styles.faq_answer}>
+                  {faq.answer}
                 </div>
               </div>
-              <div className={styles.faq_answer}>
-                We strive to respond to all inquiries within 24 hours during business days. For urgent technical issues, please use our phone support option for immediate assistance during our support hours.
-              </div>
-            </div>
-            
-            <div className={styles.faq_item}>
-              <div className={styles.faq_question}>
-                <div className={styles.question_text}>How can I request a product demonstration?</div>
-                <div className={styles.question_icon}>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                  </svg>
-                </div>
-              </div>
-              <div className={styles.faq_answer}>
-                You can request a product demonstration by selecting "Product Inquiry" in the contact form subject dropdown and specifying your interest in a demo. Alternatively, you can email our sales team directly at sales@hiveproject.com to schedule a personalized demonstration.
-              </div>
-            </div>
-            
-            <div className={styles.faq_item}>
-              <div className={styles.faq_question}>
-                <div className={styles.question_text}>Do you offer support in languages other than English?</div>
-                <div className={styles.question_icon}>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                  </svg>
-                </div>
-              </div>
-              <div className={styles.faq_answer}>
-                Yes, we offer support in multiple languages including English, French, German, Spanish, and Italian. Please indicate your preferred language when contacting us, and we'll do our best to accommodate your request.
-              </div>
-            </div>
-            
-            <div className={styles.faq_item}>
-              <div className={styles.faq_question}>
-                <div className={styles.question_text}>How can I report a bug or suggest a feature?</div>
-                <div className={styles.question_icon}>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                  </svg>
-                </div>
-              </div>
-              <div className={styles.faq_answer}>
-                We value your feedback! To report a bug, please select "Technical Support" in the contact form and provide as much detail as possible about the issue you're experiencing. For feature suggestions, select "Feedback" and share your ideas with us. Our product team reviews all suggestions as we continue to improve HIVE.
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>

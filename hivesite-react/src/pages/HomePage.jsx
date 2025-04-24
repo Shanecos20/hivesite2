@@ -436,12 +436,12 @@ const HomePage = () => {
           <p className={styles.hero_description} ref={heroDescriptionRef} style={{ opacity: 0, transform: 'translateY(30px)' }}>HIVE connects IoT technology with AI-driven insights to make beekeeping more accessible, efficient, and sustainable. Real-time monitoring, smart analytics, and actionable recommendations to ensure thriving colonies.</p>
           <div className={styles.hero_cta_group} ref={heroCTAGroupRef} style={{ opacity: 0, transform: 'translateY(30px)' }}>
             <a href="#" className="cta-button">Download the App</a>
-            <a href="#" className={styles.hero_cta_secondary}>
+            <a href="https://www.youtube.com/watch?v=RVhQh1vsklw" target="_blank" rel="noopener noreferrer" className={styles.hero_cta_secondary}>
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="10"></circle>
                 <polygon points="10 8 16 12 10 16 10 8"></polygon>
               </svg>
-              Watch Demo
+              Watch Video
             </a>
           </div>
         </div>
@@ -896,7 +896,7 @@ const HomePage = () => {
           <p className={styles.cta_description} ref={sectionRefs.ctaDescription} style={{ opacity: 0, transform: 'translateY(30px)' }}>Join thousands of beekeepers who are using HIVE technology to create healthier, more productive colonies while contributing to global bee conservation efforts.</p>
           <div className={styles.cta_buttons} ref={sectionRefs.ctaButtons} style={{ opacity: 0, transform: 'translateY(30px)' }}>
             <a href="#" className="cta-button">Get Started Today</a>
-            <a href="#" className={styles.hero_cta_secondary}>Contact Sales</a>
+            <a href="#" className="cta-button" style={{ backgroundColor: 'transparent', border: '2px solid var(--honey-yellow)' }}>Contact Sales</a>
           </div>
           <div className={styles.app_stores} ref={sectionRefs.appStores} style={{ opacity: 0, transform: 'translateY(30px)' }}>
             <a href="#" className={styles.app_store_button}>

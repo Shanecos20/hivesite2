@@ -415,9 +415,9 @@ const About = () => {
         <div className={styles.story_container}>
           <div className={styles.story_content} ref={sectionRefs.storyContent} style={{ opacity: 0, transform: 'translateY(20px)' }}>
             <h3 className={styles.story_title}>A Vision Born from Necessity</h3>
-            <p className={styles.story_text}>HIVE began in 2020 when our founder, a third-generation beekeeper, witnessed firsthand the devastating effects of colony collapse disorder. Frustrated by the lack of advanced tools to monitor and protect his hives, he envisioned a technology that could bridge the gap between traditional beekeeping practices and modern innovation.</p>
-            <p className={styles.story_text}>Collaborating with engineers, data scientists, and fellow beekeepers, we developed a system that harnesses the power of IoT and AI to provide unprecedented insights into hive health and behavior. Our early prototypes quickly gained attention for their effectiveness in preventing hive loss and increasing honey production.</p>
-            <p className={styles.story_text}>Today, HIVE has grown into a comprehensive platform used by thousands of beekeepers across Europe and North America, from hobbyists with a single hive to commercial operations with thousands of colonies.</p>
+            <p className={styles.story_text}>HIVE was born from a shared passion for sustainability, technology, and bee welfare. Founded in 2024 by a team of final-year computing and digital media students—and developed in close dialogue with real-world beekeepers—HIVE emerged in response to a simple but serious question: why are we still losing so many hives to preventable problems like mites, starvation, and disease?</p>
+            <p className={styles.story_text}>Rather than replace the art of beekeeping, we set out to build a tool that complements it—a modular smart-hive system powered by AI and IoT that can alert, assist, and even act on a beekeeper’s behalf when early signs of trouble appear. Drawing from sensor technology, cloud computing, and human-centered design, we created a prototype that brings precision and peace of mind to both hobbyists and commercial apiarists.</p>
+            <p className={styles.story_text}>With strong early interest from local clubs, commercial beekeepers, and agri-tech mentors, we’re working to launch a product that empowers keepers of all levels to protect their colonies, reduce manual labour, and improve outcomes—without losing the hands-on joy of the craft.</p>
           </div>
           <div className={styles.story_image} ref={sectionRefs.storyImage} style={{ opacity: 0, transform: 'translateY(20px)' }}>
             <img src="/assets/beeflower.jpg" alt="HIVE founders with beehives" />
@@ -701,7 +701,7 @@ const About = () => {
             <div className={styles.timeline_content}>
               <div className={styles.timeline_year}>September 2024</div>
               <h3 className={styles.timeline_title}>Hive App Concept</h3>
-              <p className={styles.timeline_text}>The Hive App concept was ideated and our group was formed.</p>
+              <p className={styles.timeline_text}>The Hive App concept was ideated and our group was formed. Stemming from a shared passion for sustainability, technology, and bee welfare.</p>
             </div>
           </div>
           
@@ -710,7 +710,7 @@ const About = () => {
             <div className={styles.timeline_content}>
               <div className={styles.timeline_year}>October 2024</div>
               <h3 className={styles.timeline_title}>Market Research</h3>
-              <p className={styles.timeline_text}>Initial market research was conducted to determine the viability of the Hive App.</p>
+              <p className={styles.timeline_text}>Initial market research was conducted to determine the viability of the Hive App. This included a survey of beekeepers and a review of existing beekeeping apps.</p>
             </div>
           </div>
           
@@ -719,7 +719,7 @@ const About = () => {
             <div className={styles.timeline_content}>
               <div className={styles.timeline_year}>November 2024</div>
               <h3 className={styles.timeline_title}>Prototype Concept</h3>
-              <p className={styles.timeline_text}>A prototype concept was created to showcase the potential of the Hive App project.</p>
+              <p className={styles.timeline_text}>A prototype concept was created to showcase the potential of the Hive App project. This included a prototype of the app and website as well as additional resources such as the first issue of our E-Book series.</p>
             </div>
           </div>
           
@@ -727,16 +727,16 @@ const About = () => {
             <div className={styles.timeline_dot}></div>
             <div className={styles.timeline_content}>
               <div className={styles.timeline_year}>February 2025</div>
-              <h3 className={styles.timeline_title}>International Expansion</h3>
-              <p className={styles.timeline_text}>Growing beyond Europe, HIVE entered markets in North America and Australia, adapting to diverse beekeeping practices and environments.</p>
+              <h3 className={styles.timeline_title}>New Direction</h3>
+              <p className={styles.timeline_text}>The HIVE team turned their focus to the redesign of the brand, including the app and website according to feedback recieved. We began finalising what we wanted our product to be.</p>
             </div>
           </div>
           
           <div className={styles.timeline_item} ref={el => addToRef(el, sectionRefs.timelineItems)} style={{ opacity: 0, transform: 'translateY(20px)' }}>
             <div className={styles.timeline_dot}></div>
             <div className={styles.timeline_content}>
-              <div className={styles.timeline_year}>2024</div>
-              <h3 className={styles.timeline_title}>EU Green Award</h3>
+              <div className={styles.timeline_year}>March 2025</div>
+              <h3 className={styles.timeline_title}>ATU Student Entrepreneur Awards</h3>
               <p className={styles.timeline_text}>HIVE was recognized with the prestigious EU Green Award for sustainable innovation that contributes to environmental conservation.</p>
             </div>
           </div>
@@ -744,9 +744,9 @@ const About = () => {
           <div className={styles.timeline_item} ref={el => addToRef(el, sectionRefs.timelineItems)} style={{ opacity: 0, transform: 'translateY(20px)' }}>
             <div className={styles.timeline_dot}></div>
             <div className={styles.timeline_content}>
-              <div className={styles.timeline_year}>2025</div>
-              <h3 className={styles.timeline_title}>HIVE 2.0 Launch</h3>
-              <p className={styles.timeline_text}>Our next-generation platform introduces groundbreaking features including advanced disease detection and comprehensive colony genetics tracking.</p>
+              <div className={styles.timeline_year}>April 2025</div>
+              <h3 className={styles.timeline_title}>Enterprise Ireland Student Entrepreneur Awards</h3>
+              <p className={styles.timeline_text}>HIVE was shortlisted for the Enterprise Ireland Student Entrepreneur Awards for 2025.</p>
             </div>
           </div>
         </div>
@@ -763,16 +763,16 @@ const About = () => {
         <div className={styles.partners_container}>
           <div className={styles.partners_grid}>
             {[
-              { name: 'EU Green',    logo: '/assets/main-logo-colors.png' },
-              { name: 'ATU',          logo: '/assets/AtuPartner.png' },
-              { name: 'APIMONDIA',    logo: '/assets/Apimondia.png' },
-              { name: 'Global Bee Institute' },
-              { name: 'TechGreen Innovations' },
-              { name: 'University of Zurich' },
-              { name: 'Sustainable Farming Alliance' },
-              { name: 'World Beekeepers Association', logo: '/assets/WorldBeekeepers.png' },
-              { name: 'EcoTech Ventures' },
-              { name: 'Agricultural Research Institute' }
+              { name: 'ATU', logo: '/assets/partnerATU.png' },
+              { name: 'Bord Bia', logo: '/assets/partnerBordbia.png' },
+              { name: 'Enterprise Ireland', logo: '/assets/partnerEnterprise.png' },
+              { name: 'EU Green', logo: '/assets/partnerEUGREEN.png' },
+              { name: 'IFA', logo: '/assets/partnerIFA.png' },
+              { name: 'Innovation Hub', logo: '/assets/partnerIHUBS.jpg' },
+              { name: 'Irish Beekeepers Association', logo: '/assets/partnerIrishBee.png' },
+              { name: 'National Ploughing Championships', logo: '/assets/partnerPloughing.png' },
+              { name: 'All-Ireland Pollinator Plan', logo: '/assets/partnerPollinator.png' },
+              { name: 'Teagasc', logo: '/assets/partnerTeagasc.png' }
             ].map(({ name, logo }) => (
               <div
                 className={styles.partner_item}
@@ -781,7 +781,7 @@ const About = () => {
                 style={{ opacity: 0, transform: 'translateY(20px)' }}
               >
                 <img
-                  src={logo || `https://via.placeholder.com/150?text=${encodeURIComponent(name)}`}
+                  src={logo}
                   alt={name}
                   className={styles.partner_logo}
                 />

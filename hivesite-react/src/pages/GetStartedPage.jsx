@@ -189,7 +189,7 @@ const GetStartedPage = () => {
             onSubmit={handleSubmit}
           >
             <div className={styles.form_logo_container}>
-              <img src="/assets/main-logo-colors.png" alt="HIVE Logo" className={styles.form_logo} />
+              <img src="/assets/HiveBoxLogo.png" alt="HIVE Logo" className={styles.form_logo} />
             </div>
             
             <h3 className={styles.form_heading}>Join Our Beekeeping Community</h3>
@@ -241,7 +241,7 @@ const GetStartedPage = () => {
         ) : (
           <div ref={pageRefs.success} className={styles.success_container}>
             <div className={styles.form_logo_container}>
-              <img src="/assets/main-logo-colors.png" alt="HIVE Logo" className={styles.form_logo} />
+              <img src="/assets/HiveBoxLogo.png" alt="HIVE Logo" className={styles.form_logo} />
             </div>
             <div className={styles.success_icon}>✓</div>
             <h2 className={styles.success_title}>Thank You For Pre-ordering!</h2>

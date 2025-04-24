@@ -95,6 +95,34 @@ app.post('/api/preorder', async (req, res) => {
   }
 });
 
+// API endpoint for support form submissions
+app.post('/api/support', async (req, res) => {
+  const { name, email, subject, message, website } = req.body;
+  
+  // Check honeypot field - if it's filled, it's likely a bot
+  if (website) {
+    console.log(`Honeypot triggered - bot submission detected from ${email}`);
+    // Return success to the bot but don't process the submission
+    return res.status(200).json({ message: 'Form submitted successfully' });
+  }
+  
+  if (!email || !name || !subject || !message) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+  
+  try {
+    // Send support email
+    await sendSupportEmail(name, email, subject, message);
+    
+    console.log(`Support request received from ${email}, subject: ${subject}`);
+    
+    res.status(200).json({ message: 'Support request received. We will contact you shortly.' });
+  } catch (error) {
+    console.error('Error processing support request:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // TESTING ONLY: Get all registered emails
 app.get('/api/admin/preorders', async (req, res) => {
   try {
@@ -140,6 +168,218 @@ app.delete('/api/admin/preorders', async (req, res) => {
   }
 });
 
+// Function to send support request email
+const sendSupportEmail = async (name, email, subject, message) => {
+  if (!transporter) {
+    console.error('Email transporter not initialized');
+    throw new Error('Email service unavailable');
+  }
+  
+  // Email to the support team
+  const supportMailOptions = {
+    from: '"HIVE Website" <hiveappreply@gmail.com>',
+    to: process.env.SUPPORT_EMAIL || 'hiveappreply@gmail.com',
+    subject: `HIVE Support Request: ${subject}`,
+    html: `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>New Support Request</title>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+      </head>
+      <body style="margin: 0; padding: 0; font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9f9f9; color: #212121;">
+        <!-- Outer wrapper for wavy side backgrounds -->
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f9f9f9;">
+          <tr>
+            <td width="120" style="background-image: url('https://i.imgur.com/vinNU4l.png'); background-repeat: repeat-y; background-position: left center;"></td>
+            <td align="center" style="padding: 0;">
+              <table cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-spacing: 0; box-shadow: 0 8px 24px rgba(0,0,0,0.1);">
+                <!-- Header with honey gradient -->
+                <tr>
+                  <td style="background: linear-gradient(90deg, #FFC107, #FF9800, #FF6F00); height: 12px;"></td>
+                </tr>
+                
+                <!-- Logo -->
+                <tr>
+                  <td style="text-align: center; padding: 40px 20px 30px;">
+                    <img src="https://i.imgur.com/kjI6egd.png" alt="HIVE Logo" width="180" style="max-width: 180px; height: auto;">
+                  </td>
+                </tr>
+                
+                <!-- Main Content -->
+                <tr>
+                  <td style="padding: 20px 30px 30px;">
+                    <h1 style="font-size: 28px; color: #212121; margin: 0 0 24px; text-align: center; font-weight: 700;">New Support Request</h1>
+                    
+                    <div style="background-color: #F5F5F5; padding: 25px; margin-bottom: 20px;">
+                      <p style="margin: 0 0 10px; font-weight: 600;">Contact Information:</p>
+                      <p style="margin: 0 0 5px;"><strong>Name:</strong> ${name}</p>
+                      <p style="margin: 0 0 5px;"><strong>Email:</strong> ${email}</p>
+                      <p style="margin: 0 0 5px;"><strong>Subject:</strong> ${subject}</p>
+                    </div>
+                    
+                    <p style="margin: 0 0 10px; font-weight: 600;">Message:</p>
+                    <div style="background-color: #FFF8E1; border-left: 4px solid #FFC107; padding: 15px; margin: 0 0 25px;">
+                      ${message.replace(/\n/g, '<br>')}
+                    </div>
+                  </td>
+                </tr>
+                
+                <!-- Footer -->
+                <tr>
+                  <td style="background: linear-gradient(135deg, #212121, #424242); color: #ffffff; text-align: center; padding: 30px; font-size: 14px;">
+                    <p style="margin: 0 0 10px;">&copy; 2024 HIVE Smart Beekeeping. All rights reserved.</p>
+                    <p style="margin: 0;">This message was sent from the HIVE website contact form.</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td width="120" style="background-image: url('https://i.imgur.com/vinNU4l.png'); background-repeat: repeat-y; background-position: right center;"></td>
+          </tr>
+        </table>
+      </body>
+      </html>
+    `
+  };
+  
+  // Confirmation email to the user
+  const userConfirmationOptions = {
+    from: '"HIVE Support" <hiveappreply@gmail.com>',
+    to: email,
+    subject: 'We Received Your Support Request',
+    html: `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Support Request Confirmation</title>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+      </head>
+      <body style="margin: 0; padding: 0; font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9f9f9; color: #212121;">
+        <!-- Outer wrapper for wavy side backgrounds -->
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f9f9f9;">
+          <tr>
+            <td width="120" style="background-image: url('https://i.imgur.com/vinNU4l.png'); background-repeat: repeat-y; background-position: left center;"></td>
+            <td align="center" style="padding: 0;">
+              <table cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-spacing: 0; box-shadow: 0 8px 24px rgba(0,0,0,0.1);">
+                <!-- Header with honey gradient -->
+                <tr>
+                  <td style="background: linear-gradient(90deg, #FFC107, #FF9800, #FF6F00); height: 12px;"></td>
+                </tr>
+                
+                <!-- Logo -->
+                <tr>
+                  <td style="text-align: center; padding: 40px 20px 30px;">
+                    <img src="https://i.imgur.com/kjI6egd.png" alt="HIVE Logo" width="180" style="max-width: 180px; height: auto;">
+                  </td>
+                </tr>
+                
+                <!-- Main Content -->
+                <tr>
+                  <td style="padding: 20px 30px 30px;">
+                    <h1 style="font-size: 32px; color: #212121; margin: 0 0 24px; text-align: center; font-weight: 700;">HIVE Smart Beekeeping</h1>
+                    
+                    <p style="margin: 0 0 20px; line-height: 1.6; font-size: 16px;">Hi ${name},</p>
+                    
+                    <p style="margin: 0 0 20px; line-height: 1.6; font-size: 16px;">Thank you for contacting HIVE Support. We've received your message regarding "${subject}" and will get back to you as soon as possible.</p>
+                    
+                    <div style="background-color: #FFF8E1; border-left: 4px solid #FFC107; padding: 15px; margin: 25px 0; border-radius: 4px;">
+                      <p style="margin: 0; line-height: 1.6; font-size: 16px;">Our support team typically responds within 24 business hours. If your matter is urgent, please call our support line at +1 (800) 555-1234.</p>
+                    </div>
+                  </td>
+                </tr>
+                
+                <!-- Support Hours -->
+                <tr>
+                  <td style="padding: 0 30px 30px;">
+                    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-spacing: 0;">
+                      <tr>
+                        <td style="background-color: #F5F5F5; padding: 25px; text-align: center;">
+                          <h3 style="margin: 0 0 15px; font-size: 18px; color: #212121; font-weight: 600;">Support Hours</h3>
+                          <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-spacing: 0;">
+                            <tr>
+                              <td width="50%" style="padding: 5px 10px; text-align: right; font-weight: 600;">Monday - Friday:</td>
+                              <td width="50%" style="padding: 5px 10px; text-align: left;">8:00 AM - 8:00 PM CET</td>
+                            </tr>
+                            <tr>
+                              <td width="50%" style="padding: 5px 10px; text-align: right; font-weight: 600;">Saturday:</td>
+                              <td width="50%" style="padding: 5px 10px; text-align: left;">9:00 AM - 5:00 PM CET</td>
+                            </tr>
+                            <tr>
+                              <td width="50%" style="padding: 5px 10px; text-align: right; font-weight: 600;">Sunday:</td>
+                              <td width="50%" style="padding: 5px 10px; text-align: left;">Closed</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                
+                <!-- Call to Action -->
+                <tr>
+                  <td style="padding: 0 30px 40px;">
+                    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-spacing: 0;">
+                      <tr>
+                        <td style="background-color: #FFFDE7; padding: 25px; text-align: center; border: 1px dashed #FFC107;">
+                          <p style="margin: 0 0 15px; font-size: 20px; font-weight: 600; color: #FF6F00;">Connect With Us</p>
+                          <p style="margin: 0 0 20px; line-height: 1.5; font-size: 16px; color: #616161;">Follow us on social media for updates and beekeeping tips.</p>
+                          <div>
+                            <!-- Social media icons -->
+                            <a href="https://instagram.com" style="display: inline-block; margin: 0 10px; text-decoration: none;">
+                              <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" width="36" height="36" style="border: 0;">
+                            </a>
+                            <a href="https://twitter.com" style="display: inline-block; margin: 0 10px; text-decoration: none;">
+                              <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter" width="36" height="36" style="border: 0;">
+                            </a>
+                            <a href="https://facebook.com" style="display: inline-block; margin: 0 10px; text-decoration: none;">
+                              <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" width="36" height="36" style="border: 0;">
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                
+                <!-- Footer -->
+                <tr>
+                  <td style="background: linear-gradient(135deg, #212121, #424242); color: #ffffff; text-align: center; padding: 30px; font-size: 14px;">
+                    <p style="margin: 0 0 10px;">&copy; 2024 HIVE Smart Beekeeping. All rights reserved.</p>
+                    <p style="margin: 0;">Old Dublin Rd, Galway, H91 DCH9</p>
+                    <div style="margin-top: 20px;">
+                      <a href="https://hivesite2.github.io/privacy" style="color: #FFC107; text-decoration: none; margin: 0 10px;">Privacy Policy</a>
+                      <a href="https://hivesite2.github.io/terms" style="color: #FFC107; text-decoration: none; margin: 0 10px;">Terms of Service</a>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td width="120" style="background-image: url('https://i.imgur.com/vinNU4l.png'); background-repeat: repeat-y; background-position: right center;"></td>
+          </tr>
+        </table>
+      </body>
+      </html>
+    `
+  };
+  
+  try {
+    // Send email to support team
+    await transporter.sendMail(supportMailOptions);
+    
+    // Send confirmation to user
+    await transporter.sendMail(userConfirmationOptions);
+    
+    return true;
+  } catch (error) {
+    console.error('Error sending support emails:', error);
+    throw error;
+  }
+};
+
 // Function to send confirmation email
 const sendConfirmationEmail = async (email) => {
   if (!transporter) {
@@ -166,7 +406,7 @@ const sendConfirmationEmail = async (email) => {
           <tr>
             <td width="120" style="background-image: url('https://i.imgur.com/vinNU4l.png'); background-repeat: repeat-y; background-position: left center;"></td>
             <td align="center" style="padding: 0;">
-              <table cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-spacing: 0; box-shadow: 0 8px 24px rgba(0,0,0,0.1); border-radius: 12px; overflow: hidden;">
+              <table cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-spacing: 0; box-shadow: 0 8px 24px rgba(0,0,0,0.1);">
                 <!-- Header with honey gradient -->
                 <tr>
                   <td style="background: linear-gradient(90deg, #FFC107, #FF9800, #FF6F00); height: 12px;"></td>
@@ -199,7 +439,7 @@ const sendConfirmationEmail = async (email) => {
                   <td style="padding: 0 30px 30px;">
                     <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-spacing: 0;">
                       <tr>
-                        <td style="background-color: #F5F5F5; border-radius: 8px; padding: 25px; text-align: center;">
+                        <td style="background-color: #F5F5F5; padding: 25px; text-align: center;">
                           <img src="https://i.imgur.com/uHl0XDs.png" alt="HIVE Dashboard" style="max-width: 100%; height: auto; border-radius: 6px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
                           <h3 style="margin: 0 0 15px; font-size: 20px; color: #212121; font-weight: 600;">Smart Monitoring System</h3>
                           <p style="margin: 0; line-height: 1.5; font-size: 15px; color: #616161;">Our innovative solution helps beekeepers monitor hive health, prevent colony loss, and increase honey production.</p>
@@ -214,7 +454,7 @@ const sendConfirmationEmail = async (email) => {
                   <td style="padding: 0 30px 40px;">
                     <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-spacing: 0;">
                       <tr>
-                        <td style="background-color: #FFFDE7; border-radius: 8px; padding: 25px; text-align: center; border: 1px dashed #FFC107;">
+                        <td style="background-color: #FFFDE7; padding: 25px; text-align: center; border: 1px dashed #FFC107;">
                           <p style="margin: 0 0 15px; font-size: 20px; font-weight: 600; color: #FF6F00;">Stay Connected</p>
                           <p style="margin: 0 0 20px; line-height: 1.5; font-size: 16px; color: #616161;">Follow us on social media for updates on our progress and beekeeping tips.</p>
                           <div>
@@ -266,8 +506,8 @@ const sendConfirmationEmail = async (email) => {
                 
                 <!-- Footer -->
                 <tr>
-                  <td style="background: linear-gradient(135deg, #212121, #424242); color: #ffffff; text-align: center; padding: 30px; font-size: 14px; border-radius: 0 0 12px 12px;">
-                    <p style="margin: 0 0 10px;">&copy; 2025 HIVE Smart Beekeeping. All rights reserved.</p>
+                  <td style="background: linear-gradient(135deg, #212121, #424242); color: #ffffff; text-align: center; padding: 30px; font-size: 14px;">
+                    <p style="margin: 0 0 10px;">&copy; 2024 HIVE Smart Beekeeping. All rights reserved.</p>
                     <p style="margin: 0;">Old Dublin Rd, Galway, H91 DCH9</p>
                     <div style="margin-top: 20px;">
                       <a href="https://hivesite2.github.io/privacy" style="color: #FFC107; text-decoration: none; margin: 0 10px;">Privacy Policy</a>
