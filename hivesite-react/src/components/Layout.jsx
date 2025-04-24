@@ -145,11 +145,7 @@ function Layout() {
                 const cursor = document.getElementById('custom-cursor');
                 if (!cursor) return;
         
-                // Query for hoverable elements
-                const cursorHoverElements = document.querySelectorAll(
-                    'a, button, .platform-button, .faq-question, .feature-card, .testimonial-dot, .app-store-button'
-                );
-        
+                // Mouse movement tracking
                 const onMouseMove = (e) => {
                     gsap.to(cursor, {
                         x: e.clientX,
@@ -157,24 +153,67 @@ function Layout() {
                         duration: 0.2,
                     });
                 };
-        
+                
                 document.addEventListener('mousemove', onMouseMove);
                 
-                const onMouseEnter = () => cursor.classList.add(styles.hover);
-                const onMouseLeave = () => cursor.classList.remove(styles.hover);
+                // Function to check if an element has cursor:pointer
+                const hasCursorPointer = (element) => {
+                    const style = window.getComputedStyle(element);
+                    return style.cursor === 'pointer';
+                };
                 
-                cursorHoverElements.forEach((element) => {
-                    element.addEventListener('mouseenter', onMouseEnter);
-                    element.addEventListener('mouseleave', onMouseLeave);
-                });
+                // Function to handle mouse over elements
+                const onMouseOver = (e) => {
+                    let target = e.target;
+                    
+                    // Check if the target or any of its parents have cursor:pointer
+                    while (target && target !== document) {
+                        if (hasCursorPointer(target) || 
+                            target.tagName.toLowerCase() === 'a' || 
+                            target.tagName.toLowerCase() === 'button' ||
+                            target.classList.contains('testimonial-dot') ||
+                            target.classList.contains('testimonial_dot') ||
+                            target.classList.contains('faq-question') ||
+                            target.classList.contains('feature-card')) {
+                            cursor.classList.add(styles.hover);
+                            return;
+                        }
+                        target = target.parentElement;
+                    }
+                };
+                
+                // Function to handle mouse out
+                const onMouseOut = (e) => {
+                    let target = e.target;
+                    let relatedTarget = e.relatedTarget;
+                    
+                    // Check if we're moving to a non-clickable element
+                    while (relatedTarget && relatedTarget !== document) {
+                        if (hasCursorPointer(relatedTarget) || 
+                            relatedTarget.tagName.toLowerCase() === 'a' || 
+                            relatedTarget.tagName.toLowerCase() === 'button' ||
+                            relatedTarget.classList.contains('testimonial-dot') ||
+                            relatedTarget.classList.contains('testimonial_dot') ||
+                            relatedTarget.classList.contains('faq-question') ||
+                            relatedTarget.classList.contains('feature-card')) {
+                            return; // Still on a clickable element, don't remove hover
+                        }
+                        relatedTarget = relatedTarget.parentElement;
+                    }
+                    
+                    // If we've moved to a non-clickable element, remove hover
+                    cursor.classList.remove(styles.hover);
+                };
+                
+                // Add global event listeners
+                document.addEventListener('mouseover', onMouseOver);
+                document.addEventListener('mouseout', onMouseOut);
         
                 // Cleanup function
                 return () => {
                     document.removeEventListener('mousemove', onMouseMove);
-                    cursorHoverElements.forEach((element) => {
-                        element.removeEventListener('mouseenter', onMouseEnter);
-                        element.removeEventListener('mouseleave', onMouseLeave);
-                    });
+                    document.removeEventListener('mouseover', onMouseOver);
+                    document.removeEventListener('mouseout', onMouseOut);
                 };
             } catch (error) {
                 console.error("Error loading GSAP for cursor animation:", error);
