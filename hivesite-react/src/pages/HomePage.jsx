@@ -50,22 +50,46 @@ const HomePage = () => {
       clearInterval(testimonialInterval.current);
     }
     
+    // Hide all slides first
+    sectionRefs.testimonialSlides.current.forEach((slide) => {
+      gsap.set(slide, {
+        opacity: 0,
+        display: 'none',
+        x: 0 // Removed the x transform for smoother transitions
+      });
+    });
+    
+    // Show selected slide with animation
+    gsap.set(sectionRefs.testimonialSlides.current[index], { display: 'block' });
+    gsap.to(sectionRefs.testimonialSlides.current[index], {
+      opacity: 1,
+      duration: 0.5, // Shorter duration for smoother transition
+      ease: 'power1.inOut' // Changed from default ease
+    });
+    
     setCurrentSlide(index);
+    
+    // Set up the interval again
+    testimonialInterval.current = setInterval(() => {
+      const nextSlide = (index + 1) % 3; // assuming 3 slides
+      showSlide(nextSlide);
+    }, 6000);
   };
 
   // Setup testimonial auto-rotation after initial render
   useEffect(() => {
-    testimonialInterval.current = setInterval(() => {
-      const nextSlide = (currentSlide + 1) % 3; // assuming 3 slides
-      setCurrentSlide(nextSlide);
-    }, 6000);
-
+    // Initialize the first slide
+    if (sectionRefs.testimonialSlides.current && sectionRefs.testimonialSlides.current.length > 0) {
+      showSlide(0);
+    }
+    
+    // Don't need the interval here since showSlide sets it up
     return () => {
       if (testimonialInterval.current) {
         clearInterval(testimonialInterval.current);
       }
     };
-  }, [currentSlide]);
+  }, []); // Only run on initial render
 
   // Canvas for hexagon background
   useEffect(() => {
@@ -806,63 +830,69 @@ const HomePage = () => {
           <div className={styles.testimonial_slider}>
             <div 
               className={styles.testimonial_slide} 
+              ref={el => addToRef(el, sectionRefs.testimonialSlides)}
               style={{ 
                 display: currentSlide === 0 ? 'block' : 'none',
-                opacity: currentSlide === 0 ? 1 : 0,
-                transform: `translateX(${currentSlide === 0 ? 0 : '100%'})`
+                opacity: currentSlide === 0 ? 1 : 0
               }}
             >
               <div className={styles.testimonial_card}>
                 <div className={styles.testimonial_content}>
-                  HIVE has completely transformed my beekeeping operation. The real-time monitoring has allowed me to detect and address issues before they become serious, and my honey yields have increased by over 40% in just one season.
-                </div>
-                <div className={styles.testimonial_author}>
-                  <div className={styles.testimonial_avatar}>JM</div>
-                  <div className={styles.testimonial_info}>
-                    <div className={styles.testimonial_name}>John Markson</div>
-                    <div className={styles.testimonial_role}>Commercial Beekeeper, Oregon</div>
+                  <p className={styles.testimonial_text}>
+                    HIVE has completely transformed my beekeeping operation. The real-time monitoring has allowed me to detect and address issues before they become serious, and my honey yields have increased by over 40% in just one season.
+                  </p>
+                  <div className={styles.testimonial_author}>
+                    <div className={styles.testimonial_avatar}>JM</div>
+                    <div className={styles.testimonial_info}>
+                      <div className={styles.testimonial_name}>John Markson</div>
+                      <div className={styles.testimonial_role}>Commercial Beekeeper, Oregon</div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
             <div 
               className={styles.testimonial_slide} 
+              ref={el => addToRef(el, sectionRefs.testimonialSlides)}
               style={{ 
                 display: currentSlide === 1 ? 'block' : 'none',
-                opacity: currentSlide === 1 ? 1 : 0,
-                transform: `translateX(${currentSlide === 1 ? 0 : '100%'})`
+                opacity: currentSlide === 1 ? 1 : 0
               }}
             >
               <div className={styles.testimonial_card}>
                 <div className={styles.testimonial_content}>
-                  As a hobby beekeeper, I was always worried about missing important changes in my hives. With HIVE, I get alerts directly to my phone and clear guidance on what actions to take. It's like having an expert beekeeper by my side 24/7.
-                </div>
-                <div className={styles.testimonial_author}>
-                  <div className={styles.testimonial_avatar}>SL</div>
-                  <div className={styles.testimonial_info}>
-                    <div className={styles.testimonial_name}>Sarah Linden</div>
-                    <div className={styles.testimonial_role}>Hobby Beekeeper, Vermont</div>
+                  <p className={styles.testimonial_text}>
+                    As a hobby beekeeper, I was always worried about missing important changes in my hives. With HIVE, I get alerts directly to my phone and clear guidance on what actions to take. It's like having an expert beekeeper by my side 24/7.
+                  </p>
+                  <div className={styles.testimonial_author}>
+                    <div className={styles.testimonial_avatar}>SL</div>
+                    <div className={styles.testimonial_info}>
+                      <div className={styles.testimonial_name}>Sarah Linden</div>
+                      <div className={styles.testimonial_role}>Hobby Beekeeper, Vermont</div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
             <div 
               className={styles.testimonial_slide} 
+              ref={el => addToRef(el, sectionRefs.testimonialSlides)}
               style={{ 
                 display: currentSlide === 2 ? 'block' : 'none',
-                opacity: currentSlide === 2 ? 1 : 0,
-                transform: `translateX(${currentSlide === 2 ? 0 : '100%'})`
+                opacity: currentSlide === 2 ? 1 : 0
               }}
             >
               <div className={styles.testimonial_card}>
                 <div className={styles.testimonial_content}>
-                  The insights provided by HIVE are invaluable. We've been able to optimize our beekeeping practices based on data rather than guesswork, resulting in healthier colonies and more sustainable operations.
-                </div>
-                <div className={styles.testimonial_author}>
-                  <div className={styles.testimonial_avatar}>RM</div>
-                  <div className={styles.testimonial_info}>
-                    <div className={styles.testimonial_name}>Robert Martinez</div>
-                    <div className={styles.testimonial_role}>Apiary Manager, California</div>
+                  <p className={styles.testimonial_text}>
+                    The insights provided by HIVE are invaluable. We've been able to optimize our beekeeping practices based on data rather than guesswork, resulting in healthier colonies and more sustainable operations.
+                  </p>
+                  <div className={styles.testimonial_author}>
+                    <div className={styles.testimonial_avatar}>RM</div>
+                    <div className={styles.testimonial_info}>
+                      <div className={styles.testimonial_name}>Robert Martinez</div>
+                      <div className={styles.testimonial_role}>Apiary Manager, California</div>
+                    </div>
                   </div>
                 </div>
               </div>

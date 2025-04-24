@@ -48,7 +48,7 @@ const MissionPage = () => {
       gsap.set(slide, {
         opacity: 0,
         display: 'none',
-        x: '100%'
+        x: 0
       });
     });
     
@@ -56,9 +56,8 @@ const MissionPage = () => {
     gsap.set(testimonialSlidesRef.current[index], { display: 'block' });
     gsap.to(testimonialSlidesRef.current[index], {
       opacity: 1,
-      x: 0,
-      duration: 0.7,
-      ease: 'power2.out'
+      duration: 0.5,
+      ease: 'power1.inOut'
     });
     
     // Update active dot
@@ -724,48 +723,48 @@ const MissionPage = () => {
       <section className={`${styles.section} ${styles.bg_white}`} id="eu-initiative">
         <div className={styles.section_header}>
           <span className={styles.section_subtitle}>Recognition</span>
-          <h2 className={styles.section_title}>EU Green Initiative Partnership</h2>
+          <h2 className={styles.section_title}>ATU Student Entrepreneur Award</h2>
           <p className={styles.section_description}>
-            Our collaboration with the European Union's sustainability program to advance shared environmental goals.
+            Our achievement in the EU GREEN - Sustainability category for our innovative beekeeping technology.
           </p>
         </div>
         
         <div className={styles.eu_initiative} ref={euInitiativeRef}>
           <div className={styles.initiative_top}>
             <div className={styles.initiative_logo}>
-              <img src="/assets/eu.png" alt="EU Green Initiative Logo" />
+              <img src="/assets/eu.png" alt="EU Green Award Logo" />
             </div>
             <div>
-              <h3 className={styles.initiative_title}>Official EU Green Award Recipient</h3>
-              <p className={styles.initiative_subtitle}>Recognized for Excellence in Eco-Innovation and Sustainability</p>
+              <h3 className={styles.initiative_title}>EU GREEN - Sustainability Award Winner</h3>
+              <p className={styles.initiative_subtitle}>Recognized for Innovation in Sustainable Beekeeping Technology</p>
             </div>
           </div>
           
           <p className={styles.initiative_text}>
-            HIVE is proud to be a partner in the European Union's Green Initiative, which aims to support innovative technologies that address climate change and biodiversity loss. As a recipient of the prestigious EU Green Award, we've received both recognition and funding to expand our impact across Europe and beyond.
+            HIVE is proud to have been recognized in the ATU Student Entrepreneur Awards, winning the EU GREEN - Sustainability category. This award acknowledges our innovative approach to sustainable beekeeping technology developed as part of our final year project.
           </p>
           
           <p className={styles.initiative_text}>
-            This partnership enables us to collaborate with leading research institutions, policy makers, and environmental organizations to develop best practices for bee conservation and sustainable agriculture.
+            This recognition has motivated us to continue developing our technology and expand our vision for bee conservation and sustainable beekeeping practices.
           </p>
           
           <div className={styles.initiative_highlights}>
             <div className={styles.initiative_highlight}>
-              <h4 className={styles.highlight_title}>Research Collaboration</h4>
+              <h4 className={styles.highlight_title}>Innovative Technology</h4>
               <p className={styles.highlight_text}>
-                Joint research projects with EU universities studying the correlation between bee health and ecosystem resilience.
+                Development of smart monitoring systems that help beekeepers maintain healthier colonies with reduced environmental impact.
               </p>
             </div>
             <div className={styles.initiative_highlight}>
-              <h4 className={styles.highlight_title}>Policy Development</h4>
+              <h4 className={styles.highlight_title}>Sustainability Focus</h4>
               <p className={styles.highlight_text}>
-                Contributing data and insights to inform EU agricultural policies that support pollinator conservation.
+                Recognition for our commitment to promoting organic beekeeping methods that benefit both bees and surrounding ecosystems.
               </p>
             </div>
             <div className={styles.initiative_highlight}>
-              <h4 className={styles.highlight_title}>Knowledge Sharing</h4>
+              <h4 className={styles.highlight_title}>Educational Impact</h4>
               <p className={styles.highlight_text}>
-                Participating in EU-sponsored workshops and conferences to share our expertise with stakeholders across sectors.
+                Sharing knowledge about sustainable beekeeping practices with the broader community through our platform and resources.
               </p>
             </div>
           </div>
@@ -787,8 +786,8 @@ const MissionPage = () => {
             {/* Testimonial Slides */}
             <div className={styles.testimonial_slide}>
               <div className={styles.testimonial_content}>
-                <p className={styles.testimonial_quote}>
-                  "HIVE's technology has transformed how I care for my bees. I've seen a remarkable improvement in colony health and honey production, all while reducing my reliance on chemical treatments. It's not just about better beekeeping—it's about being part of a movement that's making a real difference."
+                <p className={styles.testimonial_text}>
+                  HIVE's technology has transformed how I care for my bees. I've seen a remarkable improvement in colony health and honey production, all while reducing my reliance on chemical treatments. It's not just about better beekeeping—it's about being part of a movement that's making a real difference.
                 </p>
                 <div className={styles.testimonial_author}>
                   <img src="/api/placeholder/60/60" alt="Marco Rossi" className={styles.author_image} />
@@ -802,14 +801,14 @@ const MissionPage = () => {
             
             <div className={styles.testimonial_slide}>
               <div className={styles.testimonial_content}>
-                <p className={styles.testimonial_quote}>
-                  "As a first-time beekeeper, I was overwhelmed by the learning curve. HIVE has not only made the process manageable but enjoyable. The community support and data-driven insights have given me confidence that I'm doing right by my bees and the environment."
+                <p className={styles.testimonial_text}>
+                  As a researcher in biodiversity, I've been monitoring the impact of HIVE's technology on local ecosystems. The data shows clear improvements in pollination rates and plant diversity in areas where their smart hives are deployed. This is exactly the kind of innovation our environment needs.
                 </p>
                 <div className={styles.testimonial_author}>
-                  <img src="/api/placeholder/60/60" alt="Sarah Johnson" className={styles.author_image} />
+                  <img src="/api/placeholder/60/60" alt="Dr. Emma Clarke" className={styles.author_image} />
                   <div className={styles.author_info}>
-                    <p className={styles.author_name}>Sarah Johnson</p>
-                    <p className={styles.author_title}>Hobbyist Beekeeper, United States</p>
+                    <p className={styles.author_name}>Dr. Emma Clarke</p>
+                    <p className={styles.author_title}>Environmental Scientist, UK</p>
                   </div>
                 </div>
               </div>
@@ -817,14 +816,14 @@ const MissionPage = () => {
             
             <div className={styles.testimonial_slide}>
               <div className={styles.testimonial_content}>
-                <p className={styles.testimonial_quote}>
-                  "Our agricultural cooperative has been using HIVE's technology across all our apiaries for the past three years. The data collected has been invaluable for optimizing pollination services and ensuring our bees remain healthy throughout the growing season. This technology is the future of sustainable agriculture."
+                <p className={styles.testimonial_text}>
+                  Since implementing HIVE's monitoring system across our 50 colonies, we've reduced winter losses by 35% and increased honey yields by nearly 20%. The environmental data has allowed us to make smarter decisions about hive placement and timing. It's revolutionized our entire operation.
                 </p>
                 <div className={styles.testimonial_author}>
-                  <img src="/api/placeholder/60/60" alt="Dr. Luisa Fernandez" className={styles.author_image} />
+                  <img src="/api/placeholder/60/60" alt="Miguel Sanchez" className={styles.author_image} />
                   <div className={styles.author_info}>
-                    <p className={styles.author_name}>Dr. Luisa Fernandez</p>
-                    <p className={styles.author_title}>Agricultural Scientist, Spain</p>
+                    <p className={styles.author_name}>Miguel Sanchez</p>
+                    <p className={styles.author_title}>Commercial Apiary Owner, Spain</p>
                   </div>
                 </div>
               </div>
