@@ -493,10 +493,12 @@
         padding: 3rem 2rem 1.5rem;
     }
     
-    /* Center logo on mobile screens */
+    /* Position logo in the top-left corner on mobile screens */
     .logo {
-        left: 50%;
-        transform: translate(-50%, -50%);
+        left: 0rem;
+        top: 2rem;
+        /* keep vertical centering */
+        transform: translateY(-50%);
     }
 
     .logo_img {
