@@ -584,6 +584,11 @@ html {
     right: 0;
 }
 
+.testimonial_slide.active {
+    display: block;
+    opacity: 1;
+}
+
 .testimonial_content {
     position: relative;
     background: #fff;
@@ -613,15 +618,16 @@ html {
     opacity: 0.3;
     font-family: 'Georgia', serif;
     z-index: -1;
+    display: block; /* Ensure they're visible */
 }
 
 .testimonial_text:before {
-    top: -40px;
+    top: -50px;
     left: -15px;
 }
 
 .testimonial_text:after {
-    bottom: -40px;
+    bottom: -60px;
     right: 0;
 }
 

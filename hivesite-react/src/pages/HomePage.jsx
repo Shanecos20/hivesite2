@@ -6,7 +6,12 @@ import styles from '../css/Home.module.css';
 const HomePage = () => {
   // State for testimonials
   const [currentSlide, setCurrentSlide] = useState(0);
-  const testimonialInterval = useRef(null);
+  
+  // Use refs approach similar to MissionPage
+  const testimonialSlidesRef = useRef([]);
+  const testimonialDotsRef = useRef([]);
+  const testimonialIntervalRef = useRef(null);
+  const currentSlideRef = useRef(0);
   
   // Register ScrollTrigger plugin outside useEffect
   gsap.registerPlugin(ScrollTrigger);
@@ -43,50 +48,71 @@ const HomePage = () => {
     }
   };
 
-  // Testimonial slider functionality
+  // Testimonial slider functionality using the MissionPage approach
   const showSlide = (index) => {
     // Clear any existing interval
-    if (testimonialInterval.current) {
-      clearInterval(testimonialInterval.current);
+    if (testimonialIntervalRef.current) {
+      clearInterval(testimonialIntervalRef.current);
     }
     
     // Hide all slides first
-    sectionRefs.testimonialSlides.current.forEach((slide) => {
+    testimonialSlidesRef.current.forEach((slide) => {
       gsap.set(slide, {
         opacity: 0,
         display: 'none',
-        x: 0 // Removed the x transform for smoother transitions
+        x: 0
       });
     });
     
     // Show selected slide with animation
-    gsap.set(sectionRefs.testimonialSlides.current[index], { display: 'block' });
-    gsap.to(sectionRefs.testimonialSlides.current[index], {
+    gsap.set(testimonialSlidesRef.current[index], { display: 'block' });
+    gsap.to(testimonialSlidesRef.current[index], {
       opacity: 1,
-      duration: 0.5, // Shorter duration for smoother transition
-      ease: 'power1.inOut' // Changed from default ease
+      duration: 0.5,
+      ease: 'power1.inOut'
     });
     
-    setCurrentSlide(index);
+    // Update active dot
+    testimonialDotsRef.current.forEach((dot, i) => {
+      if (i === index) {
+        dot.classList.add(styles.active);
+      } else {
+        dot.classList.remove(styles.active);
+      }
+    });
+    
+    currentSlideRef.current = index;
+    setCurrentSlide(index); // Update state for UI rendering
     
     // Set up the interval again
-    testimonialInterval.current = setInterval(() => {
-      const nextSlide = (index + 1) % 3; // assuming 3 slides
+    testimonialIntervalRef.current = setInterval(() => {
+      const nextSlide = (currentSlideRef.current + 1) % testimonialSlidesRef.current.length;
       showSlide(nextSlide);
     }, 6000);
   };
 
   // Setup testimonial auto-rotation after initial render
   useEffect(() => {
-    // Initialize the first slide
-    if (sectionRefs.testimonialSlides.current && sectionRefs.testimonialSlides.current.length > 0) {
-      showSlide(0);
+    // Check if refs are populated before initializing
+    const slidesAvailable = sectionRefs.testimonialSlides.current && sectionRefs.testimonialSlides.current.length > 0;
+    
+    if (slidesAvailable) {
+        // Initialize the first slide
+        showSlide(0);
+    } else {
+        // Optional: Retry mechanism if refs aren't immediately available
+        const timeoutId = setTimeout(() => {
+            if (sectionRefs.testimonialSlides.current && sectionRefs.testimonialSlides.current.length > 0) {
+                showSlide(0);
+            }
+        }, 100); // Wait 100ms
+        return () => clearTimeout(timeoutId); // Cleanup timeout
     }
     
-    // Don't need the interval here since showSlide sets it up
+    // Cleanup for interval
     return () => {
-      if (testimonialInterval.current) {
-        clearInterval(testimonialInterval.current);
+      if (testimonialIntervalRef.current) {
+        clearInterval(testimonialIntervalRef.current);
       }
     };
   }, []); // Only run on initial render
@@ -159,6 +185,22 @@ const HomePage = () => {
       
       // Kill any existing ScrollTrigger instances to prevent conflicts
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      
+      // Find and store slides and dots in refs
+      testimonialSlidesRef.current = Array.from(document.querySelectorAll(`.${styles.testimonial_slide}`));
+      testimonialDotsRef.current = Array.from(document.querySelectorAll(`.${styles.testimonial_dot}`));
+      
+      // Initialize testimonial slider
+      if (testimonialSlidesRef.current.length > 0) {
+        showSlide(0);
+      }
+      
+      // Add event listeners for testimonial dots
+      testimonialDotsRef.current.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+          showSlide(i);
+        });
+      });
       
       // Animate blobs with GSAP
       if (blobsRef.current && blobsRef.current.length) {
@@ -431,8 +473,8 @@ const HomePage = () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
       gsap.killTweensOf("*");
       
-      if (testimonialInterval.current) {
-        clearInterval(testimonialInterval.current);
+      if (testimonialIntervalRef.current) {
+        clearInterval(testimonialIntervalRef.current);
       }
     };
   }, []); // Empty dependency array to run once on mount
@@ -828,14 +870,7 @@ const HomePage = () => {
         </div>
         <div className={styles.testimonials_container}>
           <div className={styles.testimonial_slider}>
-            <div 
-              className={styles.testimonial_slide} 
-              ref={el => addToRef(el, sectionRefs.testimonialSlides)}
-              style={{ 
-                display: currentSlide === 0 ? 'block' : 'none',
-                opacity: currentSlide === 0 ? 1 : 0
-              }}
-            >
+            <div className={styles.testimonial_slide}>
               <div className={styles.testimonial_card}>
                 <div className={styles.testimonial_content}>
                   <p className={styles.testimonial_text}>
@@ -851,14 +886,7 @@ const HomePage = () => {
                 </div>
               </div>
             </div>
-            <div 
-              className={styles.testimonial_slide} 
-              ref={el => addToRef(el, sectionRefs.testimonialSlides)}
-              style={{ 
-                display: currentSlide === 1 ? 'block' : 'none',
-                opacity: currentSlide === 1 ? 1 : 0
-              }}
-            >
+            <div className={styles.testimonial_slide}>
               <div className={styles.testimonial_card}>
                 <div className={styles.testimonial_content}>
                   <p className={styles.testimonial_text}>
@@ -874,14 +902,7 @@ const HomePage = () => {
                 </div>
               </div>
             </div>
-            <div 
-              className={styles.testimonial_slide} 
-              ref={el => addToRef(el, sectionRefs.testimonialSlides)}
-              style={{ 
-                display: currentSlide === 2 ? 'block' : 'none',
-                opacity: currentSlide === 2 ? 1 : 0
-              }}
-            >
+            <div className={styles.testimonial_slide}>
               <div className={styles.testimonial_card}>
                 <div className={styles.testimonial_content}>
                   <p className={styles.testimonial_text}>
@@ -899,18 +920,9 @@ const HomePage = () => {
             </div>
           </div>
           <div className={styles.testimonial_nav}>
-            <div 
-              className={`${styles.testimonial_dot} ${currentSlide === 0 ? styles.active : ''}`} 
-              onClick={() => showSlide(0)}
-            ></div>
-            <div 
-              className={`${styles.testimonial_dot} ${currentSlide === 1 ? styles.active : ''}`} 
-              onClick={() => showSlide(1)}
-            ></div>
-            <div 
-              className={`${styles.testimonial_dot} ${currentSlide === 2 ? styles.active : ''}`} 
-              onClick={() => showSlide(2)}
-            ></div>
+            <div className={styles.testimonial_dot}></div>
+            <div className={styles.testimonial_dot}></div>
+            <div className={styles.testimonial_dot}></div>
           </div>
         </div>
       </section>
