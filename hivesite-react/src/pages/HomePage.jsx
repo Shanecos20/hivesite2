@@ -498,10 +498,10 @@ const HomePage = () => {
             </svg>
             <span style={{ marginLeft: '8px' }}>EU Green Award Winner</span>
           </div>
-          <h1 className={styles.hero_title} ref={heroTitleRef} style={{ opacity: 0, transform: 'translateY(30px)' }}>Revolutionizing <span>Beekeeping</span> Through Innovation</h1>
+          <h1 className={styles.hero_title} ref={heroTitleRef} style={{ opacity: 0, transform: 'translateY(30px)' }}>Revolutionising <span>Beekeeping</span> Through Innovation</h1>
           <p className={styles.hero_description} ref={heroDescriptionRef} style={{ opacity: 0, transform: 'translateY(30px)' }}>HIVE connects IoT technology with AI-driven insights to make beekeeping more accessible, efficient, and sustainable. Real-time monitoring, smart analytics, and actionable recommendations to ensure thriving colonies.</p>
           <div className={styles.hero_cta_group} ref={heroCTAGroupRef} style={{ opacity: 0, transform: 'translateY(30px)' }}>
-            <a href="#" className="cta-button">Download the App</a>
+            <a href="/download" className="cta-button">Download the App</a>
             <a href="https://www.youtube.com/watch?v=RVhQh1vsklw" target="_blank" rel="noopener noreferrer" className={styles.hero_cta_secondary}>
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="10"></circle>
@@ -725,7 +725,7 @@ const HomePage = () => {
               </svg>
             </div>
             <h3 className={styles.feature_title}>AI-Powered Insights</h3>
-            <p className={styles.feature_description}>Our smart algorithms analyze data patterns to predict issues before they become problems and suggest optimal interventions.</p>
+            <p className={styles.feature_description}>Our smart algorithms analyse data patterns to predict issues before they become problems and suggest optimal interventions.</p>
           </div>
           <div className={styles.feature_card} ref={el => addToRef(el, sectionRefs.featureCards)} style={{ opacity: 0, transform: 'translateY(30px)' }}>
             <div className={styles.feature_icon}>
@@ -734,7 +734,7 @@ const HomePage = () => {
               </svg>
             </div>
             <h3 className={styles.feature_title}>Colony Protection</h3>
-            <p className={styles.feature_description}>Early detection of threats like disease, pests, or unfavorable conditions helps protect your colonies and improve survival rates.</p>
+            <p className={styles.feature_description}>Early detection of threats like disease, pests, or unfavourable conditions helps protect your colonies and improve survival rates.</p>
           </div>
           <div className={styles.feature_card} ref={el => addToRef(el, sectionRefs.featureCards)} style={{ opacity: 0, transform: 'translateY(30px)' }}>
             <div className={styles.feature_icon}>
@@ -806,8 +806,8 @@ const HomePage = () => {
           <div className={styles.process_step} ref={el => addToRef(el, sectionRefs.processSteps)} style={{ opacity: 0, transform: 'translateY(30px)' }}>
             <div className={styles.process_number}>3</div>
             <div className={styles.process_content}>
-              <h3 className={styles.process_title}>Analyze Real-Time Data</h3>
-              <p className={styles.process_description}>Our AI algorithms continuously monitor and analyze data from your hives, identifying patterns and potential issues before they become serious problems.</p>
+              <h3 className={styles.process_title}>Analyse Real-Time Data</h3>
+              <p className={styles.process_description}>Our AI algorithms continuously monitor and analyse data from your hives, identifying patterns and potential issues before they become serious problems.</p>
             </div>
             <div className={styles.process_image}>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -819,7 +819,7 @@ const HomePage = () => {
             <div className={styles.process_number}>4</div>
             <div className={styles.process_content}>
               <h3 className={styles.process_title}>Receive Smart Recommendations</h3>
-              <p className={styles.process_description}>Get personalized, actionable insights based on your specific hive conditions. Our recommendations help you make informed decisions to optimize colony health and productivity.</p>
+              <p className={styles.process_description}>Get personalised, actionable insights based on your specific hive conditions. Our recommendations help you make informed decisions to optimise colony health and productivity.</p>
             </div>
             <div className={styles.process_image}>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -937,11 +937,11 @@ const HomePage = () => {
           <h2 className={styles.cta_title} ref={sectionRefs.ctaTitle} style={{ opacity: 0, transform: 'translateY(30px)' }}>Ready to Transform Your Beekeeping?</h2>
           <p className={styles.cta_description} ref={sectionRefs.ctaDescription} style={{ opacity: 0, transform: 'translateY(30px)' }}>Join thousands of beekeepers who are using HIVE technology to create healthier, more productive colonies while contributing to global bee conservation efforts.</p>
           <div className={styles.cta_buttons} ref={sectionRefs.ctaButtons} style={{ opacity: 0, transform: 'translateY(30px)' }}>
-            <a href="#" className="cta-button">Get Started Today</a>
-            <a href="#" className="cta-button cta-button--secondary">Contact Sales</a>
+            <a href="/download" className="cta-button">Get Started Today</a>
+            <a href="/contact" className="cta-button cta-button--secondary">Contact Sales</a>
           </div>
           <div className={styles.app_stores} ref={sectionRefs.appStores} style={{ opacity: 0, transform: 'translateY(30px)' }}>
-            <a href="#" className={styles.app_store_button}>
+            <a href="https://apps.apple.com/app/hive-beekeeping" target="_blank" rel="noopener noreferrer" className={styles.app_store_button}>
               <div className={styles.app_store_icon}>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FFFFFF">
                   <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.79 1.17-.29 2.28-.95 3.53-.84 1.5.17 2.63.64 3.38 1.64-2.36 1.62-1.35 5.2.93 6.18-1.05 2.47-2.49 4.37-4.12 6.1zm-3.44-17.5c.05 1.87-1.37 3.4-3.1 3.58-.03-1.95 1.41-3.47 3.1-3.58z"/>
@@ -952,7 +952,7 @@ const HomePage = () => {
                 <span>App Store</span>
               </div>
             </a>
-            <a href="#" className={styles.app_store_button}>
+            <a href="https://play.google.com/store/apps/details?id=com.hive.beekeeping" target="_blank" rel="noopener noreferrer" className={styles.app_store_button}>
               <div className={styles.app_store_icon}>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FFFFFF">
                   <path d="M3.18 23L20.6 12 3.18 1l.01 22zM6.97 4.7l9.44 7.3-9.44 7.3V4.7z"/>

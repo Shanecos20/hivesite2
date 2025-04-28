@@ -400,7 +400,7 @@ const About = () => {
             <span style={{ marginLeft: '8px' }}>EU Green Award Winner</span>
           </div>
           <h1 className={styles.hero_title} ref={heroTitleRef} style={{ opacity: 0, transform: 'translateY(20px)' }}>The Team Behind <span>HIVE</span></h1>
-          <p className={styles.hero_description} ref={heroDescriptionRef} style={{ opacity: 0, transform: 'translateY(20px)' }}>We're a passionate group of technologists, beekeepers, and environmentalists united by a common goal: to revolutionize beekeeping through innovation while ensuring a sustainable future for honeybees worldwide.</p>
+          <p className={styles.hero_description} ref={heroDescriptionRef} style={{ opacity: 0, transform: 'translateY(20px)' }}>We're a passionate group of technologists, beekeepers, and environmentalists united by a common goal: to revolutionise beekeeping through innovation while ensuring a sustainable future for honeybees worldwide.</p>
         </div>
       </section>
 
@@ -416,7 +416,7 @@ const About = () => {
           <div className={styles.story_content} ref={sectionRefs.storyContent} style={{ opacity: 0, transform: 'translateY(20px)' }}>
             <h3 className={styles.story_title}>A Vision Born from Necessity</h3>
             <p className={styles.story_text}>HIVE was born from a shared passion for sustainability, technology, and bee welfare. Founded in 2024 by a team of final-year computing and digital media students—and developed in close dialogue with real-world beekeepers—HIVE emerged in response to a simple but serious question: why are we still losing so many hives to preventable problems like mites, starvation, and disease?</p>
-            <p className={styles.story_text}>Rather than replace the art of beekeeping, we set out to build a tool that complements it—a modular smart-hive system powered by AI and IoT that can alert, assist, and even act on a beekeeper's behalf when early signs of trouble appear. Drawing from sensor technology, cloud computing, and human-centered design, we created a prototype that brings precision and peace of mind to both hobbyists and commercial apiarists.</p>
+            <p className={styles.story_text}>Rather than replace the art of beekeeping, we set out to build a tool that complements it—a modular smart-hive system powered by AI and IoT that can alert, assist, and even act on a beekeeper's behalf when early signs of trouble appear. Drawing from sensor technology, cloud computing, and human-centred design, we created a prototype that brings precision and peace of mind to both hobbyists and commercial apiarists.</p>
             <p className={styles.story_text}>With strong early interest from local clubs, commercial beekeepers, and agri-tech mentors, we're working to launch a product that empowers keepers of all levels to protect their colonies, reduce manual labour, and improve outcomes—without losing the hands-on joy of the craft.</p>
           </div>
           <div className={styles.story_image} ref={sectionRefs.storyImage} style={{ opacity: 0, transform: 'translateY(20px)' }}>
@@ -608,7 +608,7 @@ const About = () => {
           <div className={styles.tech_row}>
             <div className={styles.tech_content} ref={el => addToRef(el, sectionRefs.techContents)} style={{ opacity: 0, transform: 'translateY(20px)' }}>
               <h3 className={styles.tech_title}>AI-Powered Analytics</h3>
-              <p className={styles.tech_text}>Our machine learning algorithms analyze billions of data points to identify patterns and predict potential issues before they become problems. This predictive approach enables proactive management rather than reactive intervention.</p>
+              <p className={styles.tech_text}>Our machine learning algorithms analyse billions of data points to identify patterns and predict potential issues before they become problems. This predictive approach enables proactive management rather than reactive intervention.</p>
               <div className={styles.tech_features}>
                 <div className={styles.tech_feature}>
                   <div className={styles.feature_icon}>
@@ -635,7 +635,7 @@ const About = () => {
                       <polyline points="22 4 12 14.01 9 11.01"></polyline>
                     </svg>
                   </div>
-                  <p className={styles.feature_text}>Personalized recommendations based on local conditions and hive history</p>
+                  <p className={styles.feature_text}>Personalised recommendations based on local conditions and hive history</p>
                 </div>
               </div>
             </div>
@@ -647,7 +647,7 @@ const About = () => {
           <div className={styles.tech_row}>
             <div className={styles.tech_content} ref={el => addToRef(el, sectionRefs.techContents)} style={{ opacity: 0, transform: 'translateY(20px)' }}>
               <h3 className={styles.tech_title}>Mobile & Web Platform</h3>
-              <p className={styles.tech_text}>Our intuitive, cross-platform application puts powerful tools in the hands of beekeepers everywhere. From comprehensive data visualization to community insights, everything you need is just a tap away.</p>
+              <p className={styles.tech_text}>Our intuitive, cross-platform application puts powerful tools in the hands of beekeepers everywhere. From comprehensive data visualisation to community insights, everything you need is just a tap away.</p>
               <div className={styles.tech_features}>
                 <div className={styles.tech_feature}>
                   <div className={styles.feature_icon}>
@@ -665,7 +665,7 @@ const About = () => {
                       <polyline points="22 4 12 14.01 9 11.01"></polyline>
                     </svg>
                   </div>
-                  <p className={styles.feature_text}>Comprehensive record-keeping and reportng tools</p>
+                  <p className={styles.feature_text}>Comprehensive record-keeping and reporting tools</p>
                 </div>
                 <div className={styles.tech_feature}>
                   <div className={styles.feature_icon}>
@@ -798,8 +798,8 @@ const About = () => {
           <p className={styles.cta_description} ref={sectionRefs.ctaDescription} style={{ opacity: 0, transform: 'translateY(20px)' }}>Whether you're a hobbyist with a single hive or manage thousands of colonies, HIVE is designed to help you become a better beekeeper while contributing to the global effort of bee conservation.</p>
           
           <div className={styles.cta_buttons} ref={sectionRefs.ctaButtons} style={{ opacity: 0, transform: 'translateY(20px)' }}>
-            <a href="#" className="cta-button">Get Started</a>
-            <a href="#" className="cta-button cta-button--secondary">Contact Sales</a>
+            <a href="/download" className="cta-button">Get Started</a>
+            <a href="/contact" className="cta-button cta-button--secondary">Contact Sales</a>
           </div>
         </div>
       </section>

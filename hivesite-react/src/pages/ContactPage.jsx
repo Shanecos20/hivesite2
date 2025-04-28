@@ -457,7 +457,7 @@ const ContactPage = () => {
             </div>
             <h3 className={styles.contact_title}>Phone Support</h3>
             <p className={styles.contact_info}>For urgent technical issues, our dedicated support line is available during business hours.</p>
-            <a href="tel:+18005551234" className={styles.contact_link}>+1 (800) 555-1234</a>
+            <a href="tel:+353123456789" className={styles.contact_link}>+353 (123) 456-789</a>
           </div>
           
           <div className={styles.contact_card}>
@@ -466,9 +466,9 @@ const ContactPage = () => {
                 <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
               </svg>
             </div>
-            <h3 className={styles.contact_title}>Live Chat</h3>
-            <p className={styles.contact_info}>For quick questions and real-time assistance, connect with our support team through live chat.</p>
-            <a href="#" className={styles.contact_link}>Start a chat</a>
+            <h3 className={styles.contact_title}>Community Forum</h3>
+            <p className={styles.contact_info}>Join our community of beekeepers to share experiences, ask questions, and learn from others.</p>
+            <a href="/forum" className={styles.contact_link}>Visit Forum</a>
           </div>
         </div>
       </section>

@@ -503,7 +503,7 @@ const MissionPage = () => {
         
         <div className={styles.mission_statement} ref={missionStatementRef}>
           <p className={styles.mission_quote}>
-            To revolutionize beekeeping through technology that enhances colony health, empowers beekeepers, and contributes to global biodiversity, ensuring a sustainable future where both bees and humans thrive together.
+            To revolutionise beekeeping through technology that enhances colony health, empowers beekeepers, and contributes to global biodiversity, ensuring a sustainable future where both bees and humans thrive together.
           </p>
           <p className={styles.mission_author}>
             — HIVE Team
@@ -531,7 +531,7 @@ const MissionPage = () => {
             </div>
             <h3 className={styles.value_title}>Environmental Stewardship</h3>
             <p className={styles.value_description}>
-              We recognize that bees are essential for ecological balance and food security. Every decision we make considers its impact on the environment and biodiversity.
+              We recognise that bees are essential for ecological balance and food security. Every decision we make considers its impact on the environment and biodiversity.
             </p>
           </div>
           
@@ -609,7 +609,7 @@ const MissionPage = () => {
                 Our data-driven approach enables beekeepers to make more informed decisions, reducing the need for chemical interventions and promoting organic beekeeping methods.
               </p>
               <p className={styles.impact_text}>
-                By minimizing the use of antibiotics and pesticides, we help create healthier hive environments and protect surrounding ecosystems from harmful chemicals.
+                By minimising the use of antibiotics and pesticides, we help create healthier hive environments and protect surrounding ecosystems from harmful chemicals.
               </p>
               <div className={styles.impact_metrics}>
                 <div className={styles.impact_metric}>

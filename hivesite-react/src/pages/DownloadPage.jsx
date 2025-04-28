@@ -412,7 +412,7 @@ const DownloadPage = () => {
                 </div>
                 
                 <div className={styles.app_stores}>
-                  <a href="#" className={styles.app_store_button}>
+                  <a href="https://apps.apple.com/app/hive-beekeeping" target="_blank" rel="noopener noreferrer" className={styles.app_store_button}>
                     <div className={styles.app_store_icon}>
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FFFFFF">
                         <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.79 1.17-.29 2.28-.95 3.53-.84 1.5.17 2.63.64 3.38 1.64-2.36 1.62-1.35 5.2.93 6.18-1.05 2.47-2.49 4.37-4.12 6.1zm-3.44-17.5c.05 1.87-1.37 3.4-3.1 3.58-.03-1.95 1.41-3.47 3.1-3.58z"/>
@@ -451,7 +451,7 @@ const DownloadPage = () => {
                 </div>
                 
                 <div className={styles.app_stores}>
-                  <a href="#" className={styles.app_store_button}>
+                  <a href="https://play.google.com/store/apps/details?id=com.hive.beekeeping" target="_blank" rel="noopener noreferrer" className={styles.app_store_button}>
                     <div className={styles.app_store_icon}>
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FFFFFF">
                         <path d="M3.18 23L20.6 12 3.18 1l.01 22zM6.97 4.7l9.44 7.3-9.44 7.3V4.7z"/>
@@ -474,7 +474,7 @@ const DownloadPage = () => {
         <div className={styles.section_header}>
           <span className={styles.section_subtitle} ref={el => addToRef(el, sectionRefs.subtitles)} style={{ opacity: 0, transform: 'translateY(20px)' }}>App Highlights</span>
           <h2 className={styles.section_title} ref={el => addToRef(el, sectionRefs.titles)} style={{ opacity: 0, transform: 'translateY(20px)' }}>Powerful Features at Your Fingertips</h2>
-          <p className={styles.section_description} ref={el => addToRef(el, sectionRefs.descriptions)} style={{ opacity: 0, transform: 'translateY(20px)' }}>Our intuitive interface provides easy access to all the tools you need to revolutionize your beekeeping practice.</p>
+          <p className={styles.section_description} ref={el => addToRef(el, sectionRefs.descriptions)} style={{ opacity: 0, transform: 'translateY(20px)' }}>Our intuitive interface provides easy access to all the tools you need to revolutionise your beekeeping practice.</p>
         </div>
         
         <div className={styles.showcase_container}>
@@ -540,7 +540,7 @@ const DownloadPage = () => {
           <div className={styles.feature_box} ref={el => addToRef(el, sectionRefs.featureBoxes)} style={{ opacity: 0, transform: 'translateY(30px)' }}>
             <div className={styles.feature_icon}>
               <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                <path d="M22 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
               </svg>
             </div>
             <h3 className={styles.feature_title}>Offline Functionality</h3>
@@ -557,8 +557,8 @@ const DownloadPage = () => {
                 <line x1="12" y1="16" x2="12.01" y2="16"></line>
               </svg>
             </div>
-            <h3 className={styles.feature_title}>Customizable Alerts</h3>
-            <p className={styles.feature_description}>Set personalized notification thresholds for temperature, humidity, and other critical metrics based on your specific needs.</p>
+            <h3 className={styles.feature_title}>Customisable Alerts</h3>
+            <p className={styles.feature_description}>Set personalised notification thresholds for temperature, humidity, and other critical metrics based on your specific needs.</p>
           </div>
           
           <div className={styles.feature_box} ref={el => addToRef(el, sectionRefs.featureBoxes)} style={{ opacity: 0, transform: 'translateY(30px)' }}>
@@ -626,8 +626,8 @@ const DownloadPage = () => {
           <p className={styles.cta_description} ref={sectionRefs.ctaDescription} style={{ opacity: 0, transform: 'translateY(20px)' }}>Join thousands of beekeepers who are already using HIVE to create healthier, more productive colonies while contributing to global bee conservation efforts.</p>
           
           <div className={styles.cta_buttons} ref={sectionRefs.ctaButtons} style={{ opacity: 0, transform: 'translateY(20px)' }}>
-            <a href="#" className="cta-button">Download Now</a>
-            <a href="#" className={styles.app_store_button}>
+            <a href="/download" className="cta-button">Download Now</a>
+            <a href="https://apps.apple.com/app/hive-beekeeping" target="_blank" rel="noopener noreferrer" className={styles.app_store_button}>
               <div className={styles.app_store_icon}>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FFFFFF">
                   <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.79 1.17-.29 2.28-.95 3.53-.84 1.5.17 2.63.64 3.38 1.64-2.36 1.62-1.35 5.2.93 6.18-1.05 2.47-2.49 4.37-4.12 6.1zm-3.44-17.5c.05 1.87-1.37 3.4-3.1 3.58-.03-1.95 1.41-3.47 3.1-3.58z"/>
@@ -638,7 +638,7 @@ const DownloadPage = () => {
                 <span>App Store</span>
               </div>
             </a>
-            <a href="#" className={styles.app_store_button}>
+            <a href="https://play.google.com/store/apps/details?id=com.hive.beekeeping" target="_blank" rel="noopener noreferrer" className={styles.app_store_button}>
               <div className={styles.app_store_icon}>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FFFFFF">
                   <path d="M3.18 23L20.6 12 3.18 1l.01 22zM6.97 4.7l9.44 7.3-9.44 7.3V4.7z"/>
