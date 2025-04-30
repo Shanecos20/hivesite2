@@ -203,7 +203,7 @@
 /* 3D Device Preview */
 .device_preview {
     position: absolute;
-    right: 13%;
+    right: 5%;
     top: 50%;
     transform: translateY(-50%) perspective(800px) rotateY(-15deg) rotateX(10deg);
     width: 280px;
@@ -993,7 +993,7 @@
     }
     
     .device_preview {
-        right: 5%;
+        right: 2%;
         width: 240px;
         height: 480px;
         transform: translateY(-50%) perspective(800px) rotateY(-15deg) rotateX(10deg) scale(0.9);
