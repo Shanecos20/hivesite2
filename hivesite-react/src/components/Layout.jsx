@@ -382,6 +382,9 @@ function Layout() {
                     </div>
                 </div>
                 <div className={styles.footer_copyright}>
+                    <a href="/assets/HIVE E-Book (1) (1).pdf" className={styles.ebook_button} target="_blank" rel="noopener noreferrer">
+                        Download Our E-Book
+                    </a>
                     <p>© 2025 HIVE - Honeybee Innovation for Vibrant Ecosystems. All rights reserved.</p>
                 </div>
             </footer>

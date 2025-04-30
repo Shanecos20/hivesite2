@@ -277,6 +277,26 @@
     font-size: 0.9rem;
 }
 
+.ebook_button {
+    display: inline-block;
+    background-color: var(--honey-yellow);
+    color: var(--dark);
+    font-weight: 600;
+    padding: 0.8rem 1.5rem;
+    border-radius: 30px;
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.ebook_button:hover {
+    background-color: var(--honey-dark);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
 /* EU Badge */
 .eu_badge {
     position: fixed;
@@ -312,7 +332,7 @@
 
 /* Mobile Menu Button */
 .mobile_menu_btn {
-    display: none;
+    display: block;
     background: none;
     border: none;
     cursor: pointer;
@@ -514,5 +534,12 @@
     
     .navbar.scrolled {
         padding: 0.8rem 1.5rem;
+    }
+    
+    .ebook_button {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+        width: 80%;
+        max-width: 250px;
     }
 }
