@@ -13,7 +13,7 @@ import MissionPage from './pages/MissionPage.jsx'
 import GetStartedPage from './pages/GetStartedPage.jsx'
 
 // Initialize Google Analytics
-ReactGA.initialize('G-XXXXXXXXXX'); // Replace with your actual Measurement ID
+ReactGA.initialize('G-64ZLHLXMNT'); // Replace with your actual Measurement ID
 
 // ScrollToTop component to ensure page scrolls to top on route change
 function ScrollToTop() {
