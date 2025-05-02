@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
+import ReactGA from 'react-ga4'
 import './index.css'
 import Layout from './components/Layout.jsx'
 import HomePage from './pages/HomePage.jsx'
@@ -11,11 +12,17 @@ import ContactPage from './pages/ContactPage.jsx'
 import MissionPage from './pages/MissionPage.jsx'
 import GetStartedPage from './pages/GetStartedPage.jsx'
 
+// Initialize Google Analytics
+ReactGA.initialize('G-XXXXXXXXXX'); // Replace with your actual Measurement ID
+
 // ScrollToTop component to ensure page scrolls to top on route change
 function ScrollToTop() {
   const { pathname } = useLocation();
   
   useEffect(() => {
+    // Send page view to Google Analytics
+    ReactGA.send({ hitType: "pageview", page: pathname });
+    
     window.scrollTo(0, 0);
     
     // Force refresh of any active GSAP animations/ScrollTriggers
